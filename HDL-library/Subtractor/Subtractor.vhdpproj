@@ -1,0 +1,13 @@
+﻿<Project>
+  <ItemGroup>
+    <File Include="FullSubtractor.vhdl" />
+    <File Include="FullSubtractor_tb.vhdl" />
+    <File Include="HalfSubtractor.vhdl" />
+    <File Include="HalfSubtractor_tb.vhdl" />
+    <File Include="Subtractor.vhd" />
+    <File Include="Subtractor_tb.vhd" />
+  </ItemGroup>
+  <PropertyGroup>
+    <HardwareStartPath>FullSubtractor_tb.vhdl</HardwareStartPath>
+  </PropertyGroup>
+</Project>

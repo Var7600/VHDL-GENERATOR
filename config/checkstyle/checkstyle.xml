@@ -1,0 +1,118 @@
+<?xml version="1.0"?>
+<!DOCTYPE module PUBLIC
+        "-//Puppy Crawl//DTD Check Configuration 1.3//EN"
+        "http://www.puppycrawl.com/dtds/configuration_1_3.dtd">
+
+
+<!--
+    This configuration file was written by the eclipse-cs plugin configuration editor
+-->
+<!--
+    Checkstyle-Configuration: VG Checks
+    Description: 
+checkstyle for the VHDL generator project
+-->
+<module name="Checker">
+  <property name="severity" value="warning"/>
+  <module name="TreeWalker">
+    <module name="AnnotationLocation">
+      <property name="severity" value="error"/>
+      <property name="tokens" value="CLASS_DEF, INTERFACE_DEF, PACKAGE_DEF, ENUM_CONSTANT_DEF, ENUM_DEF, METHOD_DEF, CTOR_DEF, VARIABLE_DEF, RECORD_DEF, COMPACT_CTOR_DEF"/>
+    </module>
+    <module name="MissingOverride">
+      <property name="severity" value="error"/>
+    </module>
+    <module name="MissingDeprecated">
+      <property name="severity" value="error"/>
+    </module>
+    <module name="FinalClass">
+      <property name="severity" value="error"/>
+    </module>
+    <module name="AvoidDoubleBraceInitialization">
+      <property name="severity" value="error"/>
+    </module>
+    <module name="DefaultComesLast">
+      <property name="severity" value="warning"/>
+    </module>
+    <module name="EmptyStatement">
+      <property name="severity" value="warning"/>
+    </module>
+    <module name="ExplicitInitialization">
+      <property name="severity" value="warning"/>
+    </module>
+    <module name="UnusedLocalVariable">
+      <property name="severity" value="warning"/>
+    </module>
+    <module name="UnnecessarySemicolonInTryWithResources">
+      <property name="severity" value="warning"/>
+    </module>
+    <module name="OneStatementPerLine">
+      <property name="severity" value="error"/>
+    </module>
+    <module name="AvoidStarImport">
+      <property name="severity" value="error"/>
+    </module>
+    <module name="IllegalImport">
+      <property name="severity" value="error"/>
+    </module>
+    <module name="RedundantImport">
+      <property name="severity" value="error"/>
+    </module>
+    <module name="UnusedImports">
+      <property name="severity" value="error"/>
+    </module>
+    <module name="JavadocMethod">
+      <property name="severity" value="error"/>
+      <property name="tokens" value="METHOD_DEF, CTOR_DEF, ANNOTATION_FIELD_DEF, COMPACT_CTOR_DEF"/>
+    </module>
+    <module name="NonEmptyAtclauseDescription">
+      <property name="severity" value="warning"/>
+      <property name="javadocTokens" value="PARAM_LITERAL, RETURN_LITERAL, THROWS_LITERAL, EXCEPTION_LITERAL, DEPRECATED_LITERAL"/>
+    </module>
+    <module name="InvalidJavadocPosition">
+      <property name="severity" value="warning"/>
+    </module>
+    <module name="JavadocVariable">
+      <property name="severity" value="warning"/>
+    </module>
+    <module name="TodoComment">
+      <property name="severity" value="info"/>
+    </module>
+    <module name="PackageName">
+      <property name="severity" value="error"/>
+    </module>
+    <module name="MethodName">
+      <property name="severity" value="error"/>
+    </module>
+    <module name="AnonInnerLength">
+      <property name="severity" value="warning"/>
+      <property name="max" value="45"/>
+    </module>
+    <module name="MethodLength">
+      <property name="severity" value="error"/>
+      <property name="tokens" value="METHOD_DEF, CTOR_DEF, COMPACT_CTOR_DEF"/>
+    </module>
+    <module name="ParameterNumber">
+      <property name="severity" value="warning"/>
+      <property name="ignoreOverriddenMethods" value="true"/>
+      <property name="max" value="10"/>
+      <property name="tokens" value="METHOD_DEF, CTOR_DEF"/>
+    </module>
+    <module name="EmptyBlock">
+      <property name="severity" value="info"/>
+      <property name="tokens" value="LITERAL_WHILE, LITERAL_TRY, LITERAL_FINALLY, LITERAL_DO, LITERAL_IF, LITERAL_ELSE, LITERAL_FOR, INSTANCE_INIT, STATIC_INIT, LITERAL_SWITCH, LITERAL_SYNCHRONIZED"/>
+    </module>
+    <module name="ParameterNumber">
+      <property name="tokens" value="METHOD_DEF, CTOR_DEF"/>
+    </module>
+    <module name="LambdaBodyLength">
+      <property name="severity" value="info"/>
+      <property name="max" value="20"/>
+    </module>
+  </module>
+  <module name="LineLength">
+    <property name="severity" value="error"/>
+    <property name="fileExtensions" value="*.java"/>
+    <property name="max" value="126"/>
+  </module>
+</module>

@@ -1,0 +1,8 @@
+﻿<Project>
+  <ItemGroup>
+    <File Include="SegmentDisplay.vhdl" />
+  </ItemGroup>
+  <PropertyGroup>
+    <HardwareStartPath>SegmentDisplay.vhdl</HardwareStartPath>
+  </PropertyGroup>
+</Project>

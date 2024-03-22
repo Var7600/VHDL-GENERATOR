@@ -1,0 +1,87 @@
+project:
+  name: VHDL_GENERATOR
+  description: App that generate VHDL Code
+  longDescription: VHDL-GENERATOR can generate VHDL Code, Testbench template and some VHDL Component(Mux,Encoder,Adder,...) .
+  version: 0.0
+  
+ 
+  links:
+    homepage: https://github.com/Var7600/VHDL-GENERATOR
+  authors:
+    - DOUDOU DIAWARA
+  license: “Commons Clause” License Condition v1.0
+  inceptionYear: 2024
+  stereotype: DESKTOP
+  screenshots:
+    - url: https://github.com/Var7600/VHDL-GENERATOR/blob/main/assets/Screenshot.png
+      caption: Welcome Screen
+  icons:
+    - url: https://github.com/Var7600/VHDL-GENERATOR/blob/main/assets/logo.png
+      width: 288
+      height: 256
+  java:
+    version: 18
+    groupId: vhdlgenerator
+    artifactId: VHDL_GENERATOR
+    mainClass: vhdlgenerator.application.AppVG
+
+release:
+  github:
+    overwrite: true
+    discussionCategoryName: Announcements
+    issues:
+      enabled: true
+    changelog:
+      formatted: ALWAYS
+      preset: conventional-commits
+      contributors:
+        format: '- {{contributorName}}{{#contributorUsernameAsLink}} ({{.}}){{/contributorUsernameAsLink}}'
+        contentTemplate: 'changelog.tpl'
+        extraProperties:
+          categorizeScopes: true
+        labelers:
+          - label: 'i18n'
+            title: 'regex:^(?:i18n(?:\(.*\))?!?):\s.*'
+            order: 120
+          - label: 'dependencies'
+            title: 'regex:^(?:deps(?:\(.*\))?!?):\s.*'
+            order: 130
+          - label: 'allcontributors1'
+            title: 'regex:^docs: update .all-contributorsrc.*'
+            order: -1
+          - label: 'allcontributors2'
+            title: 'regex:^docs: update CONTRIBUTORS.md.*'
+            order: -2
+        categories:
+          - title: '🌐 Translation'
+            key: 'i18n'
+            order: 70
+            labels:
+              - 'i18n'
+          - title: '⚙️  Dependencies'
+            key: 'dependencies'
+            order: 80
+            labels:
+              - 'dependencies'
+          - title: 'allcontributors'
+            order: 59
+            labels:
+              - 'allcontributors1'
+              - 'allcontributors2'
+        hide:
+          categories:
+            - 'merge'
+            - 'allcontributors'
+          contributors:
+            - 'GitHub'
+            - 'allcontributors'
+            - 'dependabot'
+        replacers:
+          - search: 'i18n: '
+          - search: 'deps: 
+
+distributions:
+  VHDL_GENERATOR:
+    type: SINGLE_JAR
+    artifacts:
+      - path: target/{{distributionName}}-{{projectVersion}}-jar-with-dependencies.jar

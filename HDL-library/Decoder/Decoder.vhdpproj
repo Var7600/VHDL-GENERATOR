@@ -1,0 +1,12 @@
+﻿<Project>
+  <ItemGroup>
+    <File Include="Decoder2_4.vhd" />
+    <File Include="Decoder2_4_tb.vhd" />
+    <File Include="Decoder3_8.vhdl" />
+    <File Include="Decoder4_16_tb.vhdl" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Decoder4_16.vhdl" />
+  </ItemGroup>
+  <PropertyGroup />
+</Project>

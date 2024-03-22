@@ -1,0 +1,15 @@
+vhdlgenerator.application
+vhdlgenerator.component
+vhdlgenerator.component.adder
+vhdlgenerator.component.comparator
+vhdlgenerator.component.decoder
+vhdlgenerator.component.demultiplexer
+vhdlgenerator.component.dflipflop
+vhdlgenerator.component.encoder
+vhdlgenerator.component.multiplexer
+vhdlgenerator.component.priorityencoder
+vhdlgenerator.component.segment7
+vhdlgenerator.component.subtractor
+vhdlgenerator.generator
+vhdlgenerator.testbench
+vhdlgenerator.texteditor

@@ -1,0 +1,6 @@
+to change the version of the project you got to change the version in this 3 files.(I couldn’t automate this in the GitHub Action YAML configuration).
+DO IT IF YOU CAN!!!!:) 
+
+-- change version in file: pom.xml
+-- change version in file: release.yml JRELEASER_PROJECT_VERSION
+-- change version in file: jreleaser.yml version

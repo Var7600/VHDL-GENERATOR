@@ -1,0 +1,11 @@
+﻿<Project>
+  <ItemGroup>
+    <File Include="d_flip_flop.vhdl" />
+    <File Include="d_flip_flop_tb.vhdl" />
+    <File Include="dff_reser_tb.vhdl" />
+    <File Include="dff_reset.vhdl" />
+  </ItemGroup>
+  <PropertyGroup>
+    <HardwareStartPath>dff_reser_tb.vhdl</HardwareStartPath>
+  </PropertyGroup>
+</Project>

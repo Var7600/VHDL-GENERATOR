@@ -1,0 +1,8 @@
+#ignores class file
+*.class
+
+# ignore target directory
+target/
+
+# ignore jar files
+*.jar

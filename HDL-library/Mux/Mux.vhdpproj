@@ -1,0 +1,12 @@
+﻿<Project>
+  <ItemGroup>
+    <File Include="Mux16_1.vhdl" />
+    <File Include="Mux2_1.vhdl" />
+    <File Include="Mux4_1.vhdl" />
+    <File Include="Mux4_1_tb.vhdl" />
+    <File Include="Mux8_1.vhdl" />
+    <File Include="Mux_tb.vhd" />
+    <File Include="Mux_tb_Sim.ghdp" />
+  </ItemGroup>
+  <PropertyGroup />
+</Project>

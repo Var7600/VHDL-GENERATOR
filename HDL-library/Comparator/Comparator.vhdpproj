@@ -1,0 +1,11 @@
+﻿<Project>
+  <ItemGroup>
+    <File Include="BitComparator.vhdl" />
+    <File Include="BitComparator_tb.vhdl" />
+    <File Include="Comparator.vhdl" />
+    <File Include="Comparator_tb.vhdl" />
+  </ItemGroup>
+  <PropertyGroup>
+    <HardwareStartPath>Comparator_tb.vhdl</HardwareStartPath>
+  </PropertyGroup>
+</Project>

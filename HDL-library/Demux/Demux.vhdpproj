@@ -1,0 +1,12 @@
+﻿<Project>
+  <ItemGroup>
+    <File Include="Demux1_2.vhdl" />
+    <File Include="Demux1_4.vhdl" />
+    <File Include="Demux1_8.vhdl" />
+    <File Include="Demux1x4_tb.vhdl" />
+    <File Include="Demux_tb.vhd" />
+  </ItemGroup>
+  <PropertyGroup>
+    <HardwareStartPath>Demux1x8.vhdl</HardwareStartPath>
+  </PropertyGroup>
+</Project>

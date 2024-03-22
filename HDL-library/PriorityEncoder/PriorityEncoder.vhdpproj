@@ -1,0 +1,11 @@
+﻿<Project>
+  <ItemGroup>
+    <File Include="PriorityEncoder4_2.vhdl" />
+    <File Include="PriorityEncoder4x2_tb.vhd" />
+    <File Include="PriorityEncoder8_3.vhdl" />
+    <File Include="PriorityEncoder8_3_tb.vhdl" />
+  </ItemGroup>
+  <PropertyGroup>
+    <HardwareStartPath>PriorityEncoder8_3_tb.vhdl</HardwareStartPath>
+  </PropertyGroup>
+</Project>

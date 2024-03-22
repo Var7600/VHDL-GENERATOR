@@ -1,0 +1,10 @@
+﻿<Project>
+  <ItemGroup>
+    <File Include="Adder.vhdl" />
+    <File Include="FullAdder.vhdl" />
+    <File Include="FullAdder_tb.vhdl" />
+    <File Include="HalfAdder.vhdl" />
+    <File Include="HalfAdder_tb.vhdl" />
+  </ItemGroup>
+  <PropertyGroup />
+</Project>

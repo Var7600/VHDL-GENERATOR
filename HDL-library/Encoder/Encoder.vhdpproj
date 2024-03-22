@@ -1,0 +1,13 @@
+﻿<Project>
+  <ItemGroup>
+    <File Include="Encoder4x2.vhdl" />
+    <File Include="Encoder8x3.vhdl" />
+    <File Include="Encoder8x3_tb.vhdl" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Encoder4x2_tb.vhdl" />
+  </ItemGroup>
+  <PropertyGroup>
+    <HardwareStartPath>Encoder8x3.vhdl</HardwareStartPath>
+  </PropertyGroup>
+</Project>
