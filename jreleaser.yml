@@ -53,32 +53,32 @@ release:
           title: 'regex:^docs: update CONTRIBUTORS.md.*'
           order: -2
       categories:
-         - title: '🌐 Translation'
-           key: 'i18n'
-           order: 70
-           labels:
-              - 'i18n'
-         - title: '⚙️  Dependencies'
-           key: 'dependencies'
-           order: 80
-           labels:
-              - 'dependencies'
-         - title: 'allcontributors'
-           order: 59
-           labels:
-             - 'allcontributors1'
-             - 'allcontributors2'
+        - title: '🌐 Translation'
+          key: 'i18n'
+          order: 70
+          labels:
+            - 'i18n'
+        - title: '⚙️  Dependencies'
+          key: 'dependencies'
+          order: 80
+          labels:
+            - 'dependencies'
+        - title: 'allcontributors'
+          order: 59
+          labels:
+            - 'allcontributors1'
+            - 'allcontributors2'
       hide:
-         categories:
-           - 'merge'
-           - 'allcontributors'
+        categories:
+          - 'merge'
+          - 'allcontributors'
          contributors:
            - 'GitHub'
            - 'allcontributors'
            - 'dependabot'
       replacers:
-         - search: 'i18n: '
-         - search: 'deps: ' 
+        - search: 'i18n: '
+        - search: 'deps: ' 
 
 distributions:
   VHDL_GENERATOR:
