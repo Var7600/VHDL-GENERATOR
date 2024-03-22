@@ -72,13 +72,13 @@ release:
         categories:
           - 'merge'
           - 'allcontributors'
-         contributors:
+        contributors:
            - 'GitHub'
            - 'allcontributors'
            - 'dependabot'
-      replacers:
-        - search: 'i18n: '
-        - search: 'deps: ' 
+       replacers:
+         - search: 'i18n: '
+         - search: 'deps: ' 
 
 distributions:
   VHDL_GENERATOR:
