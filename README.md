@@ -3,7 +3,7 @@
                                         ![VHDL GENERATOR LOGO](assets/logo.png)
 
 # Badges
-
+[![Checkstyle](https://github.com/Var7600/VHDL-GENERATOR/actions/workflows/checkstyle.yml/badge.svg)](https://github.com/Var7600/VHDL-GENERATOR/actions/workflows/checkstyle.yml)  [![Test](https://github.com/Var7600/VHDL-GENERATOR/actions/workflows/test.yml/badge.svg)](https://github.com/Var7600/VHDL-GENERATOR/actions/workflows/test.yml)  [![Release](https://github.com/Var7600/VHDL-GENERATOR/actions/workflows/release.yml/badge.svg)](https://github.com/Var7600/VHDL-GENERATOR/actions/workflows/release.yml)  
 ---
 
 # Overview
