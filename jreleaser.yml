@@ -36,49 +36,49 @@ release:
       preset: conventional-commits
       contributors:
         format: '- {{contributorName}}{{#contributorUsernameAsLink}} ({{.}}){{/contributorUsernameAsLink}}'
-        contentTemplate: 'changelog.tpl'
-        extraProperties:
-          categorizeScopes: true
-        labelers:
-          - label: 'i18n'
-            title: 'regex:^(?:i18n(?:\(.*\))?!?):\s.*'
-            order: 120
-          - label: 'dependencies'
-            title: 'regex:^(?:deps(?:\(.*\))?!?):\s.*'
-            order: 130
-          - label: 'allcontributors1'
-            title: 'regex:^docs: update .all-contributorsrc.*'
-            order: -1
-          - label: 'allcontributors2'
-            title: 'regex:^docs: update CONTRIBUTORS.md.*'
-            order: -2
-        categories:
-          - title: '🌐 Translation'
-            key: 'i18n'
-            order: 70
-            labels:
+      contentTemplate: 'changelog.tpl'
+      extraProperties:
+        categorizeScopes: true
+      labelers:
+        - label: 'i18n'
+          title: 'regex:^(?:i18n(?:\(.*\))?!?):\s.*'
+          order: 120
+        - label: 'dependencies'
+          title: 'regex:^(?:deps(?:\(.*\))?!?):\s.*'
+          order: 130
+        - label: 'allcontributors1'
+          title: 'regex:^docs: update .all-contributorsrc.*'
+          order: -1
+        - label: 'allcontributors2'
+          title: 'regex:^docs: update CONTRIBUTORS.md.*'
+          order: -2
+      categories:
+         - title: '🌐 Translation'
+           key: 'i18n'
+           order: 70
+           labels:
               - 'i18n'
-          - title: '⚙️  Dependencies'
-            key: 'dependencies'
-            order: 80
-            labels:
+         - title: '⚙️  Dependencies'
+           key: 'dependencies'
+           order: 80
+           labels:
               - 'dependencies'
-          - title: 'allcontributors'
-            order: 59
-            labels:
-              - 'allcontributors1'
-              - 'allcontributors2'
-        hide:
-          categories:
-            - 'merge'
-            - 'allcontributors'
-          contributors:
-            - 'GitHub'
-            - 'allcontributors'
-            - 'dependabot'
-        replacers:
-          - search: 'i18n: '
-          - search: 'deps: ' 
+         - title: 'allcontributors'
+           order: 59
+           labels:
+             - 'allcontributors1'
+             - 'allcontributors2'
+      hide:
+         categories:
+           - 'merge'
+           - 'allcontributors'
+         contributors:
+           - 'GitHub'
+           - 'allcontributors'
+           - 'dependabot'
+      replacers:
+         - search: 'i18n: '
+         - search: 'deps: ' 
 
 distributions:
   VHDL_GENERATOR:
