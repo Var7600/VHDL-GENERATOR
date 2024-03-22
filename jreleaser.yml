@@ -78,7 +78,7 @@ release:
             - 'dependabot'
         replacers:
           - search: 'i18n: '
-          - search: 'deps: 
+          - search: 'deps: ' 
 
 distributions:
   VHDL_GENERATOR:
