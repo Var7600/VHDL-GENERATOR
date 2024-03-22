@@ -22,14 +22,21 @@
 - **VHDL Code generator**
 
 
-https://github.com/Var7600/VHDL-GENERATOR/assets/77991946/c287d853-e0ed-462e-9077-085351e61097
+
+
+https://github.com/Var7600/VHDL-GENERATOR/assets/77991946/25838c0e-d476-46ce-b349-681119a521a6
+
+
 
 
 - **VHDL Component Generator**
   
 
 
-https://github.com/Var7600/VHDL-GENERATOR/assets/77991946/249969ff-c6e0-447e-b78d-c0eb2d5daf6a
+
+
+https://github.com/Var7600/VHDL-GENERATOR/assets/77991946/5b428296-f99d-48ad-a16c-bd5ebcdf8064
+
 
 
 # Requirements
