@@ -12,6 +12,9 @@
 
 **VHDL_GENERATOR** is a java swing application that can generate **VHDL Code** it can generate the VHDL file given information of the VHDL interface(entity,port,signals, ...)  and  a **Testbench template file** also it can generate **ready to use VHDL Component** like(Mux,Demux,Adder,...). 
 
+
+![Screenshot](https://github.com/Var7600/VHDL-GENERATOR/assets/77991946/a4300731-9d73-4bc0-9aba-5449584eb1b2)
+
 # Demos
 
 ---
