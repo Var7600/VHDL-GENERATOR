@@ -1,0 +1,21 @@
+name: Checkstyle
+'on':
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+jobs:
+  checkstyle:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Set up JDK  18
+        uses: actions/setup-java@v4
+        with:
+          java-version: '18'
+          distribution: temurin
+      - name: Run Checkstyle
+        run: mvn validate
