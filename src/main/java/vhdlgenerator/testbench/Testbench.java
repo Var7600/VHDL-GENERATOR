@@ -18,6 +18,7 @@ package vhdlgenerator.testbench;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Objects;
 
 import vhdlgenerator.generator.FileGenerator;
 import vhdlgenerator.generator.WindowCode;
@@ -56,13 +57,7 @@ public class Testbench
 	 */
 	public Testbench(FileGenerator unit)
 	{
-		if (unit == null)
-		{
-			throw new NullPointerException();
-		} else
-		{
-			this.unit = unit;
-		}
+		this.unit = Objects.requireNonNull(unit);
 	}
 
 	/**
@@ -152,7 +147,7 @@ public class Testbench
 	 */
 	private void writeLibrary()
 	{
-		String data = FileGenerator.vhdl_keywords.get("IEEE") + FileGenerator.NEWLINE; // importing library
+		String data = FileGenerator.VHDL_KEYWORDS.get("IEEE") + FileGenerator.NEWLINE; // importing library
 		FileGenerator.writeData(this.path_testbench, data);
 	}
 
@@ -165,9 +160,9 @@ public class Testbench
 		 * entity name_entity is
 		 */
 		StringBuffer data = new StringBuffer();
-		data.append(FileGenerator.vhdl_keywords.get("ENTITY")).append(this.entity_testbench)
-				.append(FileGenerator.vhdl_keywords.get("IS")).append(FileGenerator.NEWLINE)
-				.append(FileGenerator.vhdl_keywords.get("END_ENTITY")); // entity
+		data.append(FileGenerator.VHDL_KEYWORDS.get("ENTITY")).append(this.entity_testbench)
+				.append(FileGenerator.VHDL_KEYWORDS.get("IS")).append(FileGenerator.NEWLINE)
+				.append(FileGenerator.VHDL_KEYWORDS.get("END_ENTITY")); // entity
 
 		// write to the file
 		FileGenerator.writeData(this.path_testbench, data.toString());
@@ -196,7 +191,7 @@ public class Testbench
 		// get input signals data type
 		String[] data_type_split = this.unit.getPort().getInDataType().split(FileGenerator.SEMICOLON);
 
-		buffer.append(FileGenerator.vhdl_keywords.get("PORT")).append(FileGenerator.NEWLINE)
+		buffer.append(FileGenerator.VHDL_KEYWORDS.get("PORT")).append(FileGenerator.NEWLINE)
 				.append(FileGenerator.TAB + FileGenerator.TAB + FileGenerator.TAB);
 
 		// i to iterate in_data_type
@@ -206,14 +201,14 @@ public class Testbench
 
 			buffer.append(input_signal); // input signal name
 			// add directional signal
-			buffer.append(FileGenerator.vhdl_keywords.get("IN"));
+			buffer.append(FileGenerator.VHDL_KEYWORDS.get("IN"));
 
 			// input data type signal
 			buffer.append(data_type_split[i]);
 
 			// add length to array std_logic_vector value generic constant
 			if (this.unit.getPort().getGenericMap() != null
-					&& data_type_split[i].equals(FileGenerator.vhdl_keywords.get("STD_LOGIC_VECTOR")))
+					&& data_type_split[i].equals(FileGenerator.VHDL_KEYWORDS.get("STD_LOGIC_VECTOR")))
 			{
 				String[] name_value_generic = this.unit.getPort().getGenericMap().split(FileGenerator.SEMICOLON);
 				// add only the name not the value
@@ -249,14 +244,14 @@ public class Testbench
 
 			buffer.append(output);
 			// add directional signal
-			buffer.append(FileGenerator.vhdl_keywords.get("OUT"));
+			buffer.append(FileGenerator.VHDL_KEYWORDS.get("OUT"));
 
 			// Output data type signal
 			buffer.append(data_type_split[i]);
 
 			// add length to array std_logic_vector value generic constant
 			if (this.unit.getPort().getGenericMap() != null
-					&& data_type_split[i].equals(FileGenerator.vhdl_keywords.get("STD_LOGIC_VECTOR")))
+					&& data_type_split[i].equals(FileGenerator.VHDL_KEYWORDS.get("STD_LOGIC_VECTOR")))
 			{
 				String[] name_value_generic = this.unit.getPort().getGenericMap().split(FileGenerator.SEMICOLON);
 				// add only the name not the value
@@ -291,16 +286,16 @@ public class Testbench
 		// data to write to the file
 		StringBuffer data = new StringBuffer();
 
-		data.append(FileGenerator.vhdl_keywords.get("ARCHITECTURE"));
+		data.append(FileGenerator.VHDL_KEYWORDS.get("ARCHITECTURE"));
 		data.append(this.entity_testbench);
 
 		// writing component
-		data.append(FileGenerator.vhdl_keywords.get("IS"));
+		data.append(FileGenerator.VHDL_KEYWORDS.get("IS"));
 		data.append(FileGenerator.NEWLINE);
 		data.append(FileGenerator.TAB);
-		data.append(FileGenerator.vhdl_keywords.get("COMPONENT"));
+		data.append(FileGenerator.VHDL_KEYWORDS.get("COMPONENT"));
 		data.append(this.unit.getPort().getNameEntity());
-		data.append(FileGenerator.vhdl_keywords.get("IS")).append(FileGenerator.NEWLINE);
+		data.append(FileGenerator.VHDL_KEYWORDS.get("IS")).append(FileGenerator.NEWLINE);
 
 		// add generic constant if given
 		if (this.unit.getPort().getGenericMap() != null)
@@ -308,10 +303,10 @@ public class Testbench
 			// return the generic name and the generic value
 			String[] name_value = this.unit.getPort().getGenericMap().split(FileGenerator.SEMICOLON);
 			// GENERIC MAP
-			data.append(FileGenerator.TAB).append(FileGenerator.vhdl_keywords.get("GENERIC")).append(name_value[0])
-					.append(FileGenerator.COLON).append(FileGenerator.vhdl_keywords.get("INTEGER"))
-					.append(FileGenerator.vhdl_keywords.get("VARIABLE_ASSIGNMENT")).append(name_value[1])
-					.append(FileGenerator.vhdl_keywords.get("END_GENERIC"));
+			data.append(FileGenerator.TAB).append(FileGenerator.VHDL_KEYWORDS.get("GENERIC")).append(name_value[0])
+					.append(FileGenerator.COLON).append(FileGenerator.VHDL_KEYWORDS.get("INTEGER"))
+					.append(FileGenerator.VHDL_KEYWORDS.get("VARIABLE_ASSIGNMENT")).append(name_value[1])
+					.append(FileGenerator.VHDL_KEYWORDS.get("END_GENERIC"));
 
 			data.append(FileGenerator.NEWLINE);
 
@@ -319,7 +314,7 @@ public class Testbench
 		// write the signal
 		data.append(writeSignal());
 
-		data.append(FileGenerator.vhdl_keywords.get("END_COMPONENT"));
+		data.append(FileGenerator.VHDL_KEYWORDS.get("END_COMPONENT"));
 		data.append(FileGenerator.NEWLINE);
 
 		// write to the file
@@ -338,12 +333,12 @@ public class Testbench
 		if (this.unit.getPort().getGenericMap() != null)
 		{
 			data.append(FileGenerator.TAB);
-			data.append(FileGenerator.vhdl_keywords.get("CONSTANT"));
+			data.append(FileGenerator.VHDL_KEYWORDS.get("CONSTANT"));
 			// return the generic name and the generic value
 			String[] name_value = this.unit.getPort().getGenericMap().split(FileGenerator.SEMICOLON);
 			// GENERIC MAP
-			data.append(name_value[0]).append(FileGenerator.COLON).append(FileGenerator.vhdl_keywords.get("INTEGER"))
-					.append(FileGenerator.vhdl_keywords.get("VARIABLE_ASSIGNMENT")).append(name_value[1])
+			data.append(name_value[0]).append(FileGenerator.COLON).append(FileGenerator.VHDL_KEYWORDS.get("INTEGER"))
+					.append(FileGenerator.VHDL_KEYWORDS.get("VARIABLE_ASSIGNMENT")).append(name_value[1])
 					.append(FileGenerator.SEMICOLON).append(FileGenerator.NEWLINE);
 		}
 		data.append(FileGenerator.TAB);
@@ -359,7 +354,7 @@ public class Testbench
 		int i = 0;
 		for (String input_signal : signal_split)
 		{
-			data.append(FileGenerator.vhdl_keywords.get("SIGNAL"));
+			data.append(FileGenerator.VHDL_KEYWORDS.get("SIGNAL"));
 
 			data.append(input_signal); // input signal name
 
@@ -369,7 +364,7 @@ public class Testbench
 
 			// add length to array std_logic_vector value generic constant
 			if (this.unit.getPort().getGenericMap() != null
-					&& data_type_split[i].equals(FileGenerator.vhdl_keywords.get("STD_LOGIC_VECTOR")))
+					&& data_type_split[i].equals(FileGenerator.VHDL_KEYWORDS.get("STD_LOGIC_VECTOR")))
 			{
 				String[] name_value_generic = this.unit.getPort().getGenericMap().split(FileGenerator.SEMICOLON);
 				// add only the name not the value
@@ -398,7 +393,7 @@ public class Testbench
 
 		for (String output : signal_split)
 		{
-			data.append(FileGenerator.vhdl_keywords.get("SIGNAL"));
+			data.append(FileGenerator.VHDL_KEYWORDS.get("SIGNAL"));
 
 			data.append(output);
 
@@ -409,7 +404,7 @@ public class Testbench
 
 			// add length to array std_logic_vector value generic constant
 			if (this.unit.getPort().getGenericMap() != null
-					&& data_type_split[i].equals(FileGenerator.vhdl_keywords.get("STD_LOGIC_VECTOR")))
+					&& data_type_split[i].equals(FileGenerator.VHDL_KEYWORDS.get("STD_LOGIC_VECTOR")))
 			{
 				String[] name_value_generic = this.unit.getPort().getGenericMap().split(FileGenerator.SEMICOLON);
 				// add only the name not the value
@@ -437,7 +432,7 @@ public class Testbench
 	private void mapDUT()
 	{
 		StringBuffer data = new StringBuffer();
-		data.append(FileGenerator.vhdl_keywords.get("BEGIN"));
+		data.append(FileGenerator.VHDL_KEYWORDS.get("BEGIN"));
 		data.append(FileGenerator.TAB);
 		data.append(DUT);
 		data.append(this.unit.getPort().getNameEntity());
@@ -446,12 +441,12 @@ public class Testbench
 		if (this.unit.getPort().getGenericMap() != null)
 		{
 			String[] generic = this.unit.getPort().getGenericMap().split(FileGenerator.SEMICOLON);
-			data.append(FileGenerator.vhdl_keywords.get("GENERIC_MAP")).append(generic[0]).append("=>")
+			data.append(FileGenerator.VHDL_KEYWORDS.get("GENERIC_MAP")).append(generic[0]).append("=>")
 					.append(generic[0]).append(")");
 			data.append(FileGenerator.NEWLINE);
 		}
 
-		data.append(FileGenerator.vhdl_keywords.get("PORT_MAP"));
+		data.append(FileGenerator.VHDL_KEYWORDS.get("PORT_MAP"));
 		data.append(FileGenerator.TAB);
 		data.append(FileGenerator.TAB);
 
@@ -481,7 +476,7 @@ public class Testbench
 		}
 
 		data.append(FileGenerator.NEWLINE);
-		data.append(FileGenerator.vhdl_keywords.get("END_PORT"));
+		data.append(FileGenerator.VHDL_KEYWORDS.get("END_PORT"));
 		data.append(FileGenerator.NEWLINE);
 
 		// write to the file
@@ -493,8 +488,8 @@ public class Testbench
 	 */
 	private void writeProcess()
 	{
-		String data = FileGenerator.vhdl_keywords.get("PROCESS") + "-- Write your auto test or your simulation here\n\t"
-				+ FileGenerator.vhdl_keywords.get("END_PROCESS") + FileGenerator.vhdl_keywords.get("END_ARCHITECTURE");
+		String data = FileGenerator.VHDL_KEYWORDS.get("PROCESS") + "-- Write your auto test or your simulation here\n\t"
+				+ FileGenerator.VHDL_KEYWORDS.get("END_PROCESS") + FileGenerator.VHDL_KEYWORDS.get("END_ARCHITECTURE");
 
 		// write to the file
 		FileGenerator.writeData(this.path_testbench, data);

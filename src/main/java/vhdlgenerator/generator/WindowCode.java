@@ -38,6 +38,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.InvalidPathException;
 import java.nio.file.Paths;
+import java.util.Objects;
 //UTIL
 import java.util.regex.Pattern;
 
@@ -172,7 +173,10 @@ public class WindowCode extends JFrame implements ActionListener
 	 */
 	private Port info_interface;
 
+	//
 	// SIZE OF FRAME ELEMENT
+	//
+
 	/**
 	 * x position to align component horizontally
 	 */
@@ -245,7 +249,10 @@ public class WindowCode extends JFrame implements ActionListener
 	private final JLabel label_ouput_signal = new JLabel(
 			"<html><b>OUTPUT SIGNALS (example : output1;output2;output3;...)</b><span style=color:red> *</span>");
 
+	//
 	// ICON
+	//
+
 	/**
 	 * arrow icon
 	 */
@@ -1105,31 +1112,27 @@ public class WindowCode extends JFrame implements ActionListener
 	 */
 	public static void showFile(String file_path)
 	{
-		if (file_path == null)
+		Objects.requireNonNull(file_path, FileGenerator.NULL_VALUE);
+
+		// check if the Desktop class is supported on the current platform
+		if (Desktop.isDesktopSupported())
 		{
-			throw new NullPointerException(FileGenerator.NULL_VALUE);
-		} else
-		{
-			// check if the Desktop class is supported on the current platform
-			if (Desktop.isDesktopSupported())
+			// return a instance of the current desktop context
+			Desktop desk = Desktop.getDesktop();
+
+			// check if opening a file is supported
+			if (desk.isSupported(Desktop.Action.OPEN))
 			{
-				// return a instance of the current desktop context
-				Desktop desk = Desktop.getDesktop();
-
-				// check if opening a file is supported
-				if (desk.isSupported(Desktop.Action.OPEN))
+				try
 				{
-					try
-					{
-						// trying to open the file
-						desk.open(new File(file_path));
+					// trying to open the file
+					desk.open(new File(file_path));
 
-					} catch (IOException e)
-					{
+				} catch (IOException e)
+				{
 
-						errorFrame(NO_OPEN_FILE);
+					errorFrame(NO_OPEN_FILE);
 
-					}
 				}
 			}
 		}
@@ -1229,7 +1232,6 @@ public class WindowCode extends JFrame implements ActionListener
 			{
 				// all fields are NULL/EMPTY
 				errorFrame(NULL_VALUES);
-
 			} else
 			{
 				//
@@ -1238,7 +1240,6 @@ public class WindowCode extends JFrame implements ActionListener
 				{
 					// only file_path is empty
 					errorFrame(INVALID_FILE_PATH);
-
 				}
 
 				try
@@ -1248,13 +1249,10 @@ public class WindowCode extends JFrame implements ActionListener
 					{
 						// Generate file
 						generate();
-
 					}
 				} catch (NullPointerException e)
 				{
-
 					errorFrame(INVALID_FILE_PATH);
-
 				}
 
 			}

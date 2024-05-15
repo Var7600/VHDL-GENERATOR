@@ -14,6 +14,8 @@
 package vhdlgenerator.component.adder;
 
 import java.io.IOException;
+import java.util.Objects;
+
 import javax.swing.JOptionPane;
 
 import vhdlgenerator.component.DisplayLibrary;
@@ -212,10 +214,7 @@ public class Adder
 	 */
 	public void writeAdder(String adder_type)
 	{
-		if (adder_type == null)
-		{
-			throw new NullPointerException("passing null value");
-		}
+		Objects.requireNonNull(adder_type, "passing null value");
 
 		try
 		{
