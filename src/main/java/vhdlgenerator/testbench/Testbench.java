@@ -159,7 +159,7 @@ public class Testbench
 		/*
 		 * entity name_entity is
 		 */
-		StringBuffer data = new StringBuffer();
+		StringBuilder data = new StringBuilder();
 		data.append(FileGenerator.VHDL_KEYWORDS.get("ENTITY")).append(this.entity_testbench)
 				.append(FileGenerator.VHDL_KEYWORDS.get("IS")).append(FileGenerator.NEWLINE)
 				.append(FileGenerator.VHDL_KEYWORDS.get("END_ENTITY")); // entity
@@ -183,7 +183,7 @@ public class Testbench
 		 * **** INTPUT SIGNALS ***
 		 */
 		// buffer to write to the file
-		StringBuffer buffer = new StringBuffer();
+		StringBuilder buffer = new StringBuilder();
 		String downTo = "-1 downto 0)";
 
 		// get the input signals
@@ -260,11 +260,12 @@ public class Testbench
 
 			// last out signal don't add comma
 			if (!output.equals(signal_split[signal_split.length - 1]))
-			{
-				buffer.append(FileGenerator.TAB);
-				buffer.append(FileGenerator.TAB);
+			{				
 				buffer.append(FileGenerator.SEMICOLON);
 				buffer.append(FileGenerator.NEWLINE);
+				buffer.append(FileGenerator.TAB);
+				buffer.append(FileGenerator.TAB);
+				buffer.append(FileGenerator.TAB);
 			}
 
 			i++;
@@ -284,7 +285,7 @@ public class Testbench
 	private void writeComponent()
 	{
 		// data to write to the file
-		StringBuffer data = new StringBuffer();
+		StringBuilder data = new StringBuilder();
 
 		data.append(FileGenerator.VHDL_KEYWORDS.get("ARCHITECTURE"));
 		data.append(this.entity_testbench);
@@ -326,7 +327,7 @@ public class Testbench
 	 */
 	private void declareSignal()
 	{
-		StringBuffer data = new StringBuffer();
+		StringBuilder data = new StringBuilder();
 		String downTo = "-1 downto 0)";
 
 		// writing generic constant if exists
@@ -431,7 +432,7 @@ public class Testbench
 	 */
 	private void mapDUT()
 	{
-		StringBuffer data = new StringBuffer();
+		StringBuilder data = new StringBuilder();
 		data.append(FileGenerator.VHDL_KEYWORDS.get("BEGIN"));
 		data.append(FileGenerator.TAB);
 		data.append(DUT);

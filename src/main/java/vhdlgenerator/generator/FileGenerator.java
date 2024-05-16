@@ -278,7 +278,7 @@ public class FileGenerator
 		/*
 		 * entity name_entity is
 		 */
-		StringBuffer data = new StringBuffer();
+		StringBuilder data = new StringBuilder();
 
 		data.append(VHDL_KEYWORDS.get("IEEE")).append(NEWLINE) // importing library
 				.append(VHDL_KEYWORDS.get("ENTITY")).append(this.info_interface.getNameEntity())
@@ -323,7 +323,7 @@ public class FileGenerator
 		 * **** INTPUT SIGNALS ***
 		 */
 		// buffer to write to the file
-		StringBuffer buffer = new StringBuffer();
+		StringBuilder buffer = new StringBuilder();
 		String downTo = "-1 downto 0)";
 
 		// get the input signals
@@ -400,10 +400,12 @@ public class FileGenerator
 			// last out signal don't add comma
 			if (!output.equals(signal_split[signal_split.length - 1]))
 			{
-				buffer.append(TAB);
-				buffer.append(TAB);
 				buffer.append(SEMICOLON);
 				buffer.append(NEWLINE);
+				buffer.append(TAB);
+				buffer.append(TAB);
+				buffer.append(TAB);
+				
 			}
 
 			i++;
@@ -430,7 +432,7 @@ public class FileGenerator
 		 * architecture name of entity is begin implementation code end name ;
 		 */
 
-		StringBuffer data = new StringBuffer();
+		StringBuilder data = new StringBuilder();
 		data.append(VHDL_KEYWORDS.get("ARCHITECTURE"));
 		data.append(this.info_interface.getNameEntity());
 		data.append(VHDL_KEYWORDS.get("ARCHITECTURE_IS"));
