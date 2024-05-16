@@ -902,9 +902,9 @@ public class WindowCode extends JFrame implements ActionListener
 
 		if (!(isNull(data_type_out.getText())))
 		{
-			String data_type = SIGNAL_DATA_FORMAT;
+			String data_type = data_type_out.getText();
 
-			if (checkFormatInput(data_type, data_type))
+			if (checkFormatInput(SIGNAL_DATA_FORMAT, data_type))
 			{
 				info_interface.setOutDataType(data_type);
 				return true;
