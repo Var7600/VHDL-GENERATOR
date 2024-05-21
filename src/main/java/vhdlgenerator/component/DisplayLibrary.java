@@ -194,10 +194,12 @@ public class DisplayLibrary extends JFrame implements ActionListener
 			app.setLocationRelativeTo(null);
 			app.setVisible(true);
 		}
+		
+		String action = event.getActionCommand() ;
 		//
 		// Multiplexer
 		//
-		if (event.getActionCommand().equals("Multiplexer"))
+		if (action.equals("Multiplexer"))
 		{
 			// Mux size choice
 			String mux_size = (String) JOptionPane.showInputDialog(this,
@@ -214,7 +216,7 @@ public class DisplayLibrary extends JFrame implements ActionListener
 		//
 		// Demultiplexer
 		//
-		if (event.getActionCommand().equals("Demultiplexer"))
+		if (action.equals("Demultiplexer"))
 		{
 			// Demux size choice
 			String demux_size = (String) JOptionPane.showInputDialog(this,
@@ -231,7 +233,7 @@ public class DisplayLibrary extends JFrame implements ActionListener
 		//
 		// Decoder
 		//
-		if (event.getActionCommand().equals("Decoder"))
+		if (action.equals("Decoder"))
 		{
 			// Decoder size
 			String decoder_size = (String) JOptionPane.showInputDialog(this, "choose input size of the Decoder:",
@@ -249,13 +251,13 @@ public class DisplayLibrary extends JFrame implements ActionListener
 		//
 		// segment 7 Display
 		//
-		if (event.getActionCommand().equals("7-Segment-Display"))
+		if (action.equals("7-Segment-Display"))
 		{
 			new Segment7().writeSegment7();
 		}
 		// D flip flop
 		//
-		if (event.getActionCommand().equals("D-Flip-Flop"))
+		if (action.equals("D-Flip-Flop"))
 		{
 			String dff = (String) JOptionPane.showInputDialog(this, "choose your D-Flip-Flop type:", "D Flip-Flop",
 					JOptionPane.INFORMATION_MESSAGE, null, DFlipFlop.possibleValues, DFlipFlop.possibleValues[0]);
@@ -285,7 +287,7 @@ public class DisplayLibrary extends JFrame implements ActionListener
 		//
 		// Encoder
 		//
-		if (event.getActionCommand().equals("Encoder"))
+		if (action.equals("Encoder"))
 		{
 			String input_size = (String) JOptionPane.showInputDialog(this, "choose your input size:", "Encoder",
 					JOptionPane.INFORMATION_MESSAGE, null, Encoder.possibleValues, Encoder.possibleValues[0]);
@@ -310,7 +312,7 @@ public class DisplayLibrary extends JFrame implements ActionListener
 		//
 		// Priority Encoder
 		//
-		if (event.getActionCommand().equals("Priority Encoder"))
+		if (action.equals("Priority Encoder"))
 		{
 			String input_size = (String) JOptionPane.showInputDialog(this, "choose your input size:", "PriorityEncoder",
 					JOptionPane.INFORMATION_MESSAGE, null, PriorityEncoder.possibleValues,
@@ -338,7 +340,7 @@ public class DisplayLibrary extends JFrame implements ActionListener
 		//
 		// Adder
 		//
-		if (event.getActionCommand().equals("Adder"))
+		if (action.equals("Adder"))
 		{
 			String adder_type = (String) JOptionPane.showInputDialog(this, "choose your Adder type:", "Adder",
 					JOptionPane.INFORMATION_MESSAGE, null, Adder.possibleValues, Adder.possibleValues[0]);
@@ -353,7 +355,7 @@ public class DisplayLibrary extends JFrame implements ActionListener
 		//
 		// Subtractor
 		//
-		if (event.getActionCommand().equals("Subtractor"))
+		if (action.equals("Subtractor"))
 		{
 			String type = (String) JOptionPane.showInputDialog(this, "choose your Subtractor type:", "Subtractor",
 					JOptionPane.INFORMATION_MESSAGE, null, Subtractor.possibleValues, Subtractor.possibleValues[0]);
@@ -366,7 +368,7 @@ public class DisplayLibrary extends JFrame implements ActionListener
 		//
 		// Comparator
 		//
-		if (event.getActionCommand().equals("Comparator"))
+		if (action.equals("Comparator"))
 		{
 			String type = (String) JOptionPane.showInputDialog(this, "choose your Comparator type:", "Comparator",
 					JOptionPane.INFORMATION_MESSAGE, null, Comparator.possibleValues, Comparator.possibleValues[0]);
