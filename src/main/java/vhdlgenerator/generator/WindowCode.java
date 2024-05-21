@@ -996,10 +996,8 @@ public class WindowCode extends JFrame implements ActionListener
 
 					Object selectedValue = pane.getValue();
 
-					if (selectedValue instanceof Integer)
+					if (selectedValue instanceof Integer value)
 					{
-
-						int value = ((Integer) selectedValue);
 
 						if (value == JOptionPane.YES_OPTION || value == JOptionPane.CANCEL_OPTION
 								|| value == JOptionPane.CLOSED_OPTION)
