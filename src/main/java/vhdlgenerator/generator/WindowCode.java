@@ -1195,37 +1195,38 @@ public class WindowCode extends JFrame implements ActionListener
 		//
 		if (event.getSource() == data_type_list_in)
 		{
-			String in = "";
+			StringBuilder in = new StringBuilder();
+			
 			if (!isNull(data_type_in.getText()))
 			{
-				in = data_type_in.getText();
-				in = in + (String) data_type_list_in.getSelectedItem();
-				in = in + FileGenerator.SEMICOLON;
+				in.append(data_type_in.getText());
+				in.append((String) data_type_list_in.getSelectedItem());
+				in.append(FileGenerator.SEMICOLON);
 
 			} else
 			{
-				in = in + (String) data_type_list_in.getSelectedItem();
-				in = in + FileGenerator.SEMICOLON;
+				in.append((String) data_type_list_in.getSelectedItem());
+				in.append(FileGenerator.SEMICOLON);
 			}
 
-			data_type_in.setText(in);
+			data_type_in.setText(in.toString());
 		}
 		if (event.getSource() == data_type_list_out)
 		{
-			String out = "";
+			StringBuilder out = new StringBuilder();
 			if (!isNull(data_type_out.getText()))
 			{
-				out = data_type_out.getText();
-				out = out + (String) data_type_list_out.getSelectedItem();
-				out = out + FileGenerator.SEMICOLON;
+				out.append(data_type_out.getText());
+				out.append((String) data_type_list_out.getSelectedItem());
+				out.append(FileGenerator.SEMICOLON);
 			} else
 			{
 
-				out = out + (String) data_type_list_out.getSelectedItem();
-				out = out + FileGenerator.SEMICOLON;
+				out.append((String) data_type_list_out.getSelectedItem());
+				out.append(FileGenerator.SEMICOLON);
 			}
 
-			data_type_out.setText(out);
+			data_type_out.setText(out.toString());
 		}
 
 		//
