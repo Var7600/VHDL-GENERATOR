@@ -530,7 +530,14 @@ public class WindowCode extends JFrame implements ActionListener
 		data_type_list_out.addActionListener(this);
 
 	}
-
+	/**
+	 * <b>for testing purpose</b>
+	 * @param value the new text value for the field
+	 */
+	public void setGeneric(String value)
+	{
+		this.generic.setText(value);
+	}
 	// GETTERS
 	/**
 	 * return the file_path
@@ -780,7 +787,7 @@ public class WindowCode extends JFrame implements ActionListener
 	public boolean validateGeneric()
 	{
 
-		String pattern = "[^_0-9][A-Za-z]+[0-9]*[;]\\d+";
+		String pattern = "[A-Za-z]+[0-9]*[;]\\d+";
 
 		if (checkFormatInput(pattern, generic.getText()))
 		{

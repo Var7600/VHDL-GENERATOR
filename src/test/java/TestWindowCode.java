@@ -12,6 +12,8 @@ import org.junit.jupiter.api.condition.EnabledOnOs;
 import org.junit.jupiter.api.condition.OS;
 import java.io.IOException;
 
+
+
 public class TestWindowCode
 {
 
@@ -163,5 +165,26 @@ public class TestWindowCode
 				"fail test matching number of input and data type");
 
 	}
-
+	
+	@Test
+	@DisplayName("TEST METHOD INPUT GENERIC FORMAT")
+	public void testValidateGeneric() throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException
+	{
+		window.setGeneric("DataWidth;8");
+		Assertions.assertEquals(true , window.validateGeneric(),"fail test valid constant generic");
+		
+		window.setGeneric("12234");
+		Assertions.assertEquals(false , window.validateGeneric(),"fail test invalid constant generic");
+		
+		window.setGeneric("SIZE");
+		Assertions.assertEquals(false , window.validateGeneric(),"fail test invalid constant generic");
+		
+		window.setGeneric("N;8");
+		Assertions.assertEquals(true, window.validateGeneric(),"fail test valid constant declaration");
+		
+		window.setGeneric("N;8;N;8");
+		Assertions.assertEquals(false, window.validateGeneric(),"fail test invalid multiple constant declaration");
+		
+		
+	}
 }
