@@ -260,7 +260,7 @@ public class Testbench
 
 			// last out signal don't add comma
 			if (!output.equals(signal_split[signal_split.length - 1]))
-			{				
+			{
 				buffer.append(FileGenerator.SEMICOLON);
 				buffer.append(FileGenerator.NEWLINE);
 				buffer.append(FileGenerator.TAB);

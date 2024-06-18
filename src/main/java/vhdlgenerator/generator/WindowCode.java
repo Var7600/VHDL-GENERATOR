@@ -530,14 +530,17 @@ public class WindowCode extends JFrame implements ActionListener
 		data_type_list_out.addActionListener(this);
 
 	}
+
 	/**
 	 * <b>for testing purpose</b>
+	 *
 	 * @param value the new text value for the field
 	 */
 	public void setGeneric(String value)
 	{
 		this.generic.setText(value);
 	}
+
 	// GETTERS
 	/**
 	 * return the file_path
@@ -793,9 +796,6 @@ public class WindowCode extends JFrame implements ActionListener
 		{
 			info_interface.setGenericMap(generic.getText());
 			return true;
-		} else
-		{
-			errorFrame(INVALID_GENERIC_FORMAT);
 		}
 
 		return false;
@@ -957,6 +957,8 @@ public class WindowCode extends JFrame implements ActionListener
 			// check generic constant is a valid pattern
 			if (!(isNull(generic.getText())) && !validateGeneric())
 			{
+
+				errorFrame(INVALID_GENERIC_FORMAT);
 				return;
 			}
 			// check if the number of variable match the number of data type.
@@ -1194,7 +1196,7 @@ public class WindowCode extends JFrame implements ActionListener
 		if (event.getSource() == data_type_list_in)
 		{
 			StringBuilder in = new StringBuilder();
-			
+
 			if (!isNull(data_type_in.getText()))
 			{
 				in.append(data_type_in.getText());

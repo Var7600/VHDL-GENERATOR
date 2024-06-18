@@ -37,8 +37,9 @@ import vhdlgenerator.component.adder.Adder;
 import vhdlgenerator.component.comparator.Comparator;
 import vhdlgenerator.component.decoder.Decoder;
 import vhdlgenerator.component.demultiplexer.Demux;
-import vhdlgenerator.component.dflipflop.DFlipFlop;
 import vhdlgenerator.component.encoder.Encoder;
+import vhdlgenerator.component.flipflop.DFlipFlop;
+import vhdlgenerator.component.flipflop.JKFlipFlop;
 import vhdlgenerator.component.multiplexer.Mux;
 import vhdlgenerator.component.priorityencoder.PriorityEncoder;
 import vhdlgenerator.component.segment7.Segment7;
@@ -97,7 +98,7 @@ public class DisplayLibrary extends JFrame implements ActionListener
 	private static final JButton[] library_button = { new JButton("Multiplexer"), new JButton("Demultiplexer"),
 			new JButton("Encoder"), new JButton("Priority Encoder"), new JButton("Decoder"),
 			new JButton("7-Segment-Display"), new JButton("Adder"), new JButton("Subtractor"),
-			new JButton("Comparator"), new JButton("D-Flip-Flop") };
+			new JButton("Comparator"), new JButton("D-Flip-Flop"), new JButton("JK-Flip-Flop") };
 
 	/**
 	 * Button Font
@@ -194,8 +195,8 @@ public class DisplayLibrary extends JFrame implements ActionListener
 			app.setLocationRelativeTo(null);
 			app.setVisible(true);
 		}
-		
-		String action = event.getActionCommand() ;
+
+		String action = event.getActionCommand();
 		//
 		// Multiplexer
 		//
@@ -255,7 +256,8 @@ public class DisplayLibrary extends JFrame implements ActionListener
 		{
 			new Segment7().writeSegment7();
 		}
-		// D flip flop
+		//
+		// flip flop
 		//
 		if (action.equals("D-Flip-Flop"))
 		{
@@ -283,6 +285,12 @@ public class DisplayLibrary extends JFrame implements ActionListener
 				}
 			}
 
+		}
+		//
+		// JK Flip Flop
+		if (action.equals("JK-Flip-Flop"))
+		{
+			new JKFlipFlop().writeJK();
 		}
 		//
 		// Encoder
@@ -328,8 +336,11 @@ public class DisplayLibrary extends JFrame implements ActionListener
 				case "8":
 					new PriorityEncoder(8).writePriorityEncoder();
 					break;
+				case "16":
+					new PriorityEncoder(16).writePriorityEncoder();
+					break;
 				default:
-					System.err.println("Invalid Option!: " + input_size + "valid option are 4 or 8");
+					System.err.println("Invalid Option!: " + input_size + " valid options are 4 or 8 or 16");
 					break;
 
 				}

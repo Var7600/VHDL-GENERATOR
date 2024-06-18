@@ -2,7 +2,7 @@ project:
   name: VHDL_GENERATOR
   description: App that generate VHDL Code
   longDescription: VHDL-GENERATOR can generate VHDL Code, Testbench template and some VHDL Component(Mux,Encoder,Adder,...) .
-  version: 0.0
+  version: 0.1
   
  
   links:

@@ -12,8 +12,6 @@ import org.junit.jupiter.api.condition.EnabledOnOs;
 import org.junit.jupiter.api.condition.OS;
 import java.io.IOException;
 
-
-
 public class TestWindowCode
 {
 
@@ -22,6 +20,7 @@ public class TestWindowCode
 	@BeforeEach
 	public void setUp()
 	{
+		// Assertions.assertTrue(GraphicsEnvironment.isHeadless());
 
 		window = new WindowCode();
 	}
@@ -59,7 +58,7 @@ public class TestWindowCode
 	// file path On Windows and Linux
 	@Test
 	@EnabledOnOs(OS.WINDOWS)
-	void testPathOnWindows()
+	public void testPathOnWindows()
 	{
 		// Your Windows-specific test logic here
 		// test invalid path contains special character both on Windows
@@ -70,7 +69,7 @@ public class TestWindowCode
 
 	@Test
 	@EnabledOnOs(OS.LINUX)
-	void testPathOnLinux()
+	public void testPathOnLinux()
 	{
 		String path = "?++/";
 		Assertions.assertEquals(true, WindowCode.validateFilePath(path), "valid  special character path in Linux");
@@ -165,26 +164,26 @@ public class TestWindowCode
 				"fail test matching number of input and data type");
 
 	}
-	
+
 	@Test
 	@DisplayName("TEST METHOD INPUT GENERIC FORMAT")
-	public void testValidateGeneric() throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException
+	public void testValidateGeneric()
+			throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException
 	{
 		window.setGeneric("DataWidth;8");
-		Assertions.assertEquals(true , window.validateGeneric(),"fail test valid constant generic");
-		
+		Assertions.assertEquals(true, window.validateGeneric(), "fail test valid constant generic");
+
 		window.setGeneric("12234");
-		Assertions.assertEquals(false , window.validateGeneric(),"fail test invalid constant generic");
-		
+		Assertions.assertEquals(false, window.validateGeneric(), "fail test invalid constant generic");
+
 		window.setGeneric("SIZE");
-		Assertions.assertEquals(false , window.validateGeneric(),"fail test invalid constant generic");
-		
+		Assertions.assertEquals(false, window.validateGeneric(), "fail test invalid constant generic");
+
 		window.setGeneric("N;8");
-		Assertions.assertEquals(true, window.validateGeneric(),"fail test valid constant declaration");
-		
+		Assertions.assertEquals(true, window.validateGeneric(), "fail test valid constant declaration");
+
 		window.setGeneric("N;8;N;8");
-		Assertions.assertEquals(false, window.validateGeneric(),"fail test invalid multiple constant declaration");
-		
-		
+		Assertions.assertEquals(false, window.validateGeneric(), "fail test invalid multiple constant declaration");
+
 	}
 }

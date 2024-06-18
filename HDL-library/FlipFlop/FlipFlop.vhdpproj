@@ -1,11 +1,18 @@
 ﻿<Project>
   <ItemGroup>
-    <File Include="d_flip_flop.vhdl" />
-    <File Include="d_flip_flop_tb.vhdl" />
-    <File Include="dff_reser_tb.vhdl" />
-    <File Include="dff_reset.vhdl" />
+    <File Include="Dflipflop/.gitignore" />
+    <File Include="Dflipflop/d_flip_flop.vhdl" />
+    <File Include="Dflipflop/d_flip_flop_tb.ghw" />
+    <File Include="Dflipflop/d_flip_flop_tb.vhdl" />
+    <File Include="Dflipflop/dff_reset.ghw" />
+    <File Include="Dflipflop/dff_reset.vhdl" />
+    <File Include="Dflipflop/dff_reset_tb.vhdl" />
+    <File Include="Dflipflop/jk_ff_tb.ghw" />
+    <File Include="Dflipflop/vhdl_ls.toml" />
+    <File Include="JKflipflop/jk_ff_tb.vhdl" />
+    <File Include="JKflipflop/jk_flip_flop.vhdl" />
   </ItemGroup>
   <PropertyGroup>
-    <HardwareStartPath>dff_reser_tb.vhdl</HardwareStartPath>
+    <HardwareStartPath>JKflipflop/jk_ff_tb.vhdl</HardwareStartPath>
   </PropertyGroup>
 </Project>
