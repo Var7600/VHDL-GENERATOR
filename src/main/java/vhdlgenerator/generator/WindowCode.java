@@ -38,6 +38,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.InvalidPathException;
 import java.nio.file.Paths;
+import java.util.Objects;
 //UTIL
 import java.util.regex.Pattern;
 
@@ -172,7 +173,10 @@ public class WindowCode extends JFrame implements ActionListener
 	 */
 	private Port info_interface;
 
+	//
 	// SIZE OF FRAME ELEMENT
+	//
+
 	/**
 	 * x position to align component horizontally
 	 */
@@ -245,7 +249,10 @@ public class WindowCode extends JFrame implements ActionListener
 	private final JLabel label_ouput_signal = new JLabel(
 			"<html><b>OUTPUT SIGNALS (example : output1;output2;output3;...)</b><span style=color:red> *</span>");
 
+	//
 	// ICON
+	//
+
 	/**
 	 * arrow icon
 	 */
@@ -524,6 +531,16 @@ public class WindowCode extends JFrame implements ActionListener
 
 	}
 
+	/**
+	 * <b>for testing purpose</b>
+	 *
+	 * @param value the new text value for the field
+	 */
+	public void setGeneric(String value)
+	{
+		this.generic.setText(value);
+	}
+
 	// GETTERS
 	/**
 	 * return the file_path
@@ -773,15 +790,12 @@ public class WindowCode extends JFrame implements ActionListener
 	public boolean validateGeneric()
 	{
 
-		String pattern = "[^_0-9][A-Za-z]+[0-9]*[;]\\d+";
+		String pattern = "[A-Za-z]+[0-9]*[;]\\d+";
 
 		if (checkFormatInput(pattern, generic.getText()))
 		{
 			info_interface.setGenericMap(generic.getText());
 			return true;
-		} else
-		{
-			errorFrame(INVALID_GENERIC_FORMAT);
 		}
 
 		return false;
@@ -895,9 +909,9 @@ public class WindowCode extends JFrame implements ActionListener
 
 		if (!(isNull(data_type_out.getText())))
 		{
-			String data_type = SIGNAL_DATA_FORMAT;
+			String data_type = data_type_out.getText();
 
-			if (checkFormatInput(data_type, data_type))
+			if (checkFormatInput(SIGNAL_DATA_FORMAT, data_type))
 			{
 				info_interface.setOutDataType(data_type);
 				return true;
@@ -943,6 +957,8 @@ public class WindowCode extends JFrame implements ActionListener
 			// check generic constant is a valid pattern
 			if (!(isNull(generic.getText())) && !validateGeneric())
 			{
+
+				errorFrame(INVALID_GENERIC_FORMAT);
 				return;
 			}
 			// check if the number of variable match the number of data type.
@@ -982,10 +998,8 @@ public class WindowCode extends JFrame implements ActionListener
 
 					Object selectedValue = pane.getValue();
 
-					if (selectedValue instanceof Integer)
+					if (selectedValue instanceof Integer value)
 					{
-
-						int value = ((Integer) selectedValue);
 
 						if (value == JOptionPane.YES_OPTION || value == JOptionPane.CANCEL_OPTION
 								|| value == JOptionPane.CLOSED_OPTION)
@@ -1105,31 +1119,27 @@ public class WindowCode extends JFrame implements ActionListener
 	 */
 	public static void showFile(String file_path)
 	{
-		if (file_path == null)
+		Objects.requireNonNull(file_path, FileGenerator.NULL_VALUE);
+
+		// check if the Desktop class is supported on the current platform
+		if (Desktop.isDesktopSupported())
 		{
-			throw new NullPointerException(FileGenerator.NULL_VALUE);
-		} else
-		{
-			// check if the Desktop class is supported on the current platform
-			if (Desktop.isDesktopSupported())
+			// return a instance of the current desktop context
+			Desktop desk = Desktop.getDesktop();
+
+			// check if opening a file is supported
+			if (desk.isSupported(Desktop.Action.OPEN))
 			{
-				// return a instance of the current desktop context
-				Desktop desk = Desktop.getDesktop();
-
-				// check if opening a file is supported
-				if (desk.isSupported(Desktop.Action.OPEN))
+				try
 				{
-					try
-					{
-						// trying to open the file
-						desk.open(new File(file_path));
+					// trying to open the file
+					desk.open(new File(file_path));
 
-					} catch (IOException e)
-					{
+				} catch (IOException e)
+				{
 
-						errorFrame(NO_OPEN_FILE);
+					errorFrame(NO_OPEN_FILE);
 
-					}
 				}
 			}
 		}
@@ -1185,37 +1195,38 @@ public class WindowCode extends JFrame implements ActionListener
 		//
 		if (event.getSource() == data_type_list_in)
 		{
-			String in = "";
+			StringBuilder in = new StringBuilder();
+
 			if (!isNull(data_type_in.getText()))
 			{
-				in = data_type_in.getText();
-				in = in + (String) data_type_list_in.getSelectedItem();
-				in = in + FileGenerator.SEMICOLON;
+				in.append(data_type_in.getText());
+				in.append((String) data_type_list_in.getSelectedItem());
+				in.append(FileGenerator.SEMICOLON);
 
 			} else
 			{
-				in = in + (String) data_type_list_in.getSelectedItem();
-				in = in + FileGenerator.SEMICOLON;
+				in.append((String) data_type_list_in.getSelectedItem());
+				in.append(FileGenerator.SEMICOLON);
 			}
 
-			data_type_in.setText(in);
+			data_type_in.setText(in.toString());
 		}
 		if (event.getSource() == data_type_list_out)
 		{
-			String out = "";
+			StringBuilder out = new StringBuilder();
 			if (!isNull(data_type_out.getText()))
 			{
-				out = data_type_out.getText();
-				out = out + (String) data_type_list_out.getSelectedItem();
-				out = out + FileGenerator.SEMICOLON;
+				out.append(data_type_out.getText());
+				out.append((String) data_type_list_out.getSelectedItem());
+				out.append(FileGenerator.SEMICOLON);
 			} else
 			{
 
-				out = out + (String) data_type_list_out.getSelectedItem();
-				out = out + FileGenerator.SEMICOLON;
+				out.append((String) data_type_list_out.getSelectedItem());
+				out.append(FileGenerator.SEMICOLON);
 			}
 
-			data_type_out.setText(out);
+			data_type_out.setText(out.toString());
 		}
 
 		//
@@ -1229,7 +1240,6 @@ public class WindowCode extends JFrame implements ActionListener
 			{
 				// all fields are NULL/EMPTY
 				errorFrame(NULL_VALUES);
-
 			} else
 			{
 				//
@@ -1238,7 +1248,6 @@ public class WindowCode extends JFrame implements ActionListener
 				{
 					// only file_path is empty
 					errorFrame(INVALID_FILE_PATH);
-
 				}
 
 				try
@@ -1248,13 +1257,10 @@ public class WindowCode extends JFrame implements ActionListener
 					{
 						// Generate file
 						generate();
-
 					}
 				} catch (NullPointerException e)
 				{
-
 					errorFrame(INVALID_FILE_PATH);
-
 				}
 
 			}

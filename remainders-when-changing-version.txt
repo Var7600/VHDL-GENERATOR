@@ -4,3 +4,4 @@ DO IT IF YOU CAN!!!!:)
 -- change version in file: pom.xml
 -- change version in file: release.yml JRELEASER_PROJECT_VERSION
 -- change version in file: jreleaser.yml version
+-- change version in java file(s)

@@ -13,7 +13,7 @@
  * use
  */
 
-package vhdlgenerator.component.dflipflop;
+package vhdlgenerator.component.flipflop;
 
 import java.io.IOException;
 import javax.swing.JOptionPane;

@@ -6,9 +6,15 @@ incremental_db/
 output_files/
 db/
 
-## ignore gtkwave file
+## project VHDLPlus file(s)
+*.vhdpproj
+
+## ghw files
 *.ghw
 *.ghdp
+
+## toml files
+*.toml
 
 ## MacOS
 .DS_Store
@@ -22,6 +28,9 @@ Modelsim/
 
 ## ISSP
 Libraries/.qsys_edit
+
+## ghdl work
+*.cf
 
 ## NIOS
 *.map
@@ -39,12 +48,6 @@ mem_init/
 ## BSP Libraries
 **/Software/**/generated_bsp/
 **/Software/**/compile_commands.json
-
-## toml file
-*.toml
-
-## ghdl work
-*.cf
 
 ## Python
 *__pycache__*

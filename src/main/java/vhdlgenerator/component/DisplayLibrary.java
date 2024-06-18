@@ -37,8 +37,9 @@ import vhdlgenerator.component.adder.Adder;
 import vhdlgenerator.component.comparator.Comparator;
 import vhdlgenerator.component.decoder.Decoder;
 import vhdlgenerator.component.demultiplexer.Demux;
-import vhdlgenerator.component.dflipflop.DFlipFlop;
 import vhdlgenerator.component.encoder.Encoder;
+import vhdlgenerator.component.flipflop.DFlipFlop;
+import vhdlgenerator.component.flipflop.JKFlipFlop;
 import vhdlgenerator.component.multiplexer.Mux;
 import vhdlgenerator.component.priorityencoder.PriorityEncoder;
 import vhdlgenerator.component.segment7.Segment7;
@@ -97,7 +98,7 @@ public class DisplayLibrary extends JFrame implements ActionListener
 	private static final JButton[] library_button = { new JButton("Multiplexer"), new JButton("Demultiplexer"),
 			new JButton("Encoder"), new JButton("Priority Encoder"), new JButton("Decoder"),
 			new JButton("7-Segment-Display"), new JButton("Adder"), new JButton("Subtractor"),
-			new JButton("Comparator"), new JButton("D-Flip-Flop") };
+			new JButton("Comparator"), new JButton("D-Flip-Flop"), new JButton("JK-Flip-Flop") };
 
 	/**
 	 * Button Font
@@ -194,10 +195,12 @@ public class DisplayLibrary extends JFrame implements ActionListener
 			app.setLocationRelativeTo(null);
 			app.setVisible(true);
 		}
+
+		String action = event.getActionCommand();
 		//
 		// Multiplexer
 		//
-		if (event.getActionCommand().equals("Multiplexer"))
+		if (action.equals("Multiplexer"))
 		{
 			// Mux size choice
 			String mux_size = (String) JOptionPane.showInputDialog(this,
@@ -214,7 +217,7 @@ public class DisplayLibrary extends JFrame implements ActionListener
 		//
 		// Demultiplexer
 		//
-		if (event.getActionCommand().equals("Demultiplexer"))
+		if (action.equals("Demultiplexer"))
 		{
 			// Demux size choice
 			String demux_size = (String) JOptionPane.showInputDialog(this,
@@ -231,7 +234,7 @@ public class DisplayLibrary extends JFrame implements ActionListener
 		//
 		// Decoder
 		//
-		if (event.getActionCommand().equals("Decoder"))
+		if (action.equals("Decoder"))
 		{
 			// Decoder size
 			String decoder_size = (String) JOptionPane.showInputDialog(this, "choose input size of the Decoder:",
@@ -249,13 +252,14 @@ public class DisplayLibrary extends JFrame implements ActionListener
 		//
 		// segment 7 Display
 		//
-		if (event.getActionCommand().equals("7-Segment-Display"))
+		if (action.equals("7-Segment-Display"))
 		{
 			new Segment7().writeSegment7();
 		}
-		// D flip flop
 		//
-		if (event.getActionCommand().equals("D-Flip-Flop"))
+		// flip flop
+		//
+		if (action.equals("D-Flip-Flop"))
 		{
 			String dff = (String) JOptionPane.showInputDialog(this, "choose your D-Flip-Flop type:", "D Flip-Flop",
 					JOptionPane.INFORMATION_MESSAGE, null, DFlipFlop.possibleValues, DFlipFlop.possibleValues[0]);
@@ -283,9 +287,15 @@ public class DisplayLibrary extends JFrame implements ActionListener
 
 		}
 		//
+		// JK Flip Flop
+		if (action.equals("JK-Flip-Flop"))
+		{
+			new JKFlipFlop().writeJK();
+		}
+		//
 		// Encoder
 		//
-		if (event.getActionCommand().equals("Encoder"))
+		if (action.equals("Encoder"))
 		{
 			String input_size = (String) JOptionPane.showInputDialog(this, "choose your input size:", "Encoder",
 					JOptionPane.INFORMATION_MESSAGE, null, Encoder.possibleValues, Encoder.possibleValues[0]);
@@ -310,7 +320,7 @@ public class DisplayLibrary extends JFrame implements ActionListener
 		//
 		// Priority Encoder
 		//
-		if (event.getActionCommand().equals("Priority Encoder"))
+		if (action.equals("Priority Encoder"))
 		{
 			String input_size = (String) JOptionPane.showInputDialog(this, "choose your input size:", "PriorityEncoder",
 					JOptionPane.INFORMATION_MESSAGE, null, PriorityEncoder.possibleValues,
@@ -326,8 +336,11 @@ public class DisplayLibrary extends JFrame implements ActionListener
 				case "8":
 					new PriorityEncoder(8).writePriorityEncoder();
 					break;
+				case "16":
+					new PriorityEncoder(16).writePriorityEncoder();
+					break;
 				default:
-					System.err.println("Invalid Option!: " + input_size + "valid option are 4 or 8");
+					System.err.println("Invalid Option!: " + input_size + " valid options are 4 or 8 or 16");
 					break;
 
 				}
@@ -338,7 +351,7 @@ public class DisplayLibrary extends JFrame implements ActionListener
 		//
 		// Adder
 		//
-		if (event.getActionCommand().equals("Adder"))
+		if (action.equals("Adder"))
 		{
 			String adder_type = (String) JOptionPane.showInputDialog(this, "choose your Adder type:", "Adder",
 					JOptionPane.INFORMATION_MESSAGE, null, Adder.possibleValues, Adder.possibleValues[0]);
@@ -353,7 +366,7 @@ public class DisplayLibrary extends JFrame implements ActionListener
 		//
 		// Subtractor
 		//
-		if (event.getActionCommand().equals("Subtractor"))
+		if (action.equals("Subtractor"))
 		{
 			String type = (String) JOptionPane.showInputDialog(this, "choose your Subtractor type:", "Subtractor",
 					JOptionPane.INFORMATION_MESSAGE, null, Subtractor.possibleValues, Subtractor.possibleValues[0]);
@@ -366,7 +379,7 @@ public class DisplayLibrary extends JFrame implements ActionListener
 		//
 		// Comparator
 		//
-		if (event.getActionCommand().equals("Comparator"))
+		if (action.equals("Comparator"))
 		{
 			String type = (String) JOptionPane.showInputDialog(this, "choose your Comparator type:", "Comparator",
 					JOptionPane.INFORMATION_MESSAGE, null, Comparator.possibleValues, Comparator.possibleValues[0]);

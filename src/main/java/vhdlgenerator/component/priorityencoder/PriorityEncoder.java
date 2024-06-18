@@ -36,6 +36,8 @@ public class PriorityEncoder
 	private static final String FILE_PR4 = "PriorityEncoder4_2.vhdl";
 	/** file name for the PriorityEncoder8x3 */
 	private static final String FILE_PR8 = "PriorityEncoder8_2.vhdl";
+	/** file name for the PriorityEncoder16x4 */
+	private static final String FILE_PR16 = "PriorityEncoder16_4.vhdl";
 	/** Priority Encoder size */
 	private int size;
 	/** VHDL code for the PriorityEncoder4_2 */
@@ -124,13 +126,55 @@ public class PriorityEncoder
 			end behaviour;
 
 						""";
+	/** VHDL code for the PriorityEncoder16_4 */
+	private static final String PR16_VHDL = """
+				-------------------------------------------------------
+			-- Design Name : PriorityEncoder16_4
+			-- File Name   : PriorityEncoder16_4.vhdl
+			-- Function    : Pri Encoder using when-else
+			-------------------------------------------------------
+			library ieee;
+			use ieee.std_logic_1164.all;
 
+			entity PriorityEncoder16_4 is
+			    port (
+			        enable     :in  std_logic;                      --  Enable for the encoder
+			        encoder_in :in  std_logic_vector (15 downto 0); --  16-bit Input
+			        binary_out :out std_logic_vector (3 downto 0)   --  4 bit binary Output
+
+			    );
+			end PriorityEncoder16_4;
+
+			architecture behaviour of PriorityEncoder16_4 is
+
+			begin
+
+			 binary_out <= "0000" when enable = '0' else
+			                "0001" when encoder_in( 1 ) = '1' else
+			                "0010" when encoder_in( 2 ) = '1' else
+			                "0011" when encoder_in( 3 ) = '1' else
+			                "0100" when encoder_in( 4 ) = '1' else
+			                "0101" when encoder_in( 5 ) = '1' else
+			                "0110" when encoder_in( 6 ) = '1' else
+			                "0111" when encoder_in( 7 ) = '1' else
+			                "1000" when encoder_in( 8 ) = '1' else
+			                "1001" when encoder_in( 9 ) = '1' else
+			                "1010" when encoder_in( 10 ) = '1' else
+			                "1011" when encoder_in( 11 ) = '1' else
+			                "1100" when encoder_in( 12 ) = '1' else
+			                "1101" when encoder_in( 13 ) = '1' else
+			                "1110" when encoder_in( 14 ) = '1' else
+			                "1111" when encoder_in( 15 ) = '1' else
+			                "0000";
+			end behaviour;
+
+						""";
 	//
 	// public
 	//
 
 	/** possible size of the PriorityEncoder */
-	public static final Object[] possibleValues = { "4", "8" };
+	public static final Object[] possibleValues = { "4", "8", "16" };
 
 	/**
 	 * Constructor for the Priority Encoder size(number of input).
@@ -141,9 +185,9 @@ public class PriorityEncoder
 	 */
 	public PriorityEncoder(int size)
 	{
-		if (size != 4 && size != 8)
+		if (size != 4 && size != 8 && size != 16)
 		{
-			throw new IllegalArgumentException("Invalid size for PriorityEncoder! valid size are 4,8.");
+			throw new IllegalArgumentException("Invalid size for PriorityEncoder! valid size are 4,8,16");
 
 		}
 		this.size = size;
@@ -169,9 +213,9 @@ public class PriorityEncoder
 	 */
 	public void setSize(int size)
 	{
-		if (size != 4 && size != 8)
+		if (size != 4 && size != 8 && size != 16)
 		{
-			throw new IllegalArgumentException("Invalid size for PriorityEncoder! valid size are 4,8.");
+			throw new IllegalArgumentException("Invalid size for PriorityEncoder! valid size are 4,8,16.");
 
 		}
 
@@ -193,7 +237,7 @@ public class PriorityEncoder
 
 			if (WindowCode.validateFilePath(path))
 			{
-				// Demux size 4,8
+				// size 4,8,16
 				switch (this.size)
 				{
 				case 4:
@@ -212,6 +256,15 @@ public class PriorityEncoder
 					open = FileGenerator.openFile(path);
 					// write the code
 					FileGenerator.writeData(path, PR8_VHDL);
+					break;
+
+				case 16:
+					// new file path
+					path = path + DisplayLibrary.FILE_SEPARATOR + FILE_PR16;
+					// create the new file
+					open = FileGenerator.openFile(path);
+					// write the code
+					FileGenerator.writeData(path, PR16_VHDL);
 					break;
 
 				default:
