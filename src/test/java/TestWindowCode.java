@@ -1,7 +1,6 @@
 
 import org.junit.jupiter.api.Test;
 
-import vhdlgenerator.generator.Port;
 import vhdlgenerator.generator.WindowCode;
 
 import org.junit.jupiter.api.AfterEach;
@@ -145,22 +144,21 @@ public class TestWindowCode
 	@DisplayName("TEST METHOD equalNumberSignalData")
 	public void testEqualNumberSignalData()
 	{
-		Port port = window.getPort();
-		// input and data
-		port.setInputPort("input1;input2");
-		port.setInDataType("std_logic_vector");
-		// output and data
-		port.setOutputPort("output1;output2");
-		port.setOutDataType("std_logic_vector");
+
+		String input = "input1;input2";
+		String data_input = "std_logic_vector";
+		String output = "output1;output2";
+		String data_output = "std_logic_vector";
 
 		// NOT MATCHING TEST
-		Assertions.assertEquals(false, window.equalNumberSignalData(),
+		Assertions.assertEquals(false, window.equalNumberSignalData(input, data_input, output, data_output),
 				"fail test not matching number of input and data type");
 
 		// MAATCHING TEST
-		port.setInDataType("std_logic_vector;std_logic_vector");
-		port.setOutDataType("std_logic_vector;std_logic_vector");
-		Assertions.assertEquals(true, window.equalNumberSignalData(),
+		data_input = "std_logic_vector;std_logic_vector";
+		data_output = "std_logic_vector;std_logic_vector";
+
+		Assertions.assertEquals(true, window.equalNumberSignalData(input, data_input, output, data_output),
 				"fail test matching number of input and data type");
 
 	}

@@ -281,7 +281,7 @@ public class FileGenerator
 		StringBuilder data = new StringBuilder();
 
 		data.append(VHDL_KEYWORDS.get("IEEE")).append(NEWLINE) // importing library
-				.append(VHDL_KEYWORDS.get("ENTITY")).append(this.info_interface.getNameEntity())
+				.append(VHDL_KEYWORDS.get("ENTITY")).append(this.info_interface.entity_name())
 				.append(VHDL_KEYWORDS.get("IS")); // entity
 
 		// write to the file
@@ -298,9 +298,9 @@ public class FileGenerator
 		/*
 		 * generic(DataWitdh : integer := 8 ),
 		 */
-		if (this.info_interface.getGenericMap() != null)
+		if (this.info_interface.generic_map() != null)
 		{ // return the generic name and the generic value
-			String[] name_value = separator(SEMICOLON, this.info_interface.getGenericMap());
+			String[] name_value = separator(SEMICOLON, this.info_interface.generic_map());
 			// GENERIC MAP
 			String data = TAB + VHDL_KEYWORDS.get("GENERIC") + name_value[0] + COLON + VHDL_KEYWORDS.get("INTEGER")
 					+ VHDL_KEYWORDS.get("VARIABLE_ASSIGNMENT") + name_value[1] + VHDL_KEYWORDS.get("END_GENERIC");
@@ -327,9 +327,9 @@ public class FileGenerator
 		String downTo = "-1 downto 0)";
 
 		// get the input signals
-		String[] signal_split = separator(SEMICOLON, this.info_interface.getInputPort());
+		String[] signal_split = separator(SEMICOLON, this.info_interface.input_port());
 		// get input signals datatype
-		String[] data_type_split = separator(SEMICOLON, this.info_interface.getInDataType());
+		String[] data_type_split = separator(SEMICOLON, this.info_interface.in_data_type());
 
 		buffer.append(VHDL_KEYWORDS.get("PORT")).append(NEWLINE).append(TAB + TAB + TAB);
 
@@ -343,13 +343,15 @@ public class FileGenerator
 			buffer.append(VHDL_KEYWORDS.get("IN"));
 
 			// input data type signal
+			
 			buffer.append(data_type_split[i]);
+			
 
 			// add length to array std_logic_vector value generic constant
-			if (this.info_interface.getGenericMap() != null
+			if (this.info_interface.generic_map() != null
 					&& data_type_split[i].equals(VHDL_KEYWORDS.get("STD_LOGIC_VECTOR")))
 			{
-				String[] name_value_generic = separator(SEMICOLON, this.info_interface.getGenericMap());
+				String[] name_value_generic = separator(SEMICOLON, this.info_interface.generic_map());
 				// add only the name not the value
 				buffer.append("(").append(name_value_generic[0]).append(downTo);
 			}
@@ -370,10 +372,10 @@ public class FileGenerator
 		 * **** OUPUT SIGNALS ***
 		 */
 		// get the output signals string_split
-		signal_split = separator(SEMICOLON, this.info_interface.getOutputPort());
+		signal_split = separator(SEMICOLON, this.info_interface.output_port());
 
 		// get the output data type signal
-		data_type_split = separator(SEMICOLON, this.info_interface.getOutDataType());
+		data_type_split = separator(SEMICOLON, this.info_interface.out_data_type());
 
 		// loop to out_data_type
 		i = 0;
@@ -389,10 +391,10 @@ public class FileGenerator
 			buffer.append(data_type_split[i]);
 
 			// add length to array std_logic_vector value generic constant
-			if (this.info_interface.getGenericMap() != null
+			if (this.info_interface.generic_map() != null
 					&& data_type_split[i].equals(VHDL_KEYWORDS.get("STD_LOGIC_VECTOR")))
 			{
-				String[] name_value_generic = separator(SEMICOLON, this.info_interface.getGenericMap());
+				String[] name_value_generic = separator(SEMICOLON, this.info_interface.generic_map());
 				// add only the name not the value
 				buffer.append("(").append(name_value_generic[0]).append(downTo);
 			}
@@ -416,7 +418,7 @@ public class FileGenerator
 		buffer.append(TAB);
 		buffer.append(VHDL_KEYWORDS.get("END_PORT"));
 		buffer.append(NEWLINE);
-		buffer.append(VHDL_KEYWORDS.get("END")).append(info_interface.getNameEntity()).append(SEMICOLON);
+		buffer.append(VHDL_KEYWORDS.get("END")).append(info_interface.entity_name()).append(SEMICOLON);
 
 		// write all data to the file
 		writeData(this.getFileName(), buffer.toString());
@@ -434,13 +436,13 @@ public class FileGenerator
 
 		StringBuilder data = new StringBuilder();
 		data.append(VHDL_KEYWORDS.get("ARCHITECTURE"));
-		data.append(this.info_interface.getNameEntity());
+		data.append(this.info_interface.entity_name());
 		data.append(VHDL_KEYWORDS.get("ARCHITECTURE_IS"));
 
 		// VHDL CODE IMPLEMENTATION TO WRITE TO THE FILE
-		if (info_interface.getCodeImplementation() != null)
+		if (info_interface.code_implementation() != null)
 		{
-			data.append(info_interface.getCodeImplementation());
+			data.append(info_interface.code_implementation());
 			data.append(NEWLINE);
 		}
 

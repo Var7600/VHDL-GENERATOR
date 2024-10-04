@@ -63,7 +63,10 @@ public class WindowCode extends JFrame implements ActionListener
 	// Constant
 	//
 
+	//
 	// public re-use in others class.
+	//
+
 	/**
 	 * select title
 	 */
@@ -80,6 +83,7 @@ public class WindowCode extends JFrame implements ActionListener
 	//
 	// private
 	//
+
 	/**
 	 * title code generator
 	 */
@@ -170,6 +174,12 @@ public class WindowCode extends JFrame implements ActionListener
 
 	/**
 	 * data to write to the file
+	 */
+	String tmp_entity_name, tmp_architecture_name, tmp_generic_map, tmp_input_port, tmp_in_data_type, tmp_output_port,
+			tmp_out_data_type = null;
+
+	/**
+	 * Port to hold the data
 	 */
 	private Port info_interface;
 
@@ -370,9 +380,6 @@ public class WindowCode extends JFrame implements ActionListener
 	{
 		// TITLE
 		super(TITLE);
-
-		// PORT INTERFACE INFO
-		this.info_interface = new Port(null, null, null, null, null, null, null, null); // zero information yet
 
 		// SIZE
 		setSize(AppVG.FRAME_WIDTH, AppVG.FRAME_HEIGHT);
@@ -750,27 +757,27 @@ public class WindowCode extends JFrame implements ActionListener
 	 */
 	public boolean validateEntityName()
 	{
+		boolean valid = false;
 
-		if (isNull(entity_name.getText())) // get entity name
+		// get information ENTITY NAME
+		tmp_entity_name = entity_name.getText();
+
+		if (isNull(tmp_entity_name)) // get entity name
 		{
 			// entity name is null
 			errorFrame(NULL_ENTITY);
-
 		} else
 		{
 			// valid identifier
-			if (validateIdentifier(entity_name.getText()))
-			{
-				// get information ENTITY NAME
-				info_interface.setNameEntity(entity_name.getText());
-				return true;
-			} else
+			valid = validateIdentifier(tmp_entity_name);
+
+			if (!valid)
 			{
 				errorFrame(INVALID_IDENTIFIER);
 			}
 		}
 
-		return false;
+		return valid;
 	}
 
 	/**
@@ -791,10 +798,10 @@ public class WindowCode extends JFrame implements ActionListener
 	{
 
 		String pattern = "[A-Za-z]+[0-9]*[;]\\d+";
+		tmp_generic_map = generic.getText();
 
-		if (checkFormatInput(pattern, generic.getText()))
+		if (checkFormatInput(pattern, tmp_generic_map))
 		{
-			info_interface.setGenericMap(generic.getText());
 			return true;
 		}
 
@@ -813,20 +820,17 @@ public class WindowCode extends JFrame implements ActionListener
 	 */
 	private boolean validateInputSignal()
 	{
+		tmp_input_port = input_signals.getText();
 
-		if (!(isNull(input_signals.getText())))
+		if (!(isNull(tmp_input_port)))
 		{
-			String signals = input_signals.getText();
-
-			if (checkFormatInput(SIGNAL_NAME_FORMAT, signals))
+			if (checkFormatInput(SIGNAL_NAME_FORMAT, tmp_input_port))
 			{
-				info_interface.setInputPort(signals);
 				return true;
 			} else
 			{
 				errorFrame(NOT_MATCHING_SIGNAL_FORMAT_IN);
 			}
-
 		}
 		return false;
 	}
@@ -844,24 +848,20 @@ public class WindowCode extends JFrame implements ActionListener
 	 */
 	private boolean validateOutputSignal()
 	{
-
-		if (!(isNull(output_signals.getText())))
+		tmp_output_port = output_signals.getText();
+		if (!(isNull(tmp_output_port)))
 		{
-			String signals = output_signals.getText();
 
-			if (checkFormatInput(SIGNAL_NAME_FORMAT, signals))
+			if (checkFormatInput(SIGNAL_NAME_FORMAT, tmp_output_port))
 			{
-				info_interface.setOutputPort(signals);
 				return true;
 			} else
 			{
 				errorFrame(NOT_MATCHING_SIGNAL_FORMAT_OUT);
 			}
-
 		}
 
 		return false;
-
 	}
 
 	/**
@@ -877,20 +877,18 @@ public class WindowCode extends JFrame implements ActionListener
 	 */
 	public boolean validateDataInSignal()
 	{
+		tmp_in_data_type = data_type_in.getText();
 
-		if (!(isNull(data_type_in.getText())))
+		if (!(isNull(tmp_in_data_type)))
 		{
-			String data_type = data_type_in.getText();
 
-			if (checkFormatInput(SIGNAL_DATA_FORMAT, data_type))
+			if (checkFormatInput(SIGNAL_DATA_FORMAT, tmp_in_data_type))
 			{
-				info_interface.setInDataType(data_type);
 				return true;
 			} else
 			{
 				errorFrame(NOT_MATCHING_DATA_TYPE);
 			}
-
 		}
 		return false;
 	}
@@ -906,14 +904,13 @@ public class WindowCode extends JFrame implements ActionListener
 	 */
 	public boolean validateDataOutSignal()
 	{
+		tmp_out_data_type = data_type_out.getText();
 
-		if (!(isNull(data_type_out.getText())))
+		if (!(isNull(tmp_out_data_type)))
 		{
-			String data_type = data_type_out.getText();
 
-			if (checkFormatInput(SIGNAL_DATA_FORMAT, data_type))
+			if (checkFormatInput(SIGNAL_DATA_FORMAT, tmp_out_data_type))
 			{
-				info_interface.setOutDataType(data_type);
 				return true;
 			} else
 			{
@@ -928,15 +925,21 @@ public class WindowCode extends JFrame implements ActionListener
 	 * this method check if the number of input signal and the number of output
 	 * signal is equal to see {@link Port}
 	 *
+	 * @param tmp_input       the input signal
+	 * @param tmp_data_input  the input signal data type
+	 * @param tmp_output      the output signal
+	 * @param tmp_data_output the output signal data type
+	 *
 	 * @return <code>true</code> if it is the same number otherwise
 	 *         <code>false</code>
 	 */
-	public boolean equalNumberSignalData()
+	public boolean equalNumberSignalData(String tmp_input, String tmp_data_input, String tmp_output,
+			String tmp_data_output)
 	{
-		int number_of_input_signal = info_interface.getInputPort().split(FileGenerator.SEMICOLON).length;
-		int number_in_data_signal = info_interface.getInDataType().split(FileGenerator.SEMICOLON).length;
-		int number_of_output_signal = info_interface.getOutputPort().split(FileGenerator.SEMICOLON).length;
-		int number_out_data_signal = info_interface.getOutDataType().split(FileGenerator.SEMICOLON).length;
+		int number_of_input_signal = tmp_input.split(FileGenerator.SEMICOLON).length;
+		int number_in_data_signal = tmp_data_input.split(FileGenerator.SEMICOLON).length;
+		int number_of_output_signal = tmp_output.split(FileGenerator.SEMICOLON).length;
+		int number_out_data_signal = tmp_data_output.split(FileGenerator.SEMICOLON).length;
 
 		return number_in_data_signal == number_of_input_signal && number_out_data_signal == number_of_output_signal;
 	}
@@ -962,19 +965,15 @@ public class WindowCode extends JFrame implements ActionListener
 				return;
 			}
 			// check if the number of variable match the number of data type.
-			if (!equalNumberSignalData())
+			if (!equalNumberSignalData(tmp_input_port, tmp_in_data_type, tmp_output_port, tmp_out_data_type))
 			{
 				errorFrame(NOT_MATCHING_NUMBER_SIGNAL_DATA_TYPE);
 				return;
 			}
-			//
-			// CODE IMPLEMENTATION
-			//
-			if (!isNull(editor.getCode()))
-			{
-
-				info_interface.setCodeImplementation(editor.getCode());
-			}
+			
+			// interface informations
+			info_interface = new Port(tmp_entity_name, tmp_architecture_name, tmp_generic_map, tmp_input_port,
+					 tmp_in_data_type, tmp_output_port, tmp_out_data_type, editor.getCode());
 			//
 			// GENERATE FILE
 			//
@@ -988,7 +987,7 @@ public class WindowCode extends JFrame implements ActionListener
 
 				if (open)
 				{
-					genFile = new FileGenerator(this.getFilePath(), this.getPort());
+					genFile = new FileGenerator(this.getFilePath(), info_interface);
 
 					// Write Data to the file.
 					genFile.writeHDL();

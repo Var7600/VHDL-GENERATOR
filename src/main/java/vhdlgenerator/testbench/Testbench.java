@@ -187,9 +187,9 @@ public class Testbench
 		String downTo = "-1 downto 0)";
 
 		// get the input signals
-		String[] signal_split = this.unit.getPort().getInputPort().split(FileGenerator.SEMICOLON);
+		String[] signal_split = this.unit.getPort().input_port().split(FileGenerator.SEMICOLON);
 		// get input signals data type
-		String[] data_type_split = this.unit.getPort().getInDataType().split(FileGenerator.SEMICOLON);
+		String[] data_type_split = this.unit.getPort().in_data_type().split(FileGenerator.SEMICOLON);
 
 		buffer.append(FileGenerator.VHDL_KEYWORDS.get("PORT")).append(FileGenerator.NEWLINE)
 				.append(FileGenerator.TAB + FileGenerator.TAB + FileGenerator.TAB);
@@ -207,10 +207,10 @@ public class Testbench
 			buffer.append(data_type_split[i]);
 
 			// add length to array std_logic_vector value generic constant
-			if (this.unit.getPort().getGenericMap() != null
+			if (this.unit.getPort().generic_map() != null
 					&& data_type_split[i].equals(FileGenerator.VHDL_KEYWORDS.get("STD_LOGIC_VECTOR")))
 			{
-				String[] name_value_generic = this.unit.getPort().getGenericMap().split(FileGenerator.SEMICOLON);
+				String[] name_value_generic = this.unit.getPort().generic_map().split(FileGenerator.SEMICOLON);
 				// add only the name not the value
 				buffer.append("(").append(name_value_generic[0]).append(downTo);
 			}
@@ -231,10 +231,10 @@ public class Testbench
 		 * **** OUPUT SIGNALS ***
 		 */
 		// get the output signals string_split =
-		signal_split = this.unit.getPort().getOutputPort().split(FileGenerator.SEMICOLON);
+		signal_split = this.unit.getPort().output_port().split(FileGenerator.SEMICOLON);
 
 		// get the output data type signal
-		data_type_split = this.unit.getPort().getOutDataType().split(FileGenerator.SEMICOLON);
+		data_type_split = this.unit.getPort().out_data_type().split(FileGenerator.SEMICOLON);
 
 		// loop to out_data_type
 		i = 0;
@@ -250,10 +250,10 @@ public class Testbench
 			buffer.append(data_type_split[i]);
 
 			// add length to array std_logic_vector value generic constant
-			if (this.unit.getPort().getGenericMap() != null
+			if (this.unit.getPort().generic_map() != null
 					&& data_type_split[i].equals(FileGenerator.VHDL_KEYWORDS.get("STD_LOGIC_VECTOR")))
 			{
-				String[] name_value_generic = this.unit.getPort().getGenericMap().split(FileGenerator.SEMICOLON);
+				String[] name_value_generic = this.unit.getPort().generic_map().split(FileGenerator.SEMICOLON);
 				// add only the name not the value
 				buffer.append("(").append(name_value_generic[0]).append(downTo);
 			}
@@ -295,14 +295,14 @@ public class Testbench
 		data.append(FileGenerator.NEWLINE);
 		data.append(FileGenerator.TAB);
 		data.append(FileGenerator.VHDL_KEYWORDS.get("COMPONENT"));
-		data.append(this.unit.getPort().getNameEntity());
+		data.append(this.unit.getPort().entity_name());
 		data.append(FileGenerator.VHDL_KEYWORDS.get("IS")).append(FileGenerator.NEWLINE);
 
 		// add generic constant if given
-		if (this.unit.getPort().getGenericMap() != null)
+		if (this.unit.getPort().generic_map() != null)
 		{
 			// return the generic name and the generic value
-			String[] name_value = this.unit.getPort().getGenericMap().split(FileGenerator.SEMICOLON);
+			String[] name_value = this.unit.getPort().generic_map().split(FileGenerator.SEMICOLON);
 			// GENERIC MAP
 			data.append(FileGenerator.TAB).append(FileGenerator.VHDL_KEYWORDS.get("GENERIC")).append(name_value[0])
 					.append(FileGenerator.COLON).append(FileGenerator.VHDL_KEYWORDS.get("INTEGER"))
@@ -331,12 +331,12 @@ public class Testbench
 		String downTo = "-1 downto 0)";
 
 		// writing generic constant if exists
-		if (this.unit.getPort().getGenericMap() != null)
+		if (this.unit.getPort().generic_map() != null)
 		{
 			data.append(FileGenerator.TAB);
 			data.append(FileGenerator.VHDL_KEYWORDS.get("CONSTANT"));
 			// return the generic name and the generic value
-			String[] name_value = this.unit.getPort().getGenericMap().split(FileGenerator.SEMICOLON);
+			String[] name_value = this.unit.getPort().generic_map().split(FileGenerator.SEMICOLON);
 			// GENERIC MAP
 			data.append(name_value[0]).append(FileGenerator.COLON).append(FileGenerator.VHDL_KEYWORDS.get("INTEGER"))
 					.append(FileGenerator.VHDL_KEYWORDS.get("VARIABLE_ASSIGNMENT")).append(name_value[1])
@@ -347,9 +347,9 @@ public class Testbench
 		//
 		// declaring input signals
 		// get the input signals
-		String[] signal_split = this.unit.getPort().getInputPort().split(FileGenerator.SEMICOLON);
+		String[] signal_split = this.unit.getPort().input_port().split(FileGenerator.SEMICOLON);
 		// get input signals data type
-		String[] data_type_split = this.unit.getPort().getInDataType().split(FileGenerator.SEMICOLON);
+		String[] data_type_split = this.unit.getPort().in_data_type().split(FileGenerator.SEMICOLON);
 
 		// i to iterate in_data_type
 		int i = 0;
@@ -364,10 +364,10 @@ public class Testbench
 			data.append(data_type_split[i]);
 
 			// add length to array std_logic_vector value generic constant
-			if (this.unit.getPort().getGenericMap() != null
+			if (this.unit.getPort().generic_map() != null
 					&& data_type_split[i].equals(FileGenerator.VHDL_KEYWORDS.get("STD_LOGIC_VECTOR")))
 			{
-				String[] name_value_generic = this.unit.getPort().getGenericMap().split(FileGenerator.SEMICOLON);
+				String[] name_value_generic = this.unit.getPort().generic_map().split(FileGenerator.SEMICOLON);
 				// add only the name not the value
 				data.append("(").append(name_value_generic[0]).append(downTo);
 			}
@@ -384,10 +384,10 @@ public class Testbench
 		//
 		// declaring output signals
 		// get the output signals string_split =
-		signal_split = this.unit.getPort().getOutputPort().split(FileGenerator.SEMICOLON);
+		signal_split = this.unit.getPort().output_port().split(FileGenerator.SEMICOLON);
 
 		// get the output data type signal
-		data_type_split = this.unit.getPort().getOutDataType().split(FileGenerator.SEMICOLON);
+		data_type_split = this.unit.getPort().out_data_type().split(FileGenerator.SEMICOLON);
 
 		// loop to out_data_type
 		i = 0;
@@ -404,10 +404,10 @@ public class Testbench
 			data.append(data_type_split[i]);
 
 			// add length to array std_logic_vector value generic constant
-			if (this.unit.getPort().getGenericMap() != null
+			if (this.unit.getPort().generic_map() != null
 					&& data_type_split[i].equals(FileGenerator.VHDL_KEYWORDS.get("STD_LOGIC_VECTOR")))
 			{
-				String[] name_value_generic = this.unit.getPort().getGenericMap().split(FileGenerator.SEMICOLON);
+				String[] name_value_generic = this.unit.getPort().generic_map().split(FileGenerator.SEMICOLON);
 				// add only the name not the value
 				data.append("(").append(name_value_generic[0]).append(downTo);
 			}
@@ -436,12 +436,12 @@ public class Testbench
 		data.append(FileGenerator.VHDL_KEYWORDS.get("BEGIN"));
 		data.append(FileGenerator.TAB);
 		data.append(DUT);
-		data.append(this.unit.getPort().getNameEntity());
+		data.append(this.unit.getPort().entity_name());
 
 		// mapping generic constant
-		if (this.unit.getPort().getGenericMap() != null)
+		if (this.unit.getPort().generic_map() != null)
 		{
-			String[] generic = this.unit.getPort().getGenericMap().split(FileGenerator.SEMICOLON);
+			String[] generic = this.unit.getPort().generic_map().split(FileGenerator.SEMICOLON);
 			data.append(FileGenerator.VHDL_KEYWORDS.get("GENERIC_MAP")).append(generic[0]).append("=>")
 					.append(generic[0]).append(")");
 			data.append(FileGenerator.NEWLINE);
@@ -452,7 +452,7 @@ public class Testbench
 		data.append(FileGenerator.TAB);
 
 		// mapping input signals
-		String[] signal_split = this.unit.getPort().getInputPort().split(FileGenerator.SEMICOLON);
+		String[] signal_split = this.unit.getPort().input_port().split(FileGenerator.SEMICOLON);
 		for (String signal : signal_split)
 		{
 			data.append(signal).append("=>").append(signal).append(FileGenerator.COMMA);
@@ -460,7 +460,7 @@ public class Testbench
 			data.append(FileGenerator.TAB);
 		}
 		// mapping output signals
-		signal_split = this.unit.getPort().getOutputPort().split(FileGenerator.SEMICOLON);
+		signal_split = this.unit.getPort().output_port().split(FileGenerator.SEMICOLON);
 
 		// don't add comma if the last signal
 		for (int i = 0; i < signal_split.length; i++)
