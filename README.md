@@ -125,13 +125,4 @@ https://github.com/Var7600/VHDL-GENERATOR/assets/77991946/5b428296-f99d-48ad-a16
   
   # License
   
-  > “Commons Clause” License Condition v1.0
-  > 
-  > this is a free software; you can redistribute it and/or modify it.
-  > 
-  > Without limiting other than the License not include or grant  you right to Sell the Software.
-  > 
-  > For purposes of the foregoing, “Sell” means practicing any or all of the rights granted to you under the License to provide to third parties, 
-  > for a fee or other consideration (including without limitation fees for hosting or consulting/ support services related to the Software), 
-  > a product or service whose value derives, entirely or substantially, from the functionality of the Software. 
-  > Any license notice or attribution required by the License must also include this Commons Cause License Condition notice.
+  MIT
