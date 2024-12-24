@@ -7,7 +7,7 @@ name: Release
     types:
       - completed
 env:
-  JAVA_VERSION: '18'
+  JAVA_VERSION: '21'
   JAVA_DISTRO: 'temurin'
   
 jobs:
@@ -25,7 +25,7 @@ jobs:
           fetch-depth: 0
           
         # set up Java
-      - name: Set up Java 18
+      - name: Set up Java 21
         uses: actions/setup-java@v4
         with:
           java-version: ${{ env.JAVA_VERSION }}
@@ -43,7 +43,7 @@ jobs:
         with:
           arguments: full-release
         env:
-          JRELEASER_PROJECT_VERSION: 0.1
+          JRELEASER_PROJECT_VERSION: 0.2
           JRELEASER_GITHUB_TOKEN: ${{ secrets.JRELEASER_GITHUB_TOKEN }}
           
           # Upload Artifact
