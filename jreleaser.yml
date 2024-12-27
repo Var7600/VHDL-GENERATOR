@@ -1,15 +1,15 @@
 project:
   name: VHDL_GENERATOR
-  description: App that generate VHDL Code
-  longDescription: VHDL-GENERATOR can generate VHDL Code, Testbench template and some VHDL Component(Mux,Encoder,Adder,...) .
-  version: 0.1
+  description: App that generate VHDL Code and Testbench
+  longDescription: VHDL-GENERATOR can generate VHDL Code, Testbench template and some VHDL Component(Mux,Encoder,Adder,FliFlop(s),...).
+  version: 0.2
   
  
   links:
     homepage: https://github.com/Var7600/VHDL-GENERATOR
   authors:
     - DOUDOU DIAWARA
-  license: “Commons Clause” License Condition v1.0
+  license: MIT
   inceptionYear: 2024
   stereotype: DESKTOP
   screenshots:
@@ -20,7 +20,7 @@ project:
       width: 288
       height: 256
   java:
-    version: 18
+    version: 21
     groupId: vhdlgenerator
     artifactId: VHDL_GENERATOR
     mainClass: vhdlgenerator.application.AppVG
