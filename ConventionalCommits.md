@@ -21,9 +21,8 @@ The commit contains the following structural elements, to communicate intent to 
 1. **fix:** a commit of the *type* `fix` patches a bug in your codebase (this correlates with [`PATCH`](http://semver.org/#summary) in Semantic Versioning).
 2. **feat:** a commit of the *type* `feat` introduces a new feature to the codebase (this correlates with [`MINOR`](http://semver.org/#summary) in Semantic Versioning).
 3. **BREAKING CHANGE:** a commit that has a footer `BREAKING CHANGE:`, or appends a `!` after the type/scope, introduces a breaking API change (correlating with [`MAJOR`](http://semver.org/#summary) in Semantic Versioning). A BREAKING CHANGE can be part of commits of any *type*.
-4.*types* other than `refactor:` means that you changed <b>src</b> code but unlike `feat` no tests broke and no lines lost coverage.
-5. *types* other than `fix:` and `feat:` are allowed, for example recommends `build:`, `chore:`, `ci:`, `docs:`, `style:`, `perf:`, `test:`, and others.
-
+   4.*types* other than `refactor:` means that you changed <b>src</b> code but unlike `feat` no tests broke and no lines lost coverage.
+4. *types* other than `fix:` and `feat:` are allowed, for example recommends `build:`, `chore:`, `ci:`, `docs:`, `style:`, `perf:`, `test:`, and others.
 
 Additional types are not mandated by the Conventional Commits specification, and have no implicit effect in Semantic Versioning (unless they include a BREAKING CHANGE). A scope may be provided to a commit’s type, to provide additional contextual information and is contained within parenthesis, e.g., `feat(parser): add ability to parse arrays`.
 

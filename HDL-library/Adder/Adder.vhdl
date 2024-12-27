@@ -29,7 +29,7 @@ end entity ADDER;
 
 architecture behv of ADDER is
 
--- define a temparary signal to store the result
+-- define a temporary signal to store the result 
 
 signal result: std_logic_vector(n downto 0);
  

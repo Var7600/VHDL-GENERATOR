@@ -1,8 +1,11 @@
 #ignores class file
 *.class
 
-# ignore target directory
+# ignores target directory
 target/
+
+#ignore eclipse setting
+./settings/
 
 # ignore jar files
 *.jar

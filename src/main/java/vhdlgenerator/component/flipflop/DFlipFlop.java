@@ -1,10 +1,10 @@
 /**
- * @file DflipFlop.java
+ * @file DFlipFlop.java
  *
  * @author DOUDOU DIAWARA @see
  * <a href="https://github.com/Var7600/VHDL-GENERATOR">Github Page</a>
  *
- * @version 0.0
+ * @version 0.1
  *
  * @section LICENSE
  *
@@ -16,7 +16,6 @@
 package vhdlgenerator.component.flipflop;
 
 import java.io.IOException;
-import javax.swing.JOptionPane;
 
 import vhdlgenerator.component.DisplayLibrary;
 import vhdlgenerator.generator.FileGenerator;
@@ -27,7 +26,7 @@ import vhdlgenerator.generator.WindowCode;
  *
  * @author DOUDOU DIAWARA
  */
-public class DFlipFlop
+public final class DFlipFlop
 {
 
 	//
@@ -35,111 +34,105 @@ public class DFlipFlop
 	//
 
 	/**
-	 * the type of the D-Flip-Flop
-	 */
-	private int type = -1;
-
-	/**
 	 * filename for the d-flip-flop
 	 */
-	private final String FILE_DFLIPFLOP = "dflipflop.vhdl";
+	private static final String FILE_DFLIPFLOP = "dflipflop.vhdl";
 	/** filename for the d-flip-flop with active-low synchronous set input. */
-	private final String FILE_D_SET_LOW = "dff-set-low.vhdl";
+	private static final String FILE_D_SET_LOW = "dff-set-low.vhdl";
 	/** filename for the d-flip-flop with active-high asynchronous reset input */
-	private final String FILE_D_RESET_HIGH = "dff-reset-high.vhdl";
+	private static final String FILE_D_RESET_HIGH = "dff-reset-high.vhdl";
 
 	/**
 	 * VHDL code of the D-flip-flop
 	 */
-	private final String DFILPFLOP_VHDL = """
-			library IEEE;
-			use IEEE.std_logic_1164.all;
-			use IEEE.numeric_std.all;
+	private static final String DFILPFLOP_VHDL = """
+			LIBRARY IEEE;
+			USE IEEE.std_logic_1164.ALL;
+			USE IEEE.numeric_std.ALL;
 
-			entity d_flip_flop is
-			    port(
-			        d,clk : in     std_logic;
-			        q : out std_logic
-			    );
-			end entity d_flip_flop;
+			ENTITY d_flip_flop IS
+				PORT (
+					d, clk : IN STD_LOGIC;
+					q : OUT STD_LOGIC
+				);
+			END ENTITY d_flip_flop;
 
-			architecture behaviour of d_flip_flop is
+			ARCHITECTURE behaviour OF d_flip_flop IS
 
-			begin
+			BEGIN
+				dff : PROCESS (d, clk)
+				BEGIN
+					IF rising_edge(clk) THEN
+						q <= d;
+					END IF;
+				END PROCESS dff;
 
-			    dff: process(d,clk)
-			    begin
-			        if rising_edge(clk) then
-			            q <= d ;
-			        end if;
-			    end process dff;
-
-			end architecture behaviour;
+			END ARCHITECTURE behaviour;
 			""";
 	/**
 	 * VHDL code of the D-flip-flop with reset synchronous active low
 	 */
-	private final String DFLIPFLOP_RESET_VHDL = """
-			library ieee;
-			use ieee.std_logic_1164.all;
-			use ieee.numeric_std.all;
+	private static final String DFLIPFLOP_RESET_VHDL = """
+			LIBRARY ieee;
+			USE ieee.std_logic_1164.ALL;
+			USE ieee.numeric_std.ALL;
 
 			-------------------------------------------------------------------
 			-- Reset D Flip-flop model with active-high synchronous reset input.--
 			-------------------------------------------------------------------
-			entity d_flip_flop_reset is
-				port(
-						d,clk,reset : in std_logic;
-						q: out std_logic
+			ENTITY d_flip_flop_reset IS
+				PORT (
+					d, clk, reset : IN STD_LOGIC;
+					q : OUT STD_LOGIC
 				);
-			end d_flip_flop_reset;
+			END d_flip_flop_reset;
 
-			architecture behaviour of d_flip_flop_reset is
-			begin
-						dff_reset: process(clk)
-						begin
-						if rising_edge(clk) then
-							if reset = '1' then
-								q <= '0';
-							else
-								q <= d;
-							end if;
-						end if;
-					end process dff_reset;
+			ARCHITECTURE behaviour OF d_flip_flop_reset IS
+			BEGIN
+				dff_reset : PROCESS (clk)
+				BEGIN
+					IF rising_edge(clk) THEN
+						IF reset = '1' THEN
+							q <= '0';
+						ELSE
+							q <= d;
+						END IF;
+					END IF;
+				END PROCESS dff_reset;
 
-			end architecture;
-						""";
+			END ARCHITECTURE;
+			""";
 	/**
 	 * VHDL code of the D-flip-flop with reset asynchronous active high
 	 */
-	private final String DFLIPFLOP_RESET_ASYN_VHDL = """
-			library ieee;
-			use ieee.std_logic_1164.all;
-			use ieee.numeric_std.all;
+	private static final String DFLIPFLOP_RESET_ASYN_VHDL = """
+			LIBRARY ieee;
+			USE ieee.std_logic_1164.ALL;
+			USE ieee.numeric_std.ALL;
 
 			---------------------------------------------------------------------
 			-- Reset D Flip-flop model with active-high asynchronous reset input.--
 			---------------------------------------------------------------------
-			entity d_flip_flop_reset is
-				port(
-						d,clk,reset : in std_logic;
-						q: out std_logic
+			ENTITY d_flip_flop_reset IS
+				PORT (
+					d, clk, reset : IN STD_LOGIC;
+					q : OUT STD_LOGIC
 				);
-			end d_flip_flop_reset;
+			END d_flip_flop_reset;
 
-			architecture behaviour of d_flip_flop_reset is
-			begin
-						dff_reset: process(d,clk,reset)
-						begin
-							if reset = '1' then
-								q <= '0';
-							elsif (falling_edge(clk)) then
-								q <= d;
-							end if;
-					end process dff_reset;
+			ARCHITECTURE behaviour OF d_flip_flop_reset IS
+			BEGIN
+				dff_reset : PROCESS (d, clk, reset)
+				BEGIN
+					IF reset = '1' THEN
+						q <= '0';
+					ELSIF (falling_edge(clk)) THEN
+						q <= d;
+					END IF;
+				END PROCESS dff_reset;
 
-			end architecture;
-						""";
+			END ARCHITECTURE;
+			""";
 
 	//
 	// PUBLIC
@@ -148,122 +141,82 @@ public class DFlipFlop
 	/**
 	 * option for the D-Flip-Flop
 	 */
-	public final static Object[] possibleValues = { "D-Flip-Flop", "D-Flip-Flop-Reset", "D-Flip-Flop-Set" };
+	public static final Object[] possibleValues = { "D-Flip-Flop", "D-Flip-Flop-Reset", "D-Flip-Flop-Set" };
 
 	/**
-	 * constructor for the D-flip-flop component.
-	 *
-	 * @param type the type of the D-flip-flop if type value is 0:D-Flip-Flop, if
-	 *                 type is 1:D-Flip-Flop with synchronous reset if type is
-	 *                 2:D-Flip-Flop- with asynchronous set.
-	 * @exception IllegalArgumentException if the type is not valid for valid type
-	 *                                         see {@link DFlipFlop#possibleValues}.
+	 * default constructor for the D-flip-flop component.
 	 */
-	public DFlipFlop(int type)
+	private DFlipFlop()
 	{
-		if (type != 0 && type != 1 && type != 2)
-		{
-			throw new IllegalArgumentException(
-					"Invalid option for the constructor DFlipFlop!(options  are 0 or 1 or 2 ");
-		}
-
-		this.type = type;
-
-	}
-
-	/**
-	 * getter return the type of the d-flip-flop
-	 *
-	 * @return the type of the d-flip-flop chosen {@link DFlipFlop#DFlipFlop(int)}
-	 */
-	public int getType()
-	{
-		return type;
-	}
-
-	/**
-	 * setter change the type of the d-flip-flop
-	 *
-	 * @param new_type of the d-flip-flop
-	 */
-	public void setType(int new_type)
-	{
-		if (new_type != 0 && new_type != 1 && new_type != 2)
-		{
-			throw new IllegalArgumentException(
-					"Invalid option for the constructor DFlipFlop!(options  are 0 or 1 or 2 ");
-		}
-
-		this.type = new_type;
-	}
+	} // prevent instantiation
 
 	/**
 	 * write the VHDL code of the D-flip-flop to the folder choose by the user.
+	 *
+	 * @param type      the type of DFlipFlop to write see
+	 *                      {@link DFlipFlop#possibleValues}
+	 * @param file_path to write the DFlipFlop
+	 *
+	 * @return the full path of the file generated if file_path otherwise throw
+	 *         Exception
+	 *
+	 * @exception IllegalArgumentException if the mux_size is invalid
+	 * @exception NullPointerException     if the full path returned is
+	 *                                         <code>null</code>
 	 */
-	public void writeD()
+	public static String writeDFlipFlop(String type, String file_path)
 	{
+		StringBuilder full_path = null;
 		try
 		{
-			// check if the file has been created
-			boolean created = false;
 
-			// folder chosen
-			String path = DisplayLibrary.chooseFolder();
-
-			if (WindowCode.validateFilePath(path))
+			if (WindowCode.validateFilePath(file_path))
 			{
-				path = path + DisplayLibrary.FILE_SEPARATOR;
+				full_path = new StringBuilder(file_path + DisplayLibrary.FILE_SEPARATOR);
 
-				switch (this.type)
+				switch (type)
 				{
-				case 0:
+				case "D-Flip-Flop" -> {
 					// file path
-					path = path + FILE_DFLIPFLOP;
+					full_path.append(FILE_DFLIPFLOP);
 					// create file path
-					created = FileGenerator.openFile(path);
+					FileGenerator.openFile(full_path.toString());
 					// write VHDL code simple d-flip-flop
-					FileGenerator.writeData(path, DFILPFLOP_VHDL);
-					break;
-				case 1:
-					// file path
-					path = path + FILE_D_RESET_HIGH;
-					// create file path
-					created = FileGenerator.openFile(path);
-					// write VHDL code D Flip-flop model with active-high asynchronous reset input
-					FileGenerator.writeData(path, DFLIPFLOP_RESET_VHDL);
-					break;
-				case 2:
-					// file path
-					path = path + FILE_D_SET_LOW;
-					// create file path
-					created = FileGenerator.openFile(path);
-					// write VHDL code D Flip-flop model with active-low synchronous set input
-					FileGenerator.writeData(path, DFLIPFLOP_RESET_ASYN_VHDL);
-					break;
-				default:
-					System.err.println("Error invalid option for DFlipFlop! valid option are 0,1 and 2");
-					break;
+					FileGenerator.writeData(full_path.toString(), DFILPFLOP_VHDL);
 				}
-
-				if (created)
-				{
-					// code generated successfully
-					int option = (Integer) WindowCode.successFrame(DisplayLibrary.GENERATED_COMPONENT).getValue();
-
-					if (option == JOptionPane.YES_OPTION || option == JOptionPane.CANCEL_OPTION
-							|| option == JOptionPane.CLOSED_OPTION)
-					{
-						// show the file created
-						WindowCode.showFile(path);
-					}
+				case "D-Flip-Flop-Reset" -> {
+					// file path
+					full_path.append(FILE_D_RESET_HIGH);
+					// create file path
+					FileGenerator.openFile(full_path.toString());
+					// write VHDL code D Flip-flop model with active-high asynchronous reset input
+					FileGenerator.writeData(full_path.toString(), DFLIPFLOP_RESET_VHDL);
+				}
+				case "D-Flip-Flop-Set" -> {
+					// file path
+					full_path.append(FILE_D_SET_LOW);
+					// create file path
+					FileGenerator.openFile(full_path.toString());
+					// write VHDL code D Flip-flop model with active-low synchronous set input
+					FileGenerator.writeData(full_path.toString(), DFLIPFLOP_RESET_ASYN_VHDL);
+				}
+				default -> throw new IllegalArgumentException(
+						"Error invalid option for DFlipFlop! valid option are D-Flip-Flop,D-Flip-Flop-Reset"
+								+ ",D-Flip-Flop-Set");
 				}
 			}
 
 		} catch (IOException | NullPointerException e)
 		{
-			// handle cannot open file or create file.
-			// WindowCode.errorFrame(WindowCode.ERROR_MSG_OPEN);
+			// e.printStackTrace();
 		}
+		if (full_path == null)
+		{
+			// a error occurred when trying to write to path
+			throw new NullPointerException("could not write to file!");
+		}
+		// return path
+		return full_path.toString();
 	}
 
 }

@@ -20,7 +20,8 @@ import java.awt.Color;
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.Iterator;
-import java.util.LinkedList;
+import java.util.List;
+
 import javax.swing.JTextPane;
 import javax.swing.SwingUtilities;
 import javax.swing.event.DocumentEvent;
@@ -101,7 +102,7 @@ public class SyntaxHighlighting
 			lexer.yylex();
 
 			// list of Token to highlight
-			LinkedList<Token> list_token = lexer.getListToken();
+			List<Token> list_token = lexer.getListToken();
 			Iterator<Token> it = list_token.iterator();
 
 			while (it.hasNext())

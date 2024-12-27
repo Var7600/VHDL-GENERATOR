@@ -3,7 +3,7 @@
  *
  * @author DOUDOU DIAWARA @see
  * <a href="https://github.com/Var7600/VHDL-GENERATOR">Github Page</a>
- * @version 0.0
+ * @version 0.1
  *
  * @section LICENSE
  *
@@ -14,12 +14,16 @@
  */
 package vhdlgenerator.generator;
 
-import java.util.HashMap;
-import java.util.Objects;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
+
 import javax.swing.JOptionPane;
+
+import vhdlgenerator.component.ComponentUtil;
 
 /**
  * this class generate the code for the VHDL file. this class take information
@@ -62,7 +66,7 @@ public class FileGenerator
 	 * "http://www.pldworld.com/_hdl/2/_ref/acc-eda/VHDL_KEYWORDS/VHDL_KEYWORDS.htm">VHDL
 	 * Keywords </a>
 	 */
-	public static final HashMap<String, String> VHDL_KEYWORDS = new HashMap<String, String>();
+	public static final Map<String, String> VHDL_KEYWORDS = new HashMap<String, String>();
 
 	// INITIALIZE VHDL KEYWORDS
 	static
@@ -80,9 +84,9 @@ public class FileGenerator
 		VHDL_KEYWORDS.put("END_GENERIC", ");");
 		VHDL_KEYWORDS.put("PORT", "\tport(");
 		VHDL_KEYWORDS.put("END_PORT", ");");
-		VHDL_KEYWORDS.put("ARCHITECTURE", "\narchitecture behaviour of ");
+		VHDL_KEYWORDS.put("ARCHITECTURE", "\narchitecture behavior of ");
 		VHDL_KEYWORDS.put("ARCHITECTURE_IS", " is \nbegin\n");
-		VHDL_KEYWORDS.put("END_ARCHITECTURE", "end behaviour ;");
+		VHDL_KEYWORDS.put("END_ARCHITECTURE", "end behavior ;");
 		VHDL_KEYWORDS.put("INTEGER", " integer");
 		VHDL_KEYWORDS.put("STD_LOGIC", "std_logic");
 		VHDL_KEYWORDS.put("STD_LOGIC_VECTOR", "std_logic_vector");
@@ -187,43 +191,23 @@ public class FileGenerator
 	 */
 	public static boolean openFile(final String file_name) throws NullPointerException, IOException
 	{
-		boolean exit = false;
+		Objects.requireNonNull(file_name, NULL_FILE);
 
-		if (file_name == null)
+		// path to the file
+		File file = new File(file_name);
+
+		if (file.exists()) // test file if already exist
 		{
-			throw new NullPointerException(NULL_FILE);
-		} else
-		{
+			/* JFrame information file already exists */
+			int choice = JOptionPane.showConfirmDialog(null, FILE_ALREADY_EXISTS);
 
-			// path to the file
-			File file = new File(file_name);
-
-			if (!(file.exists())) // test file if already exist
+			if (choice == JOptionPane.YES_OPTION && removeFile(file)) // override file
 			{
-				if (file.createNewFile()) // not exist yet create
-				{
-					exit = true;
-
-				}
-			} else
-			{
-				/* JFrame information file already exists */
-
-				int choice = JOptionPane.showConfirmDialog(null, FILE_ALREADY_EXISTS);
-
-				if (choice == JOptionPane.YES_OPTION) // override file
-				{
-					if (removeFile(file)) // delete existing file
-					{
-						exit = file.createNewFile();
-						return exit;
-
-					}
-				}
+				// delete existing file
+				return file.createNewFile();
 			}
 		}
-
-		return exit;
+		return file.createNewFile();
 	}
 
 	/**
@@ -231,12 +215,11 @@ public class FileGenerator
 	 *
 	 * @param file to remove
 	 * @exception NullPointerException if file_name is <code>null</code>
-	 * @exception IOException          when the file cannot be deleted
 	 *
 	 * @return <code>true</code> if the file has been deleted successfully otherwise
 	 *         <code>false</code>.
 	 */
-	public static boolean removeFile(File file) throws NullPointerException, IOException
+	public static boolean removeFile(File file) throws NullPointerException
 	{
 		Objects.requireNonNull(file);
 		return file.delete();
@@ -257,15 +240,13 @@ public class FileGenerator
 		// file to write data
 		try (FileWriter file = new FileWriter(file_name, true))
 		{
-
 			// writing data
 			file.write(data);
-			file.append(NEWLINE);
 
 		} catch (IOException e)
 		{
 
-			WindowCode.errorFrame(NO_WRITE);
+			ComponentUtil.errorFrame(NO_WRITE);
 		}
 
 	}
@@ -281,12 +262,11 @@ public class FileGenerator
 		StringBuilder data = new StringBuilder();
 
 		data.append(VHDL_KEYWORDS.get("IEEE")).append(NEWLINE) // importing library
-				.append(VHDL_KEYWORDS.get("ENTITY")).append(this.info_interface.getNameEntity())
+				.append(VHDL_KEYWORDS.get("ENTITY")).append(this.info_interface.entity_name())
 				.append(VHDL_KEYWORDS.get("IS")); // entity
 
 		// write to the file
 		writeData(this.getFileName(), data.toString());
-
 	}
 
 	/**
@@ -298,9 +278,9 @@ public class FileGenerator
 		/*
 		 * generic(DataWitdh : integer := 8 ),
 		 */
-		if (this.info_interface.getGenericMap() != null)
+		if (this.info_interface.generic_map() != null)
 		{ // return the generic name and the generic value
-			String[] name_value = separator(SEMICOLON, this.info_interface.getGenericMap());
+			String[] name_value = separator(SEMICOLON, this.info_interface.generic_map());
 			// GENERIC MAP
 			String data = TAB + VHDL_KEYWORDS.get("GENERIC") + name_value[0] + COLON + VHDL_KEYWORDS.get("INTEGER")
 					+ VHDL_KEYWORDS.get("VARIABLE_ASSIGNMENT") + name_value[1] + VHDL_KEYWORDS.get("END_GENERIC");
@@ -327,9 +307,9 @@ public class FileGenerator
 		String downTo = "-1 downto 0)";
 
 		// get the input signals
-		String[] signal_split = separator(SEMICOLON, this.info_interface.getInputPort());
+		String[] signal_split = separator(SEMICOLON, this.info_interface.input_port());
 		// get input signals datatype
-		String[] data_type_split = separator(SEMICOLON, this.info_interface.getInDataType());
+		String[] data_type_split = separator(SEMICOLON, this.info_interface.in_data_type());
 
 		buffer.append(VHDL_KEYWORDS.get("PORT")).append(NEWLINE).append(TAB + TAB + TAB);
 
@@ -343,13 +323,14 @@ public class FileGenerator
 			buffer.append(VHDL_KEYWORDS.get("IN"));
 
 			// input data type signal
+
 			buffer.append(data_type_split[i]);
 
 			// add length to array std_logic_vector value generic constant
-			if (this.info_interface.getGenericMap() != null
+			if (this.info_interface.generic_map() != null
 					&& data_type_split[i].equals(VHDL_KEYWORDS.get("STD_LOGIC_VECTOR")))
 			{
-				String[] name_value_generic = separator(SEMICOLON, this.info_interface.getGenericMap());
+				String[] name_value_generic = separator(SEMICOLON, this.info_interface.generic_map());
 				// add only the name not the value
 				buffer.append("(").append(name_value_generic[0]).append(downTo);
 			}
@@ -370,10 +351,10 @@ public class FileGenerator
 		 * **** OUPUT SIGNALS ***
 		 */
 		// get the output signals string_split
-		signal_split = separator(SEMICOLON, this.info_interface.getOutputPort());
+		signal_split = separator(SEMICOLON, this.info_interface.output_port());
 
 		// get the output data type signal
-		data_type_split = separator(SEMICOLON, this.info_interface.getOutDataType());
+		data_type_split = separator(SEMICOLON, this.info_interface.out_data_type());
 
 		// loop to out_data_type
 		i = 0;
@@ -389,10 +370,10 @@ public class FileGenerator
 			buffer.append(data_type_split[i]);
 
 			// add length to array std_logic_vector value generic constant
-			if (this.info_interface.getGenericMap() != null
+			if (this.info_interface.generic_map() != null
 					&& data_type_split[i].equals(VHDL_KEYWORDS.get("STD_LOGIC_VECTOR")))
 			{
-				String[] name_value_generic = separator(SEMICOLON, this.info_interface.getGenericMap());
+				String[] name_value_generic = separator(SEMICOLON, this.info_interface.generic_map());
 				// add only the name not the value
 				buffer.append("(").append(name_value_generic[0]).append(downTo);
 			}
@@ -416,7 +397,7 @@ public class FileGenerator
 		buffer.append(TAB);
 		buffer.append(VHDL_KEYWORDS.get("END_PORT"));
 		buffer.append(NEWLINE);
-		buffer.append(VHDL_KEYWORDS.get("END")).append(info_interface.getNameEntity()).append(SEMICOLON);
+		buffer.append(VHDL_KEYWORDS.get("END")).append(info_interface.entity_name()).append(SEMICOLON);
 
 		// write all data to the file
 		writeData(this.getFileName(), buffer.toString());
@@ -428,19 +409,18 @@ public class FileGenerator
 	 */
 	private void writeArchitecture()
 	{
-		/*
-		 * architecture name of entity is begin implementation code end name ;
-		 */
+
+		// architecture name of entity is begin implementation code end name ;
 
 		StringBuilder data = new StringBuilder();
 		data.append(VHDL_KEYWORDS.get("ARCHITECTURE"));
-		data.append(this.info_interface.getNameEntity());
+		data.append(this.info_interface.entity_name());
 		data.append(VHDL_KEYWORDS.get("ARCHITECTURE_IS"));
 
 		// VHDL CODE IMPLEMENTATION TO WRITE TO THE FILE
-		if (info_interface.getCodeImplementation() != null)
+		if (info_interface.code_implementation() != null)
 		{
-			data.append(info_interface.getCodeImplementation());
+			data.append(info_interface.code_implementation());
 			data.append(NEWLINE);
 		}
 

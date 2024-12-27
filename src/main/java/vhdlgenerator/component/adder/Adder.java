@@ -4,7 +4,7 @@
  * @author DOUDOU DIAWARA @see
  * <a href="https://github.com/Var7600/VHDL-GENERATOR">Github Page</a>
  *
- * @version 0.0
+ * @version 0.1
  *
  * @section LICENSE This program is free software; you can redistribute it
  * and/or modify it under the terms of “Commons Clause” License Condition v1.0
@@ -14,10 +14,6 @@
 package vhdlgenerator.component.adder;
 
 import java.io.IOException;
-import java.util.Objects;
-
-import javax.swing.JOptionPane;
-
 import vhdlgenerator.component.DisplayLibrary;
 import vhdlgenerator.generator.FileGenerator;
 import vhdlgenerator.generator.WindowCode;
@@ -27,7 +23,7 @@ import vhdlgenerator.generator.WindowCode;
  *
  * @author DOUDOU DIAWARA
  */
-public class Adder
+public final class Adder
 {
 
 	/**
@@ -46,7 +42,7 @@ public class Adder
 	/**
 	 * VHDL CODE for the HalfAdder
 	 */
-	private final String HALF_ADDER_VHDL = """
+	private static final String HALF_ADDER_VHDL = """
 			--------------------------------------------------------
 			-- VHDL code for 2-bit adder
 			--
@@ -58,28 +54,25 @@ public class Adder
 			use IEEE.numeric_std.all;
 
 			entity HalfAdder is
-			    port(
-			        a : in std_logic ;
-			        b : in std_logic ;
-			        sum : out std_logic ;
-			        carry : out std_logic
-
-			    );
+				port(
+				a : in std_logic ;
+				b : in std_logic ;
+				sum : out std_logic ;
+				carry : out std_log
+				);
 			end entity HalfAdder;
 
 			architecture behaviour of HalfAdder is
 			begin
-			    sum <= a xor b ;
-			    carry <= a and b;
-
+				sum <= a xor b ;
+				carry <= a and b
 			end architecture behaviour;
-
 			""";
 
 	/**
 	 * VHDL CODE for the FullAdder
 	 */
-	private final String FULL_ADDER_VHDL = """
+	private static final String FULL_ADDER_VHDL = """
 			--------------------------------------------------------
 			-- VHDL code for 3-bit adder
 			--
@@ -91,27 +84,25 @@ public class Adder
 			use ieee.numeric_std.all;
 
 			entity FullAdder is
-			  port (
-			        a  : in std_logic;
-			        b  : in std_logic;
-			        carry_in : in std_logic;
-			        sum   : out std_logic;
-			        carry_out : out std_logic
-			    );
+			port (
+			a  : in std_logic;
+			b  : in std_logic;
+			carry_in : in std_logic;
+			sum   : out std_logic;
+			carry_out : out std_logic
+			);
 			end FullAdder;
 
 			architecture behaviour of FullAdder is
 			begin
-			   sum   <= a xor b xor carry_in; -- sum of a + b
-			   carry_out <= ((a xor b) and carry_in) or (a and b); -- carry of a + b
-
+			sum   <= a xor b xor carry_in; -- sum of a + b
+			carry_out <= ((a xor b) and carry_in) or (a and b); -- carry of a
 			end behaviour;
-
 			""";
 	/**
 	 * VHDL CODE for the arithmetic Adder
 	 */
-	private final String ARITHMETIC_ADDER_VHDL = """
+	private static final String ARITHMETIC_ADDER_VHDL = """
 			--------------------------------------------------------
 			-- VHDL code for n-bit adder
 			--
@@ -121,167 +112,118 @@ public class Adder
 			-- n(DataWidth) of the adder.
 			--------------------------------------------------------
 
-			library ieee;
-			use ieee.std_logic_1164.all;
-			use ieee.std_logic_arith.all;
-			use ieee.std_logic_unsigned.all;
+			LIBRARY ieee;
+			USE ieee.std_logic_1164.ALL;
+			USE ieee.std_logic_arith.ALL;
+			USE ieee.std_logic_unsigned.al
+			ENTITY ADDER IS
+				GENERIC (n : NATURAL := 8);
+				PORT (
+					a : IN STD_LOGIC_VECTOR(n - 1 DOWNTO 0);
+					b : IN STD_LOGIC_VECTOR(n - 1 DOWNTO 0);
+					carry : OUT STD_LOGIC;
+					sum : OUT STD_LOGIC_VECTOR(n - 1 DOWNTO 0)
+				);
 
-			--------------------------------------------------------
+			END ENTITY ADDER;
 
-			entity ADDER is
-			generic( n: natural := 8 );
-			port(
-			        a:	in std_logic_vector(n-1 downto 0);
-				b:	in std_logic_vector(n-1 downto 0);
-				carry:	out std_logic;
-				sum:	out std_logic_vector(n-1 downto 0)
-			);
+			ARCHITECTURE behaviour OF ADDER IS
 
-			end entity ADDER;
+				-- define a temparary signal to store the result
 
-			--------------------------------------------------------
+				SIGNAL result : STD_LOGIC_VECTOR(n DOWNTO 0);
 
-			architecture behv of ADDER is
+			BEGIN
 
-			-- define a temparary signal to store the result
+				-- the 3rd bit should be carry
+				result <= ('0' & a) + ('0' & b);
+				sum <= result(n - 1 DOWNTO 0);
+				carry <= result(n);
 
-			signal result: std_logic_vector(n downto 0);
-
-			begin
-
-			    -- the 3rd bit should be carry
-
-			    result <= ('0' & a)+('0' & b);
-			    sum <= result(n-1 downto 0);
-			    carry <= result(n);
-
-			end behv;
-
-			--------------------------------------------------------
+			END behaviour;
 			""";
 
 	/**
 	 * choice between bitwise-HalfAdder or bitwise-FullAdder or ArithmeticAdder
 	 */
-	public static final Object[] possibleValues = { "Bit-HalfAdder", "Bit-FullAdder", "Adder" };
+	public static final Object[] possibleValues = { "Bit-HalfAdder", "Bit-FullAdder", "Arithmetic-Adder" };
 
 	/**
-	 * Constructor for Adder
+	 * default Constructor for Adder
 	 */
-	public Adder()
+	private Adder()
 	{
-
-	}
-
-	/**
-	 * get the VHDL Code for the HalfAdder
-	 *
-	 * @return the VHDL Code for the HalfAdder
-	 */
-	public String getHALFAdder()
-	{
-		return this.HALF_ADDER_VHDL;
-	}
-
-	/**
-	 * get the VHDL Code for the FullAdder
-	 *
-	 * @return the VHDL Code for the FullAdder
-	 */
-	public String getFullAdder()
-	{
-		return this.FULL_ADDER_VHDL;
-	}
-
-	/**
-	 * get the VHDL Code for the Adder
-	 *
-	 * @return the VHDL Code for the Arithmetic Adder
-	 */
-	public String getAdder()
-	{
-		return ARITHMETIC_ADDER_VHDL;
-	}
+	} // prevent instantiation
 
 	/**
 	 * write the VHDL code for the Adder chosen to the directory.
 	 *
-	 * @param adder_type the type of adder to write to the file Bit-HalfAdder or
-	 *                       Bit-FullAdder or Adder
-	 * @exception IllegalArgumentException if adder_type value is different to
-	 *                                         HalfAdder or FullAdder
-	 * @exception NullPointerException     when adder_type is null
+	 * @param type the type of Adder to write see {@link Adder#possibleValues}
+	 * @param path to write the Adder
+	 *
+	 * @return the full path of the file generated if file_path is valid otherwise
+	 *         throw Exception
+	 *
+	 * @exception IllegalArgumentException if the mux_size is invalid
+	 * @exception NullPointerException     if the full path returned is
+	 *                                         <code>null</code>
 	 */
-	public void writeAdder(String adder_type)
+	public static String writeAdder(String type, String path)
 	{
-		Objects.requireNonNull(adder_type, "passing null value");
-
+		StringBuilder full_path = null;
 		try
 		{
-			// if the file has been opened
-			boolean created = false;
-
-			String file_path = DisplayLibrary.chooseFolder();
-
-			if (WindowCode.validateFilePath(file_path))
+			if (WindowCode.validateFilePath(path))
 			{
+				full_path = new StringBuilder(path + DisplayLibrary.FILE_SEPARATOR);
 
-				// HalfAdder
-				if ("Bit-HalfAdder".equalsIgnoreCase(adder_type))
+				switch (type)
 				{
-
+				case "Bit-HalfAdder" -> {
 					// create the full path name of the file
-					file_path = file_path + DisplayLibrary.FILE_SEPARATOR + FILE_HALF_ADDER;
+					full_path.append(FILE_HALF_ADDER);
 					// create the new file
-					created = FileGenerator.openFile(file_path);
+					FileGenerator.openFile(full_path.toString());
 					// write code to the file
-					FileGenerator.writeData(file_path, HALF_ADDER_VHDL);
-
-				} else if ("Bit-FullAdder".equalsIgnoreCase(adder_type))
-				{ // FullAdder
-
-					// create the full path name of the file
-					file_path = file_path + DisplayLibrary.FILE_SEPARATOR + FILE_FULL_ADDER;
-					// create the new file
-					created = FileGenerator.openFile(file_path);
-					// write code to the file
-					FileGenerator.writeData(file_path, FULL_ADDER_VHDL);
-
-				} else if ("Adder".equalsIgnoreCase(adder_type))
-				{
-					// create the full path name of the file
-					file_path = file_path + DisplayLibrary.FILE_SEPARATOR + FILE_ARITH_ADDER;
-					// create the new file
-					created = FileGenerator.openFile(file_path);
-					// write code to the file
-					FileGenerator.writeData(file_path, ARITHMETIC_ADDER_VHDL);
-
-				} else
-				{
-
-					throw new IllegalArgumentException(
-							"Unexpected value: " + adder_type + "valid option are HalfAdder or FullAdder or Adder!");
+					FileGenerator.writeData(full_path.toString(), HALF_ADDER_VHDL);
 				}
 
-				// FRAME for successful generation of the component
-				if (created)
-				{
-					// code generated successfully
-					int option = (Integer) WindowCode.successFrame(DisplayLibrary.GENERATED_COMPONENT).getValue();
+				case "Bit-FullAdder" -> {
 
-					if (option == JOptionPane.YES_OPTION || option == JOptionPane.CANCEL_OPTION
-							|| option == JOptionPane.CLOSED_OPTION)
-					{
-						// show the file created
-						WindowCode.showFile(file_path);
-					}
+					// create the full path name of the file
+					full_path.append(FILE_FULL_ADDER);
+					// create the new file
+					FileGenerator.openFile(full_path.toString());
+					// write code to the file
+					FileGenerator.writeData(full_path.toString(), FULL_ADDER_VHDL);
+				}
+
+				case "Arithmetic-Adder" -> {
+					// create the full path name of the file
+					full_path.append(FILE_ARITH_ADDER);
+					// create the new file
+					FileGenerator.openFile(full_path.toString());
+					// write code to the file
+					FileGenerator.writeData(full_path.toString(), ARITHMETIC_ADDER_VHDL);
+				}
+				default -> throw new IllegalArgumentException("Error invalid option for Adder! valid option are "
+						+ "Bit-HalfAdder, Bit-FullAdder  and Adder");
+
 				}
 			}
 
 		} catch (IOException | NullPointerException e)
 		{
 			// handle cannot open file or create file.
-			// WindowCode.errorFrame(WindowCode.ERROR_MSG_OPEN);
+			// e.printStackTrace();
 		}
+
+		if (full_path == null)
+		{
+			// a error occured when trying to write to path
+			throw new NullPointerException("could not write to file!");
+		}
+		// return path
+		return full_path.toString();
 	}
 }

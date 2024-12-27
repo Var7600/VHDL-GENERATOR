@@ -11,8 +11,10 @@
     <File Include="Dflipflop/vhdl_ls.toml" />
     <File Include="JKflipflop/jk_ff_tb.vhdl" />
     <File Include="JKflipflop/jk_flip_flop.vhdl" />
+    <File Include="Tflipflop/t_ff_sync.vhdl" />
+    <File Include="Tflipflop/t_ff_sync_tb.vhdl" />
   </ItemGroup>
   <PropertyGroup>
-    <HardwareStartPath>JKflipflop/jk_ff_tb.vhdl</HardwareStartPath>
+    <HardwareStartPath>Tflipflop/t_ff_sync_tb.vhdl</HardwareStartPath>
   </PropertyGroup>
 </Project>

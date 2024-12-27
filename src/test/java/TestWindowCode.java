@@ -1,7 +1,11 @@
 
+/**
+ * @file TestWindowCode.java
+ *
+ * @version 0.1
+ */
 import org.junit.jupiter.api.Test;
 
-import vhdlgenerator.generator.Port;
 import vhdlgenerator.generator.WindowCode;
 
 import org.junit.jupiter.api.AfterEach;
@@ -10,9 +14,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.condition.EnabledOnOs;
 import org.junit.jupiter.api.condition.OS;
-import java.io.IOException;
 
-public class TestWindowCode
+class TestWindowCode
 {
 
 	WindowCode window;
@@ -20,8 +23,6 @@ public class TestWindowCode
 	@BeforeEach
 	public void setUp()
 	{
-		// Assertions.assertTrue(GraphicsEnvironment.isHeadless());
-
 		window = new WindowCode();
 	}
 
@@ -33,7 +34,7 @@ public class TestWindowCode
 
 	@Test
 	@DisplayName("TEST METHOD validateFilePath")
-	public void testValidateFilePath() throws NullPointerException, IOException
+	void testValidateFilePath() throws NullPointerException
 	{
 		// test valid path current working directory
 		String path = ".";
@@ -58,7 +59,7 @@ public class TestWindowCode
 	// file path On Windows and Linux
 	@Test
 	@EnabledOnOs(OS.WINDOWS)
-	public void testPathOnWindows()
+	void testPathOnWindows()
 	{
 		// Your Windows-specific test logic here
 		// test invalid path contains special character both on Windows
@@ -69,7 +70,7 @@ public class TestWindowCode
 
 	@Test
 	@EnabledOnOs(OS.LINUX)
-	public void testPathOnLinux()
+	void testPathOnLinux()
 	{
 		String path = "?++/";
 		Assertions.assertEquals(true, WindowCode.validateFilePath(path), "valid  special character path in Linux");
@@ -78,7 +79,7 @@ public class TestWindowCode
 
 	@Test
 	@DisplayName("TEST METHOD validateIdentifier")
-	public void testValidateIdentifier()
+	void testValidateIdentifier()
 	{
 
 		String identifier = "01234";
@@ -107,7 +108,7 @@ public class TestWindowCode
 
 	@Test
 	@DisplayName("TEST METHOD checkFormatInput")
-	public void testCheckFormatInput()
+	void testCheckFormatInput()
 	{
 
 		String pattern = "(([a-zA-Z]+[0-9]*;*)*)";
@@ -143,31 +144,30 @@ public class TestWindowCode
 
 	@Test
 	@DisplayName("TEST METHOD equalNumberSignalData")
-	public void testEqualNumberSignalData()
+	void testEqualNumberSignalData()
 	{
-		Port port = window.getPort();
-		// input and data
-		port.setInputPort("input1;input2");
-		port.setInDataType("std_logic_vector");
-		// output and data
-		port.setOutputPort("output1;output2");
-		port.setOutDataType("std_logic_vector");
+
+		String input = "input1;input2";
+		String data_input = "std_logic_vector";
+		String output = "output1;output2";
+		String data_output = "std_logic_vector";
 
 		// NOT MATCHING TEST
-		Assertions.assertEquals(false, window.equalNumberSignalData(),
+		Assertions.assertEquals(false, window.equalNumberSignalData(input, data_input, output, data_output),
 				"fail test not matching number of input and data type");
 
 		// MAATCHING TEST
-		port.setInDataType("std_logic_vector;std_logic_vector");
-		port.setOutDataType("std_logic_vector;std_logic_vector");
-		Assertions.assertEquals(true, window.equalNumberSignalData(),
+		data_input = "std_logic_vector;std_logic_vector";
+		data_output = "std_logic_vector;std_logic_vector";
+
+		Assertions.assertEquals(true, window.equalNumberSignalData(input, data_input, output, data_output),
 				"fail test matching number of input and data type");
 
 	}
 
 	@Test
 	@DisplayName("TEST METHOD INPUT GENERIC FORMAT")
-	public void testValidateGeneric()
+	void testValidateGeneric()
 			throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException
 	{
 		window.setGeneric("DataWidth;8");

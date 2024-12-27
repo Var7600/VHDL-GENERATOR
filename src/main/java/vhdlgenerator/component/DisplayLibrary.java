@@ -4,7 +4,7 @@
  * @author DOUDOU DIAWARA @see
  * <a href="https://github.com/Var7600/VHDL-GENERATOR">Github Page</a>
  *
- * @version 0.0
+ * @version 0.1
  *
  * @section LICENSE
  *
@@ -15,6 +15,19 @@
  */
 package vhdlgenerator.component;
 
+import static vhdlgenerator.component.Library.ADDER;
+import static vhdlgenerator.component.Library.COMPARATOR;
+import static vhdlgenerator.component.Library.DECODER;
+import static vhdlgenerator.component.Library.DEMULTIPLEXER;
+import static vhdlgenerator.component.Library.DFILPFLOP;
+import static vhdlgenerator.component.Library.ENCODER;
+import static vhdlgenerator.component.Library.JKFLIPFLOP;
+import static vhdlgenerator.component.Library.MULTIPLEXER;
+import static vhdlgenerator.component.Library.PRIORITY_ENCODER;
+import static vhdlgenerator.component.Library.SEVEN_SEGMENT;
+import static vhdlgenerator.component.Library.SUBTRACTOR;
+import static vhdlgenerator.component.Library.TFLIPFLOP;
+
 // java awt package
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -24,14 +37,15 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 
 //java swing package
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.WindowConstants;
 
+// vhdlgenerator package
 import vhdlgenerator.application.AppVG;
 import vhdlgenerator.component.adder.Adder;
 import vhdlgenerator.component.comparator.Comparator;
@@ -40,6 +54,7 @@ import vhdlgenerator.component.demultiplexer.Demux;
 import vhdlgenerator.component.encoder.Encoder;
 import vhdlgenerator.component.flipflop.DFlipFlop;
 import vhdlgenerator.component.flipflop.JKFlipFlop;
+import vhdlgenerator.component.flipflop.TFlipFlop;
 import vhdlgenerator.component.multiplexer.Mux;
 import vhdlgenerator.component.priorityencoder.PriorityEncoder;
 import vhdlgenerator.component.segment7.Segment7;
@@ -52,7 +67,7 @@ import vhdlgenerator.generator.WindowCode;
  * @author DOUDOU DIAWARA
  */
 @SuppressWarnings("serial")
-public class DisplayLibrary extends JFrame implements ActionListener
+public final class DisplayLibrary extends JFrame implements ActionListener
 {
 	//
 	// PRIVATE
@@ -83,10 +98,7 @@ public class DisplayLibrary extends JFrame implements ActionListener
 	 * separate directories on Linux/MAC OS "anti-slashes"(\\)
 	 */
 	public static final String FILE_SEPARATOR = System.getProperty("file.separator");
-	/**
-	 * title select a directory
-	 */
-	public static final String SELECT_FOLDER = "<html><b>SELECT A DIRECTORY</b></html>";
+
 	/**
 	 * code generated successfully
 	 */
@@ -95,10 +107,10 @@ public class DisplayLibrary extends JFrame implements ActionListener
 	/**
 	 * library of VHDL component available in VHDL
 	 */
-	private static final JButton[] library_button = { new JButton("Multiplexer"), new JButton("Demultiplexer"),
-			new JButton("Encoder"), new JButton("Priority Encoder"), new JButton("Decoder"),
-			new JButton("7-Segment-Display"), new JButton("Adder"), new JButton("Subtractor"),
-			new JButton("Comparator"), new JButton("D-Flip-Flop"), new JButton("JK-Flip-Flop") };
+	private static final JButton[] library_button = { new JButton(MULTIPLEXER), new JButton(DEMULTIPLEXER),
+			new JButton(ENCODER), new JButton(PRIORITY_ENCODER), new JButton(DECODER), new JButton(SEVEN_SEGMENT),
+			new JButton(ADDER), new JButton(SUBTRACTOR), new JButton(COMPARATOR), new JButton(DFILPFLOP),
+			new JButton(JKFLIPFLOP), new JButton(TFLIPFLOP) };
 
 	/**
 	 * Button Font
@@ -122,7 +134,7 @@ public class DisplayLibrary extends JFrame implements ActionListener
 		// position center
 		setLocationRelativeTo(null);
 		// close operation
-		setDefaultCloseOperation(DisplayLibrary.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		// Layout Mode
 		setLayout(new BorderLayout());
 		Container container = getContentPane();
@@ -161,25 +173,6 @@ public class DisplayLibrary extends JFrame implements ActionListener
 	}
 
 	/**
-	 * this method open a Frame to select a Directory to create the VHDL component
-	 * see {@link vhdlgenerator.component}
-	 *
-	 * @return path of the directory selected if valid otherwise <code>null</code>.
-	 * @throws NullPointerException if the path selected is null.
-	 */
-	public static String chooseFolder() throws NullPointerException
-	{
-		File file = WindowCode.chooseFile(null, DisplayLibrary.SELECT_FOLDER, true);
-
-		if (file != null && file.isDirectory())
-		{
-			return file.getPath();
-		}
-
-		throw new NullPointerException();
-	}
-
-	/**
 	 * {@inheritDoc}
 	 */
 	@Override
@@ -200,33 +193,48 @@ public class DisplayLibrary extends JFrame implements ActionListener
 		//
 		// Multiplexer
 		//
-		if (action.equals("Multiplexer"))
+		if (action.equals(MULTIPLEXER))
 		{
 			// Mux size choice
 			String mux_size = (String) JOptionPane.showInputDialog(this,
-					"choose the number of inputs of the Multiplexer:", "Multiplexer", JOptionPane.INFORMATION_MESSAGE,
+					"choose the number of inputs of the Multiplexer:", MULTIPLEXER, JOptionPane.INFORMATION_MESSAGE,
 					null, Mux.possibleValues, Mux.possibleValues[0]);
 
 			if (mux_size != null)
 			{
-				// generate Mux VHDL code.
-				new Mux(Integer.parseInt(mux_size)).writeMux();
+				// choosing directory
+				String path = ComponentUtil.chooseFolder(this);
+				if (path != null)
+				{
+					// generate Mux VHDL code.
+					Mux.writeMux(mux_size, path);
+					// open file
+					ComponentUtil.openFileGenerated(path);
+				}
 
 			}
 		}
 		//
 		// Demultiplexer
 		//
-		if (action.equals("Demultiplexer"))
+		if (action.equals(DEMULTIPLEXER))
 		{
 			// Demux size choice
 			String demux_size = (String) JOptionPane.showInputDialog(this,
-					"choose the number of outputs of the Demultiplexer:", "Demultiplexer",
+					"choose the number of outputs of the Demultiplexer:", DEMULTIPLEXER,
 					JOptionPane.INFORMATION_MESSAGE, null, Demux.possibleValues, Demux.possibleValues[0]);
+
 			if (demux_size != null)
-			{
-				// generate Demux VHDL code.
-				new Demux(Integer.parseInt(demux_size)).writeDemux();
+			{ // choosing folder
+				String path = ComponentUtil.chooseFolder(this);
+
+				if (path != null)
+				{
+					// generate Demux VHDL code.
+					Demux.writeDemux(demux_size, path);
+					// open file
+					ComponentUtil.openFileGenerated(path);
+				}
 
 			}
 
@@ -234,7 +242,7 @@ public class DisplayLibrary extends JFrame implements ActionListener
 		//
 		// Decoder
 		//
-		if (action.equals("Decoder"))
+		if (action.equals(DECODER))
 		{
 			// Decoder size
 			String decoder_size = (String) JOptionPane.showInputDialog(this, "choose input size of the Decoder:",
@@ -243,8 +251,15 @@ public class DisplayLibrary extends JFrame implements ActionListener
 
 			if (decoder_size != null)
 			{
-				// decoder VHDL code.
-				new Decoder(Integer.parseInt(decoder_size)).writeDecoder();
+				// choosing directory
+				String path = ComponentUtil.chooseFolder(this);
+				if (path != null)
+				{
+					// generate file
+					Decoder.writeDecoder(decoder_size, path);
+					// open file
+					ComponentUtil.openFileGenerated(path);
+				}
 
 			}
 
@@ -252,141 +267,164 @@ public class DisplayLibrary extends JFrame implements ActionListener
 		//
 		// segment 7 Display
 		//
-		if (action.equals("7-Segment-Display"))
+		if (action.equals(SEVEN_SEGMENT))
 		{
-			new Segment7().writeSegment7();
+			String path = ComponentUtil.chooseFolder(this);
+
+			if (path != null)
+			{
+				Segment7.writeSegment7(path);
+				ComponentUtil.openFileGenerated(path);
+			}
 		}
 		//
-		// flip flop
+		// D flip flop
 		//
-		if (action.equals("D-Flip-Flop"))
+		if (action.equals(DFILPFLOP))
 		{
-			String dff = (String) JOptionPane.showInputDialog(this, "choose your D-Flip-Flop type:", "D Flip-Flop",
+			// choosing option
+			String dff = (String) JOptionPane.showInputDialog(this, "choose D-Flip-Flop type:", DFILPFLOP,
 					JOptionPane.INFORMATION_MESSAGE, null, DFlipFlop.possibleValues, DFlipFlop.possibleValues[0]);
 
 			if (dff != null)
 			{
-				switch (dff)
-
+				// choosing directory
+				String path = ComponentUtil.chooseFolder(this);
+				if (path != null)
 				{
-				case "D-Flip-Flop":
-					new DFlipFlop(0).writeD();
-					break;
-				case "D-Flip-Flop-Reset":
-					new DFlipFlop(1).writeD();
-					break;
-				case "D-Flip-Flop-Set":
-					new DFlipFlop(2).writeD();
-					break;
-				default:
-					System.err.println("Invalid Option!: " + dff + "valid option are:0,1,2");
-					break;
-
+					// generate file
+					DFlipFlop.writeDFlipFlop(dff, path);
+					// open file
+					ComponentUtil.openFileGenerated(path);
 				}
 			}
 
 		}
 		//
 		// JK Flip Flop
-		if (action.equals("JK-Flip-Flop"))
+		if (action.equals(JKFLIPFLOP))
 		{
-			new JKFlipFlop().writeJK();
+
+			String path = ComponentUtil.chooseFolder(this);
+			if (path != null)
+			{
+				JKFlipFlop.writeJK(path);
+				ComponentUtil.openFileGenerated(path);
+			}
+
 		}
 		//
+		// T FLIP FLOP
+		//
+		//
+		if (action.equals(TFLIPFLOP))
+		{
+			// choosing option
+			String tff = (String) JOptionPane.showInputDialog(this, "choose T-Flip-Flop type:", TFLIPFLOP,
+					JOptionPane.INFORMATION_MESSAGE, null, TFlipFlop.possibleValues, TFlipFlop.possibleValues[0]);
+
+			if (tff != null)
+			{
+				// choosing directory
+				String path = ComponentUtil.chooseFolder(this);
+
+				if (path != null)
+				{
+					// generate file
+					TFlipFlop.writeTFlipFlop(tff, path);
+					// open file
+					ComponentUtil.openFileGenerated(path);
+				}
+			}
+
+		}
 		// Encoder
 		//
-		if (action.equals("Encoder"))
+		if (action.equals(ENCODER))
 		{
 			String input_size = (String) JOptionPane.showInputDialog(this, "choose your input size:", "Encoder",
 					JOptionPane.INFORMATION_MESSAGE, null, Encoder.possibleValues, Encoder.possibleValues[0]);
 
+			String path = ComponentUtil.chooseFolder(this);
+
 			if (input_size != null)
 			{
-				switch (input_size)
-				{
-				case "4":
-					new Encoder(4).writeEncoder();
-					break;
-				case "8":
-					new Encoder(8).writeEncoder();
-					break;
-				default:
-					System.err.println("Invalid Option!: " + input_size + "valid option are 4 or 8");
-					break;
+				// generated file
+				Encoder.writeEncoder(input_size, path);
+				ComponentUtil.openFileGenerated(path);
 
-				}
 			}
 		}
 		//
 		// Priority Encoder
 		//
-		if (action.equals("Priority Encoder"))
+		if (action.equals(PRIORITY_ENCODER))
 		{
 			String input_size = (String) JOptionPane.showInputDialog(this, "choose your input size:", "PriorityEncoder",
 					JOptionPane.INFORMATION_MESSAGE, null, PriorityEncoder.possibleValues,
 					PriorityEncoder.possibleValues[0]);
+			String path = ComponentUtil.chooseFolder(this);
 
-			if (input_size != null)
+			if (input_size != null && path != null)
 			{
-				switch (input_size)
-				{
-				case "4":
-					new PriorityEncoder(4).writePriorityEncoder();
-					break;
-				case "8":
-					new PriorityEncoder(8).writePriorityEncoder();
-					break;
-				case "16":
-					new PriorityEncoder(16).writePriorityEncoder();
-					break;
-				default:
-					System.err.println("Invalid Option!: " + input_size + " valid options are 4 or 8 or 16");
-					break;
-
-				}
-
+				PriorityEncoder.writePriorityEncoder(input_size, path);
+				ComponentUtil.openFileGenerated(path);
 			}
-
 		}
 		//
 		// Adder
 		//
-		if (action.equals("Adder"))
+		if (action.equals(ADDER))
 		{
-			String adder_type = (String) JOptionPane.showInputDialog(this, "choose your Adder type:", "Adder",
+			String adder_type = (String) JOptionPane.showInputDialog(this, "choose your " + ADDER + " type:", ADDER,
 					JOptionPane.INFORMATION_MESSAGE, null, Adder.possibleValues, Adder.possibleValues[0]);
 
-			if (adder_type != null)
-			{
-				new Adder().writeAdder(adder_type);
+			String path = ComponentUtil.chooseFolder(null);
 
+			if (adder_type != null && path != null)
+			{
+				Adder.writeAdder(adder_type, path);
+				ComponentUtil.openFileGenerated(path);
 			}
 
 		}
 		//
 		// Subtractor
 		//
-		if (action.equals("Subtractor"))
+		if (action.equals(SUBTRACTOR))
 		{
-			String type = (String) JOptionPane.showInputDialog(this, "choose your Subtractor type:", "Subtractor",
+			String type = (String) JOptionPane.showInputDialog(this, "choose your " + SUBTRACTOR + " type:", SUBTRACTOR,
 					JOptionPane.INFORMATION_MESSAGE, null, Subtractor.possibleValues, Subtractor.possibleValues[0]);
 
-			if (type != null)
+			String path = ComponentUtil.chooseFolder(this);
+
+			if (type != null && path != null)
 			{
-				new Subtractor().writeSubtractor(type);
+				Subtractor.writeSubtractor(type, path);
+				ComponentUtil.openFileGenerated(path);
 			}
 		}
 		//
 		// Comparator
 		//
-		if (action.equals("Comparator"))
+		if (action.equals(COMPARATOR))
 		{
-			String type = (String) JOptionPane.showInputDialog(this, "choose your Comparator type:", "Comparator",
+			// choose option
+			String type = (String) JOptionPane.showInputDialog(this, "choose your " + COMPARATOR + " type:", COMPARATOR,
 					JOptionPane.INFORMATION_MESSAGE, null, Comparator.possibleValues, Comparator.possibleValues[0]);
 
 			if (type != null)
 			{
-				new Comparator().writeComparator(type);
+				// choosing folder
+				String path = ComponentUtil.chooseFolder(this);
+				if (path != null)
+				{
+					// generated code
+					Comparator.writeComparator(type, path);
+					// open file
+					ComponentUtil.openFileGenerated(path);
+				}
+
 			}
 		}
 
