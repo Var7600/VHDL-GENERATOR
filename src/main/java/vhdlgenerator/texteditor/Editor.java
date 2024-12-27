@@ -4,7 +4,7 @@
  * @author DOUDOU DIAWARA @see
  * <a href="https://github.com/Var7600/VHDL-GENERATOR">Github Page</a>
  *
- * @version 0.0
+ * @version 0.1
  *
  * @section LICENSE
  *
@@ -63,7 +63,7 @@ public class Editor extends JScrollPane
 	/** number of lines */
 	private int line_length = -1;
 	/** indentation replace Tabs with 5 space */
-	private final String INDENTATION = "     ";
+	private static final String INDENTATION = "     ";
 
 	/**
 	 * this constructor create the text editor to write your code.
@@ -142,6 +142,7 @@ public class Editor extends JScrollPane
 
 		// Replacing tabs with two spaces
 		((AbstractDocument) document_code).setDocumentFilter(new DocumentFilter() {
+			@Override
 			public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs)
 					throws BadLocationException
 			{
@@ -232,7 +233,10 @@ public class Editor extends JScrollPane
 	 */
 	public void setCode(String text)
 	{
-		this.code.setText(text);
+		if (text != null)
+			this.code.setText(text);
+		else
+			this.code.setText("");
 	}
 
 	/**

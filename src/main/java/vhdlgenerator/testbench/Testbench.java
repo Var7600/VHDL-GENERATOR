@@ -4,7 +4,7 @@
  * @author DOUDOU DIAWARA @see
  * <a href="https://github.com/Var7600/VHDL_GENERATOR">Github Page</a>
  *
- * @version 0.0
+ * @version 0.1
  *
  * @section LICENSE
  *
@@ -20,8 +20,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
 
+import vhdlgenerator.component.ComponentUtil;
 import vhdlgenerator.generator.FileGenerator;
-import vhdlgenerator.generator.WindowCode;
 
 /**
  *
@@ -38,11 +38,11 @@ public class Testbench
 	//
 
 	/** component under test */
-	private final String DUT = "dut: ";
+	private static final String DUT = "dut: ";
 	/** entity name for the testbench file */
-	private final String entity_testbench = "testbench";
+	private static final String entity_testbench = "testbench";
 	/** file name for the testbench file */
-	private final String file_name = "testbench.vhdl";
+	private static final String file_name = "testbench.vhdl";
 	/** path to create the file */
 	private String path_testbench;
 	/** the VHDL unit to write the testbench for */
@@ -67,28 +67,7 @@ public class Testbench
 	 */
 	public String getEntityTestBench()
 	{
-		return this.entity_testbench;
-	}
-
-	/**
-	 * Get the path where the Testbench file will be created.
-	 *
-	 * @return the path of the vhdl testbench file.
-	 */
-	public String getPathTestbench()
-	{
-		return path_testbench;
-
-	}
-
-	/**
-	 * Set a new path for the testbench file
-	 *
-	 * @param new_path the new path of the VHDL testbench
-	 */
-	public void setPathTestbench(String new_path)
-	{
-		this.path_testbench = new_path;
+		return Testbench.entity_testbench;
 	}
 
 	/**
@@ -100,22 +79,12 @@ public class Testbench
 	 */
 	public String getFilePath()
 	{
-		// file name of the unit to create the testbench
-		String unit_file_name = this.unit.getFileName();
+		// absolute path generated for the VHDL Code
+		String absolute_path = this.unit.getFileName();
+		// parent path without the file name
+		String base_path = absolute_path.substring(0, absolute_path.lastIndexOf(File.separator) + 1);
 
-		File file = new File(unit_file_name);
-		// get the full path of the unit file name
-		String path = file.getAbsolutePath();
-
-		// On Windows OS "backslashes"(//) are used to separate directories on Linux/MAC
-		// OS "anti-slashes"(\\)
-		int index = path.lastIndexOf(System.getProperty("file.separator"));
-		// get the path to the file Without the name
-		String tmp = path.substring(0, index + 1);
-		// creating the new path with the entity testbench name
-		this.path_testbench = tmp + this.file_name;
-
-		return this.path_testbench;
+		return base_path == null ? "." + Testbench.file_name : base_path + Testbench.file_name;
 	}
 
 	/**
@@ -128,17 +97,14 @@ public class Testbench
 	 */
 	public boolean createFile(String path)
 	{
-
 		try
 		{
 			return FileGenerator.openFile(path);
-		} catch (NullPointerException e)
+		} catch (NullPointerException | IOException e)
 		{
-			WindowCode.errorFrame(e.getMessage());
-		} catch (IOException e)
-		{
-			WindowCode.errorFrame(e.getMessage());
+			ComponentUtil.errorFrame("Error cannot create file: " + path + e.getMessage());
 		}
+
 		return false;
 	}
 
@@ -160,7 +126,7 @@ public class Testbench
 		 * entity name_entity is
 		 */
 		StringBuilder data = new StringBuilder();
-		data.append(FileGenerator.VHDL_KEYWORDS.get("ENTITY")).append(this.entity_testbench)
+		data.append(FileGenerator.VHDL_KEYWORDS.get("ENTITY")).append(Testbench.entity_testbench)
 				.append(FileGenerator.VHDL_KEYWORDS.get("IS")).append(FileGenerator.NEWLINE)
 				.append(FileGenerator.VHDL_KEYWORDS.get("END_ENTITY")); // entity
 
@@ -175,9 +141,8 @@ public class Testbench
 	 */
 	private String writeSignal()
 	{
-		/*
-		 * port ( input : IN datatype ...; output : OUT datatypr ... );
-		 */
+
+		// port ( input : IN datatype ...; output : OUT datatypr ... );
 
 		/*
 		 * **** INTPUT SIGNALS ***
@@ -288,7 +253,7 @@ public class Testbench
 		StringBuilder data = new StringBuilder();
 
 		data.append(FileGenerator.VHDL_KEYWORDS.get("ARCHITECTURE"));
-		data.append(this.entity_testbench);
+		data.append(Testbench.entity_testbench);
 
 		// writing component
 		data.append(FileGenerator.VHDL_KEYWORDS.get("IS"));
@@ -502,7 +467,8 @@ public class Testbench
 	 */
 	public void writeTB()
 	{
-		createFile(getFilePath()); // create the test bench file
+		this.path_testbench = getFilePath();
+		createFile(path_testbench); // create the test bench file
 		writeLibrary();
 		writeEntity();
 		writeComponent();
