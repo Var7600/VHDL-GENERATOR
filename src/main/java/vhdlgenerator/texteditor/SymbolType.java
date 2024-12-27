@@ -24,9 +24,13 @@ import java.awt.Color;
  *
  * @author DOUDOU DIAWARA
  */
-public interface SymbolType
+public final class SymbolType
 {
 
+	// prevent instantiation
+	private SymbolType()
+	{
+	}
 	//
 	// VHDL SYMBOL
 	//
