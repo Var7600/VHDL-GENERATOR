@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>vhdlgenerator</groupId>
     <artifactId>VHDL_GENERATOR</artifactId>
-    <version>0.1</version>
+    <version>0.2</version>
     <packaging>jar</packaging>
     <name>VHDL_GENERATOR</name>
     <description> project for generating VHDL code</description>
@@ -11,8 +11,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <exec.mainClass>vhdlgenerator.application.AppVG</exec.mainClass>
-        <maven.compiler.source>18</maven.compiler.source>
-        <maven.compiler.target>18</maven.compiler.target>
+        <maven.compiler.release>21</maven.compiler.release>
     </properties>
     
     <dependencies>
@@ -21,14 +20,14 @@
             <!-- Javadoc -->
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-javadoc-plugin</artifactId>
-            <version>3.6.3</version>
+            <version>3.11.2</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.junit/junit5-engine -->
         <dependency>
             <!--JUnit5-->
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
-            <version>5.10.2</version>
+            <version>5.11.4</version>
             <scope>test</scope>
         </dependency>
         <!-- https://mvnrepository.com/artifact/com.formdev/flatlaf -->
@@ -36,26 +35,26 @@
             <!-- for java UI themes(Looks And feels)-->
             <groupId>com.formdev</groupId>
             <artifactId>flatlaf</artifactId>
-            <version>3.2.5</version>
+            <version>3.5.4</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-checkstyle-plugin -->
         <dependency>
             <!-- checkstyle for coding rules-->
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-checkstyle-plugin</artifactId>
-            <version>3.3.1</version>
+            <version>3.6.0</version>
         </dependency>
         <dependency>
             <!-- Code Formatter --> 
             <groupId>net.revelc.code.formatter</groupId>
             <artifactId>formatter-maven-plugin</artifactId>
-            <version>2.23.0</version>
+            <version>2.24.1</version>
         </dependency>
         <!-- Jar file -->
         <dependency>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-assembly-plugin</artifactId>
-            <version>3.6.0</version>
+            <version>3.7.1</version>
         </dependency>
 
     </dependencies>
@@ -90,7 +89,7 @@
                 <!-- Javadoc -->
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>3.6.3</version>
+                <version>3.11.2</version>
                 <configuration>
                     <reportOutputDirectory>${project.reporting.outputDirectory}/Apidocs</reportOutputDirectory>  
                     <destDir>Apidocs/javadoc</destDir>
@@ -115,13 +114,13 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.2.3</version>
+                <version>3.5.2</version>
             </plugin>
             <!-- CheckStyle plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
-                <version>3.3.1</version>
+                <version>3.6.0</version>
                 <configuration>
                     <configLocation>config/checkstyle/checkstyle.xml</configLocation>
                     <suppressionsLocation>config/checkstyle/suppressions.xml</suppressionsLocation>
@@ -144,7 +143,7 @@
             <plugin>
                 <groupId>net.revelc.code.formatter</groupId>
                 <artifactId>formatter-maven-plugin</artifactId>
-                <version>2.23.0</version>
+                <version>2.24.1</version>
                 <configuration>
                     <configFile>${project.basedir}/config/formatter/eclipse-formatter-config.xml</configFile>
                 </configuration>
