@@ -1,8 +1,7 @@
 /**
 * @file Port.java
-
 * @author DOUDOU DIAWARA  @see <a href="https://github.com/Var7600/VHDL-GENERATOR">Github Page</a>
-* @version 0.0
+* @version 0.1
 *
 * @section LICENSE
 *
@@ -30,5 +29,4 @@ package vhdlgenerator.generator;
 public record Port(String entity_name, String architecture_name, String generic_map, String input_port,
 		String in_data_type, String output_port, String out_data_type, String code_implementation)
 {
-
 }
