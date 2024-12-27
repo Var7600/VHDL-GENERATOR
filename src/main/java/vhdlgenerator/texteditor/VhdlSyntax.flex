@@ -13,6 +13,7 @@
  // 
  //   lexical analyzer to identify simple VHDL SYNTAX/KEYWORDS
  //
+ import java.util.List;
  import java.util.LinkedList ;
 %%
 %public
@@ -23,14 +24,18 @@
 
 %{
      // a linkedList of token to highlight
-    private LinkedList<Token> list_token = new LinkedList<> ();
+    private List<Token> list_token = new LinkedList<> ();
     /**
 	 * Constructor.  This must be here because JFlex does not generate a
 	 * no-parameter constructor.
 	 */
 	public VhdlSyntax() {}
-    //List of token to color
-    public  LinkedList<Token> getListToken()
+	
+    /**
+    * this method return a List of token to highlight
+    * @return a list of token
+    */
+    public  List<Token> getListToken()
     {
         return this.list_token ;
     }
