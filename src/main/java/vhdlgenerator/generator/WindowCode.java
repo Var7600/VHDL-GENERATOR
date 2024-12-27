@@ -4,7 +4,7 @@
  * @author DOUDOU DIAWARA @see
  * <a href="https://github.com/Var7600/VHDL-GENERATOR">Github Page</a>
  *
- * @version 0.0
+ * @version 0.1
  *
  * @section LICENSE
  *
@@ -17,32 +17,30 @@ package vhdlgenerator.generator;
 
 //SWING
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Container;
-import java.awt.Desktop;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JDialog;
-import javax.swing.JEditorPane;
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JTextField;
 // I/O
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.InvalidPathException;
 import java.nio.file.Paths;
-import java.util.Objects;
 //UTIL
 import java.util.regex.Pattern;
 
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JDialog;
+import javax.swing.JEditorPane;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+
 import vhdlgenerator.application.AppVG;
+import vhdlgenerator.component.ComponentUtil;
 import vhdlgenerator.testbench.Testbench;
 import vhdlgenerator.texteditor.Editor;
 
@@ -66,15 +64,6 @@ public class WindowCode extends JFrame implements ActionListener
 	//
 	// public re-use in others class.
 	//
-
-	/**
-	 * select title
-	 */
-	public static final String SELECT = "Select";
-	/**
-	 * to select a file
-	 */
-	public static final String SELECT_FILE = "<html><b>SELECT A FILE OR TYPE THE FILE NAME AND IT WILL BE CREATED</b></html>";
 	/**
 	 * error message
 	 */
@@ -88,8 +77,7 @@ public class WindowCode extends JFrame implements ActionListener
 	 * title code generator
 	 */
 	private static final String TITLE = "CODE GENERATOR";
-	/** title error */
-	private static final String TITLE_ERROR = "Error!";
+
 	/**
 	 * code generator successfully
 	 */
@@ -106,10 +94,7 @@ public class WindowCode extends JFrame implements ActionListener
 	 * title to ask to generated testbench
 	 */
 	private static final String GENERATE_TB = "<html><b>DO YOU WANT TO GENERATE A <mark>TESTBENCH</mark> FILE?</b></html>";
-	/**
-	 * error opening file
-	 */
-	private static final String NO_OPEN_FILE = "<html><span style=color:'red';font-family:'ArialBlack';font-size:'14px';font-style:'italic'>file found! but a Error occured trying to open the file! </span> </html>";
+
 	/**
 	 * code has been generated successfully
 	 */
@@ -172,11 +157,22 @@ public class WindowCode extends JFrame implements ActionListener
 	// Attributes
 	//
 
-	/**
-	 * data to write to the file
-	 */
-	String tmp_entity_name, tmp_architecture_name, tmp_generic_map, tmp_input_port, tmp_in_data_type, tmp_output_port,
-			tmp_out_data_type = null;
+	// data to write to the file
+
+	/** the name of the entity interface */
+	String tmp_entity_name;
+	/** the name architecture of the implementation */
+	String tmp_architecture_name;
+	/** the DataWidth of the data type */
+	String tmp_generic_map;
+	/** the input signals */
+	String tmp_input_port;
+	/** Data type of the input signals */
+	String tmp_in_data_type;
+	/** the output signals */
+	String tmp_output_port;
+	/** Data type of the output signals */
+	String tmp_out_data_type;
 
 	/**
 	 * Port to hold the data
@@ -190,23 +186,23 @@ public class WindowCode extends JFrame implements ActionListener
 	/**
 	 * x position to align component horizontally
 	 */
-	private final int ALIGN_X_AXIS = 9;
+	private static final int ALIGN_X_AXIS = 9;
 	/**
 	 * label width
 	 */
-	private final int LABEL_WIDTH = 400;
+	private static final int LABEL_WIDTH = 400;
 	/**
 	 * label height
 	 */
-	private final int LABEL_HEIGTH = 30;
+	private static final int LABEL_HEIGTH = 30;
 	/**
 	 * input width
 	 */
-	private final int INPUT_WIDTH = 500;
+	private static final int INPUT_WIDTH = 500;
 	/**
 	 * input height
 	 */
-	private final int INPUT_HEIGTH = 25;
+	private static final int INPUT_HEIGTH = 25;
 
 	//
 	// SIZE OF EDITOR
@@ -214,11 +210,11 @@ public class WindowCode extends JFrame implements ActionListener
 	/**
 	 * width editor code
 	 */
-	private final int EDITOR_WIDTH = 600;
+	private static final int EDITOR_WIDTH = 600;
 	/**
 	 * height editor code
 	 */
-	private final int EDITOR_HEIGHT = 150;
+	private static final int EDITOR_HEIGHT = 150;
 
 	//
 	// JLABEL
@@ -641,30 +637,6 @@ public class WindowCode extends JFrame implements ActionListener
 	}
 
 	/**
-	 * this method open a frame with a error_msg.
-	 *
-	 * @param error_msg the error message to display
-	 */
-	public static void errorFrame(final String error_msg)
-	{
-		if (error_msg == null)
-		{
-			JOptionPane.showMessageDialog(null, "passing error_msg with value null ", TITLE_ERROR,
-					JOptionPane.ERROR_MESSAGE);
-		} else
-		{
-
-			JEditorPane message = new JEditorPane();
-			message.setContentType("text/html");
-			message.setText(error_msg);
-			JOptionPane pane = new JOptionPane(message, JOptionPane.ERROR_MESSAGE);
-			JDialog dialog = pane.createDialog(null, TITLE_ERROR);
-			dialog.setVisible(true);
-		}
-
-	}
-
-	/**
 	 * show a Frame with a message.
 	 *
 	 * @param msg_success the successful message to display into the created Frame
@@ -708,7 +680,6 @@ public class WindowCode extends JFrame implements ActionListener
 				return true;
 			} catch (InvalidPathException e)
 			{
-
 				return false;
 			}
 		} else
@@ -765,7 +736,7 @@ public class WindowCode extends JFrame implements ActionListener
 		if (isNull(tmp_entity_name)) // get entity name
 		{
 			// entity name is null
-			errorFrame(NULL_ENTITY);
+			ComponentUtil.errorFrame(NULL_ENTITY);
 		} else
 		{
 			// valid identifier
@@ -773,7 +744,7 @@ public class WindowCode extends JFrame implements ActionListener
 
 			if (!valid)
 			{
-				errorFrame(INVALID_IDENTIFIER);
+				ComponentUtil.errorFrame(INVALID_IDENTIFIER);
 			}
 		}
 
@@ -829,7 +800,7 @@ public class WindowCode extends JFrame implements ActionListener
 				return true;
 			} else
 			{
-				errorFrame(NOT_MATCHING_SIGNAL_FORMAT_IN);
+				ComponentUtil.errorFrame(NOT_MATCHING_SIGNAL_FORMAT_IN);
 			}
 		}
 		return false;
@@ -857,7 +828,7 @@ public class WindowCode extends JFrame implements ActionListener
 				return true;
 			} else
 			{
-				errorFrame(NOT_MATCHING_SIGNAL_FORMAT_OUT);
+				ComponentUtil.errorFrame(NOT_MATCHING_SIGNAL_FORMAT_OUT);
 			}
 		}
 
@@ -887,7 +858,7 @@ public class WindowCode extends JFrame implements ActionListener
 				return true;
 			} else
 			{
-				errorFrame(NOT_MATCHING_DATA_TYPE);
+				ComponentUtil.errorFrame(NOT_MATCHING_DATA_TYPE);
 			}
 		}
 		return false;
@@ -914,7 +885,7 @@ public class WindowCode extends JFrame implements ActionListener
 				return true;
 			} else
 			{
-				errorFrame(NOT_MATCHING_DATA_TYPE);
+				ComponentUtil.errorFrame(NOT_MATCHING_DATA_TYPE);
 			}
 
 		}
@@ -961,19 +932,19 @@ public class WindowCode extends JFrame implements ActionListener
 			if (!(isNull(generic.getText())) && !validateGeneric())
 			{
 
-				errorFrame(INVALID_GENERIC_FORMAT);
+				ComponentUtil.errorFrame(INVALID_GENERIC_FORMAT);
 				return;
 			}
 			// check if the number of variable match the number of data type.
 			if (!equalNumberSignalData(tmp_input_port, tmp_in_data_type, tmp_output_port, tmp_out_data_type))
 			{
-				errorFrame(NOT_MATCHING_NUMBER_SIGNAL_DATA_TYPE);
+				ComponentUtil.errorFrame(NOT_MATCHING_NUMBER_SIGNAL_DATA_TYPE);
 				return;
 			}
-			
+
 			// interface informations
 			info_interface = new Port(tmp_entity_name, tmp_architecture_name, tmp_generic_map, tmp_input_port,
-					 tmp_in_data_type, tmp_output_port, tmp_out_data_type, editor.getCode());
+					tmp_in_data_type, tmp_output_port, tmp_out_data_type, editor.getCode());
 			//
 			// GENERATE FILE
 			//
@@ -1035,8 +1006,8 @@ public class WindowCode extends JFrame implements ActionListener
 
 										if (choice == JOptionPane.YES_OPTION)
 										{
-											showFile(this.getFilePath());
-											showFile(testbench.getFilePath());
+											ComponentUtil.showFile(this.getFilePath());
+											ComponentUtil.showFile(testbench.getFilePath());
 
 										}
 
@@ -1047,7 +1018,7 @@ public class WindowCode extends JFrame implements ActionListener
 							} else
 							{
 								// OPEN ONLY THE VHDL FILE GENERATED
-								showFile(this.getFilePath());
+								ComponentUtil.showFile(this.getFilePath());
 							}
 
 						}
@@ -1058,91 +1029,10 @@ public class WindowCode extends JFrame implements ActionListener
 			} catch (NullPointerException | IOException e)
 			{
 
-				WindowCode.errorFrame(ERROR_MSG_OPEN);
+				ComponentUtil.errorFrame(ERROR_MSG_OPEN);
 			}
 
 		}
-	}
-
-	/**
-	 * open the File manager Explorer to choose a file or directory.
-	 *
-	 * @param parent the component that the File Manager depend on for
-	 *                   LookAndFeel,positioning
-	 * @param title  of the FileChooser.
-	 * @param folder if <code>true</code> need to select a folder otherwise a file.
-	 * @return the file or the directory selected otherwise return null.
-	 */
-	public static File chooseFile(Component parent, String title, boolean folder)
-	{
-		// file selected
-		File file = null;
-		// choose file
-		JFileChooser files = new JFileChooser(new File("."));
-		// selection between folder or file
-		if (folder)
-		{
-			files.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-			files.setToolTipText("select folder");
-
-		}
-		// title of the FileChooser
-		if (title == null)
-		{
-			files.setDialogTitle(SELECT_FILE);
-		} else
-		{
-			files.setDialogTitle(title);
-		}
-
-		files.setApproveButtonText(SELECT);
-		int choice = files.showOpenDialog(parent);
-
-		if (choice == JFileChooser.APPROVE_OPTION)
-		{
-			file = files.getSelectedFile();
-		}
-
-		return file;
-	}
-
-	/**
-	 * this method open a file with the default Application on the system. if
-	 * there's no default application associated with the file then the program will
-	 * try to open the file Directory if a error occur a error message is generated
-	 * on the screen.
-	 *
-	 * @param file_path the path of the file to open
-	 *
-	 * @exception NullPointerException if file_path is null.
-	 */
-	public static void showFile(String file_path)
-	{
-		Objects.requireNonNull(file_path, FileGenerator.NULL_VALUE);
-
-		// check if the Desktop class is supported on the current platform
-		if (Desktop.isDesktopSupported())
-		{
-			// return a instance of the current desktop context
-			Desktop desk = Desktop.getDesktop();
-
-			// check if opening a file is supported
-			if (desk.isSupported(Desktop.Action.OPEN))
-			{
-				try
-				{
-					// trying to open the file
-					desk.open(new File(file_path));
-
-				} catch (IOException e)
-				{
-
-					errorFrame(NO_OPEN_FILE);
-
-				}
-			}
-		}
-
 	}
 
 	/**
@@ -1165,7 +1055,7 @@ public class WindowCode extends JFrame implements ActionListener
 		if (event.getSource() == button_browse)
 		{
 
-			File file = chooseFile(this, null, false);
+			File file = ComponentUtil.chooseFile(this);
 			if (file != null)
 			{
 				String path = file.getPath();
@@ -1184,7 +1074,7 @@ public class WindowCode extends JFrame implements ActionListener
 
 				} catch (NullPointerException e)
 				{
-					errorFrame(NULL_FILE_PATH);
+					ComponentUtil.errorFrame(NULL_FILE_PATH);
 				}
 			}
 
@@ -1238,7 +1128,7 @@ public class WindowCode extends JFrame implements ActionListener
 					|| isNull(data_type_in.getText()) || isNull(data_type_out.getText()))
 			{
 				// all fields are NULL/EMPTY
-				errorFrame(NULL_VALUES);
+				ComponentUtil.errorFrame(NULL_VALUES);
 			} else
 			{
 				//
@@ -1246,7 +1136,7 @@ public class WindowCode extends JFrame implements ActionListener
 				if (isNull(file_path.getText()))
 				{
 					// only file_path is empty
-					errorFrame(INVALID_FILE_PATH);
+					ComponentUtil.errorFrame(INVALID_FILE_PATH);
 				}
 
 				try
@@ -1259,7 +1149,7 @@ public class WindowCode extends JFrame implements ActionListener
 					}
 				} catch (NullPointerException e)
 				{
-					errorFrame(INVALID_FILE_PATH);
+					ComponentUtil.errorFrame(INVALID_FILE_PATH);
 				}
 
 			}
