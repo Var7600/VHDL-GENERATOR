@@ -3,7 +3,7 @@
  *
  * @author DOUDOU DIAWARA @see
  * <a href="https://github.com/Var7600/VHDL-GENERATOR">Github Page</a>
- * @version 0.0
+ * @version 0.1
  *
  * @section LICENSE
  *
@@ -14,7 +14,10 @@
 
 package vhdlgenerator.application;
 
+//FlatLaf
 import com.formdev.flatlaf.FlatLightLaf;
+import com.formdev.flatlaf.util.SystemInfo;
+// swing
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -25,6 +28,8 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+// vhdl generator
 import vhdlgenerator.component.DisplayLibrary;
 import vhdlgenerator.generator.WindowCode;
 
@@ -69,15 +74,15 @@ public class AppVG extends JFrame implements ActionListener
 	/** title frame */
 	private static final String TITLE = "VHDL_GENERATOR";
 	/** path of the logo */
-	private final String WELCOME_LOGO_PATH = "welcome-logo.png";
+	private static final String WELCOME_LOGO_PATH = "welcome-logo.png";
 	/** background image */
-	private final String BACKGROUND_IMAGE = "welcome-screen-background.png";
+	private static final String BACKGROUND_IMAGE = "welcome-screen-background.png";
 	/** font button */
-	private final Font button_font = new Font("ArialBlack", Font.ITALIC | Font.BOLD, 14);
+	private static final Font button_font = new Font("ArialBlack", Font.ITALIC | Font.BOLD, 14);
 	/** button component */
-	private final JButton button_component = new JButton("GENERATE COMPONENT");
+	private static final JButton button_component = new JButton("GENERATE COMPONENT");
 	/** button to generate code */
-	private final JButton button_generate_code = new JButton("GENERATE CODE");
+	private static final JButton button_generate_code = new JButton("GENERATE CODE");
 
 	/**
 	 * this constructor start the application
@@ -155,8 +160,12 @@ public class AppVG extends JFrame implements ActionListener
 	 */
 	public void startApp()
 	{
-		JFrame.setDefaultLookAndFeelDecorated(true);
-
+		// Enable full window content mode in Linux (flatlaf 3.4+)
+		if (SystemInfo.isLinux)
+		{
+			// enable custom window decorations
+			JFrame.setDefaultLookAndFeelDecorated(true);
+		}
 		try
 		{
 			// FlatLaf Theme
@@ -168,10 +177,11 @@ public class AppVG extends JFrame implements ActionListener
 				app.setVisible(true);
 			});
 
-		} catch (Exception e)
+		} catch (UnsupportedLookAndFeelException e)
 		{
 
-			System.err.println("Failed to initialize flatlaf theme!\n Lauching Default System theme.");
+			System.err
+					.println("Failed to initialize flatlaf theme!\n Lauching Default System theme. " + e.getMessage());
 			// Default theme
 			SwingUtilities.invokeLater(() -> {
 
