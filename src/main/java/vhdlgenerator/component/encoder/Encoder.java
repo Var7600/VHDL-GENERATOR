@@ -4,7 +4,7 @@
  * @author DOUDOU DIAWARA @see
  * <a href="https://github.com/Var7600/VHDL-GENERATOR">Github Page</a>
  *
- * @version 0.0
+ * @version 0.1
  *
  * @section LICENSE
  *
@@ -16,7 +16,6 @@
 package vhdlgenerator.component.encoder;
 
 import java.io.IOException;
-import javax.swing.JOptionPane;
 
 import vhdlgenerator.component.DisplayLibrary;
 import vhdlgenerator.generator.FileGenerator;
@@ -27,224 +26,173 @@ import vhdlgenerator.generator.WindowCode;
  *
  * @author DOUDOU DIAWARA
  */
-public class Encoder
+public final class Encoder
 {
-	/** the size of the encoder(number of inputs of for the encoder */
-	private int encoder_size;
+
+	/** file name for the encoder4x2 */
+	private static final String FILE_ENCODER4 = "Encoder4x2.vhdl";
+	/** file name for the encoder8x3 */
+	private static final String FILE_ENCODER8 = "Encoder8x3.vhdl";
+	/** VHDL code for the encoder4x2 */
+	private static final String ENCODER4_VHDL = """
+			LIBRARY IEEE;
+			USE IEEE.std_logic_1164.ALL;
+			USE IEEE.numeric_std.ALL;
+
+			ENTITY Encoder4x2 IS
+				PORT (
+					input : IN STD_LOGIC_VECTOR(3 DOWNTO 0);
+					enable : IN STD_LOGIC;
+					output : OUT STD_LOGIC_VECTOR(1 DOWNTO 0)
+				);
+			END ENTITY Encoder4x2;
+
+			ARCHITECTURE behaviour OF Encoder4x2 IS
+
+			BEGIN
+
+				encoder : PROCESS (enable, input) IS BEGIN
+					IF enable = '1' THEN
+						CASE input IS
+							WHEN "0001" =>
+								output <= "00";
+							WHEN "0010" =>
+								output <= "01";
+							WHEN "0100" =>
+								output <= "10";
+							WHEN "1000" =>
+								output <= "11";
+							WHEN OTHERS =>
+								output <= (OTHERS => 'X');
+						END CASE;
+					END IF;
+
+				END PROCESS encoder;
+			END ARCHITECTURE behaviour;
+			""";
+	/** VHDL code for the encoder8x3 */
+	private static final String ENCODER8_VHDL = """
+			LIBRARY IEEE;
+			USE IEEE.STD_LOGIC_1164.ALL;
+			USE IEEE.NUMERIC_STD. ALL;
+
+			ENTITY Encoder8x3 IS
+
+				PORT (
+					input : IN STD_LOGIC_VECTOR (7 DOWNTO 0);
+					enable : IN STD_LOGIC;
+					output : OUT STD_LOGIC_VECTOR (2 DOWNTO 0)
+				);
+
+			END Encoder8x3;
+
+			ARCHITECTURE behaviour OF Encoder8x3 IS
+
+			BEGIN
+
+				PROCESS (enable, input) IS
+				BEGIN
+					IF enable = '1' THEN
+						CASE input IS
+
+							WHEN "00000001" => output <= "000";
+
+							WHEN "00000010" => output <= "001";
+
+							WHEN "00000100" => output <= "010";
+
+							WHEN "00001000" => output <= "011";
+
+							WHEN "00010000" => output <= "100";
+
+							WHEN "00100000" => output <= "101";
+
+							WHEN "01000000" => output <= "110";
+
+							WHEN "10000000" => output <= "111";
+
+							WHEN OTHERS => output <= "XXX";
+
+						END CASE;
+					END IF;
+				END PROCESS;
+
+			END behaviour;
+			""";
 
 	/**
 	 * possible size for the encoder
 	 */
-	public final static Object[] possibleValues = { "4", "8" };
-
-	/** file name for the encoder4x2 */
-	private final String FILE_ENCODER4 = "Encoder4x2.vhdl";
-	/** file name for the encoder8x3 */
-	private final String FILE_ENCODER8 = "Encoder8x3.vhdl";
-	/** VHDL code for the encoder4x2 */
-	private final String ENCODER4_VHDL = """
-			library IEEE;
-			use IEEE.std_logic_1164.all;
-			use IEEE.numeric_std.all;
-
-			entity Encoder4x2 is
-			    port(
-			        input : in std_logic_vector(3 downto 0);
-			        enable: in std_logic;
-			        output : out STD_LOGIC_VECTOR(1 downto 0)
-			    );
-			end entity Encoder4x2;
-
-			architecture behaviour of Encoder4x2 is
-
-			begin
-
-			    encoder:process(enable,input) is begin
-			        if enable = '1' then
-			            case input is
-			            when "0001" =>
-			                output <= "00";
-			            when "0010" =>
-			                output <= "01" ;
-			            when "0100" =>
-			                output <= "10";
-			            when "1000" =>
-			                output <= "11";
-			            when others =>
-			                output <= (others => 'X');
-			            end case;
-			        end if;
-
-			    end process encoder;
-
-
-			end architecture behaviour;
-
-						""";
-	/** VHDL code for the encoder8x3 */
-	private final String ENCODER8_VHDL = """
-
-			library IEEE;
-
-			use IEEE.STD_LOGIC_1164.all;
-			use IEEE.NUMERIC_STD. all;
-
-			entity Encoder8x3 is
-
-			    port (
-			        input: in std_logic_vector (7 downto 0);
-			        enable : in STD_LOGIC;
-			        output: out std_logic_vector (2 downto 0)
-			    );
-
-			end Encoder8x3;
-
-			architecture behaviour of Encoder8x3 is
-
-			begin
-
-			    process (enable,input) is
-			    begin
-			        if enable = '1' then
-			            case input is
-
-			                when "00000001" => output <= "000";
-
-			                when "00000010" => output <= "001";
-
-			                when "00000100" => output <= "010";
-
-			                when "00001000" => output <= "011";
-
-			                when "00010000" => output <= "100";
-
-			                when "00100000" => output <= "101";
-
-			                when "01000000" => output <= "110";
-
-			                when "10000000" => output <= "111";
-
-			                when others => output <= "XXX";
-
-			            end case ;
-			        end if;
-
-
-			    end process ;
-
-			end behaviour;
-
-						""";
+	public static final Object[] possibleValues = { "4", "8" };
 
 	/**
-	 * Constructor for the size of the encoder to create.
-	 *
-	 * @param encoder_size the size of the encoder for the available size see
-	 *                         {@link Encoder#possibleValues}
-	 * @exception IllegalArgumentException if the encoder_size is not available for
-	 *                                         available size for the encoder see
-	 *                                         {@link Encoder#possibleValues}.
+	 * default constructor
 	 */
-	public Encoder(int encoder_size)
+	private Encoder()
 	{
-		if (encoder_size != 4 && encoder_size != 8)
-		{
-			throw new IllegalArgumentException("Invalid size for the constructor Encoder!(available size are 4 and 8)");
-		}
-
-		this.encoder_size = encoder_size;
-	}
-
-	/**
-	 * getter for the Encoder size.
-	 *
-	 * @return encoder_size the number of output of the encoder.
-	 */
-	public int getEncoderSize()
-	{
-		return encoder_size;
-	}
-
-	/**
-	 * setter for the size of the encoder
-	 *
-	 * @param new_size of the encoder
-	 * @exception IllegalArgumentException if the new size is invalid for valid size
-	 *                                         see {@link Encoder#possibleValues}
-	 */
-	public void setEncoderSize(int new_size)
-	{
-		if (new_size != 4 && new_size != 8)
-		{
-			throw new IllegalArgumentException("Invalid size for the constructor Encoder!(available size are 4 and 8)");
-		}
-
-		this.encoder_size = new_size;
-	}
+	} // prevent instantiation
 
 	/**
 	 * write the VHDL code of the Encoder to the directory chosen
+	 *
+	 * @param encoder_size of the encoder see {@link Encoder#possibleValues}
+	 * @param file_path    the path where to write the final
+	 *
+	 * @return the full path of the file generated if file_path otherwise throw
+	 *         Exception
+	 *
+	 * @exception IllegalArgumentException if the mux_size is invalid
+	 * @exception NullPointerException     if the full path returned is
+	 *                                         <code>null</code>
 	 */
 
-	public void writeEncoder()
+	public static String writeEncoder(final String encoder_size, final String file_path)
 	{
+		StringBuilder full_path = null;
 		try
 		{
-			// if the file has been opened
-			boolean created = false;
-			// chose a directory path
-			String file_path = DisplayLibrary.chooseFolder();
 
 			if (WindowCode.validateFilePath(file_path))
 			{
+				full_path = new StringBuilder(file_path + DisplayLibrary.FILE_SEPARATOR);
 
-				// encoder 2,3
-				switch (this.encoder_size)
+				// encoder 4,8
+				switch (encoder_size)
 				{
-				case 4:
+				case "4" -> {
 					// create the full path name of the file
-					file_path = file_path + DisplayLibrary.FILE_SEPARATOR + FILE_ENCODER4;
+					full_path.append(FILE_ENCODER4);
 					// create the new file
-					created = FileGenerator.openFile(file_path);
+					FileGenerator.openFile(full_path.toString());
 					// write code to the file
-					FileGenerator.writeData(file_path, ENCODER4_VHDL);
-					break;
-
-				case 8:
+					FileGenerator.writeData(full_path.toString(), ENCODER4_VHDL);
+				}
+				case "8" -> {
 					// create the full path name of the file
-					file_path = file_path + DisplayLibrary.FILE_SEPARATOR + FILE_ENCODER8;
+					full_path.append(FILE_ENCODER8);
 					// create the new file
-					created = FileGenerator.openFile(file_path);
+					FileGenerator.openFile(full_path.toString());
 					// write code to the file
-					FileGenerator.writeData(file_path, ENCODER8_VHDL);
-					break;
-
-				default:
-					System.err.println("Error invalid option for Encoder! valid option are 4 and 8");
-					break;
-
+					FileGenerator.writeData(full_path.toString(), ENCODER8_VHDL);
 				}
 
-				// FRAME for successful generation of the component
-				if (created)
-				{
-					// code generated successfully
-					int option = (Integer) WindowCode.successFrame(DisplayLibrary.GENERATED_COMPONENT).getValue();
+				default ->
+					throw new IllegalArgumentException("Error invalid option for Encoder! valid option are 4 and 8");
 
-					if (option == JOptionPane.YES_OPTION || option == JOptionPane.CANCEL_OPTION
-							|| option == JOptionPane.CLOSED_OPTION)
-					{
-						// show the file created
-						WindowCode.showFile(file_path);
-					}
 				}
 			}
 
 		} catch (IOException | NullPointerException e)
 		{
-			// handle cannot open file or create file.
-			// WindowCode.errorFrame(WindowCode.ERROR_MSG_OPEN);
+			// e.printStackTrace();
 		}
+		if (full_path == null)
+		{
+			// a error occurred when trying to write to path
+			throw new NullPointerException("could not write to file!");
+		}
+		// return path
+		return full_path.toString();
 	}
 
 }

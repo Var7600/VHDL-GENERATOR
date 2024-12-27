@@ -4,7 +4,7 @@
  * @author DOUDOU DIAWARA @see
  * <a href="https://github.com/Var7600/VHDL-GENERATOR">Github Page</a>
  *
- * @version 0.0
+ * @version 0.1
  *
  * @section LICENSE
  *
@@ -16,7 +16,6 @@
 package vhdlgenerator.component.multiplexer;
 
 import java.io.IOException;
-import javax.swing.JOptionPane;
 
 import vhdlgenerator.component.DisplayLibrary;
 import vhdlgenerator.generator.FileGenerator;
@@ -27,336 +26,284 @@ import vhdlgenerator.generator.WindowCode;
  *
  * @author DOUDOU DIAWARA
  */
-public class Mux
+public final class Mux
 {
 
-	/**
-	 * represent the current size of the Multiplexer to generate.
-	 */
-	private int mux_size;
-	/**
-	 * possible size of Multiplexer to generate.
-	 */
-	public static Object[] possibleValues = { "2", "4", "8", "16" };
-
 	/** name of the mux2:1 file. */
-	private final String FILE_MUX2 = "Mux_2x1.vhdl";
+	private static final String FILE_MUX2 = "Mux_2x1.vhdl";
 	/** name of the mux4:1 file. */
-	private final String FILE_MUX4 = "Mux_4x1.vhdl";
+	private static final String FILE_MUX4 = "Mux_4x1.vhdl";
 	/** name of the mux8:1 file. */
-	private final String FILE_MUX8 = "Mux_8x1.vhdl";
+	private static final String FILE_MUX8 = "Mux_8x1.vhdl";
 	/** name of the mux16:1 file. */
-	private final String FILE_MUX16 = "Mux_16x1.vhdl";
+	private static final String FILE_MUX16 = "Mux_16x1.vhdl";
 
 	//
 	// VHDL Code For Multiplexer
 	//
 
 	/** VHDL code of Mux 2 to 1 */
-	private final String MUX2_VHDL = """
-			library ieee;
-			use ieee.std_logic_1164.all;
-			use ieee.numeric_std.all;
+	private static final String MUX2_VHDL = """
+			LIBRARY ieee;
+			USE ieee.std_logic_1164.ALL;
+			USE ieee.numeric_std.ALL;
 
-			entity Mux_2x1 is
-			generic (DataWidth : natural := 8);
-			        port(
-			        input0,input1 : in std_logic_vector(DataWidth-1 downto 0);
-			        output : out std_logic_vector(DataWidth-1 downto 0);
-			        sel : in std_logic
-			    );
-			end Mux_2x1;
+			ENTITY Mux_2x1 IS
+				GENERIC (DataWidth : NATURAL := 8);
+				PORT (
+					input0, input1 : IN STD_LOGIC_VECTOR(DataWidth - 1 DOWNTO 0);
+					output : OUT STD_LOGIC_VECTOR(DataWidth - 1 DOWNTO 0);
+					sel : IN STD_LOGIC
+				);
+			END Mux_2x1;
 
-			architecture behaviour of Mux_2x1 is
-			begin
-			    with sel select
-			    output <= input0 when '0',
-			    input1 when '1',
-			    (others => '0') when others;
-			end behaviour;
+			ARCHITECTURE behaviour OF Mux_2x1 IS
+			BEGIN
+				WITH sel SELECT
+					output <= input0 WHEN '0',
+					input1 WHEN '1',
+					(OTHERS => '0') WHEN OTHERS;
+			END behaviour;
 			""";
 	/** VHDL code of Mux 4 to 1 */
-	private final String MUX4_VHDL = """
-			library  IEEE;
-			use IEEE.std_logic_1164.all;
-			use IEEE.numeric_std.all;
+	private static final String MUX4_VHDL = """
+						LIBRARY IEEE;
+						USE IEEE.std_logic_1164.ALL;
+						USE IEEE.numeric_std.ALL;
 
-			entity Mux_4x1 is
-			    generic (DataWidth : natural := 8);
-			    port(
-			        input0,input1,input2,input3 : in std_logic_vector(DataWidth-1 downto 0);
-			        sel : in std_logic_vector( 1 downto 0);
-			        output : out std_logic_vector(DataWidth-1 downto 0)
-			    );
-			end entity Mux_4x1;
+						ENTITY Mux_4x1 IS
+							GENERIC (DataWidth : NATURAL := 8);
+							PORT (
+								input0, input1, input2, input3 : IN STD_LOGIC_VECTOR(DataWidth - 1 DOWNTO 0);
+								sel : IN STD_LOGIC_VECTOR(1 DOWNTO 0);
+								output : OUT STD_LOGIC_VECTOR(DataWidth - 1 DOWNTO 0)
+							);
+						END ENTITY Mux_4x1;
 
-			architecture behaviour of Mux_4x1 is
+						ARCHITECTURE behaviour OF Mux_4x1 IS
 
-			begin
-			    with sel select
-			    output <=   input0 when "00",
-			                input1 when "01",
-			                input2 when "10",
-			                input3 when "11",
-			    (others => '0') when others;
+						BEGIN
+							WITH sel SELECT
+								output <= input0 WHEN "00",
+								input1 WHEN "01",
+								input2 WHEN "10",
+								input3 WHEN "11",
+								(OTHERS => '0') WHEN OTHERS;
 
-			end architecture behaviour;
-			    		""";
+						END ARCHITECTURE behaviour;
+			""";
 	/** VHDL code of Mux 8 to 1 */
-	private final String MUX8_VHDL = """
-			library IEEE;
-			use IEEE.STD_LOGIC_1164.ALL;
+	private static final String MUX8_VHDL = """
+			LIBRARY IEEE;
+			USE IEEE.STD_LOGIC_1164.ALL;
 
-			entity Mux8x1 is
-			    generic (DataWidth : natural := 8);
-			    Port ( input0,input1,input2,input3,input4,input5,input6,input7 : in std_logic_vector(DataWidth-1 downto 0);
-			           sel : in STD_LOGIC_VECTOR (2 downto 0);
-			           output : out std_logic_vector(DataWidth-1 downto 0)
-			    );
-			end Mux8x1;
+			ENTITY Mux8x1 IS
+				GENERIC (DataWidth : NATURAL := 8);
+				PORT (
+					input0, input1, input2, input3, input4, input5, input6, input7 : IN STD_LOGIC_VECTOR(DataWidth - 1 DOWNTO 0);
+					sel : IN STD_LOGIC_VECTOR (2 DOWNTO 0);
+					output : OUT STD_LOGIC_VECTOR(DataWidth - 1 DOWNTO 0)
+				);
+			END Mux8x1;
 
-			architecture behaviour of Mux8x1 is
-			begin
-			    process(sel,input0,input1,input2,input3,input4,input5,input6,input7) is begin
+			ARCHITECTURE behaviour OF Mux8x1 IS
+			BEGIN
+				PROCESS (sel, input0, input1, input2, input3, input4, input5, input6, input7) IS BEGIN
 
-			    case sel is
-			        when "000" =>
-			            output <= input0;
-			        when "001" =>
-			            output <= input1;
-			        when "010" =>
-			            output <= input2;
-			        when "011" =>
-			            output <= input3;
-			        when "100" =>
-			            output <= input4;
-			        when "101" =>
-			            output <= input5;
-			        when "110" =>
-			            output <= input6;
-			        when "111" =>
-			            output <= input7;
-			        when others =>
-			            output <= (others => '0');
-			    end case;
-			   end process;
-			end behaviour;
-			    		""";
+					CASE sel IS
+						WHEN "000" =>
+							output <= input0;
+						WHEN "001" =>
+							output <= input1;
+						WHEN "010" =>
+							output <= input2;
+						WHEN "011" =>
+							output <= input3;
+						WHEN "100" =>
+							output <= input4;
+						WHEN "101" =>
+							output <= input5;
+						WHEN "110" =>
+							output <= input6;
+						WHEN "111" =>
+							output <= input7;
+						WHEN OTHERS =>
+							output <= (OTHERS => '0');
+					END CASE;
+				END PROCESS;
+			END behaviour;
+			""";
 	/** Mux 16 to 1 */
-	private final String MUX16_VHDL = """
-			library ieee;
-			use ieee.std_logic_1164.ALL;
-			use ieee.numeric_std.all;
+	private static final String MUX16_VHDL = """
+			LIBRARY ieee;
+			USE ieee.std_logic_1164.ALL;
+			USE ieee.numeric_std.ALL;
 
-			entity Mux_16x1 is
-			    generic (DataWidth : natural := 8);
-			    Port ( input0 : in std_logic_vector (DataWidth-1 downto 0);
-			           input1 : in std_logic_vector (DataWidth-1 downto 0);
-			           input2 : in std_logic_vector (DataWidth-1 downto 0);
-			           input3 : in std_logic_vector (DataWidth-1 downto 0);
-			           input4 : in std_logic_vector (DataWidth-1 downto 0);
-			           input5 : in std_logic_vector (DataWidth-1 downto 0);
-			           input6 : in std_logic_vector (DataWidth-1 downto 0);
-			           input7 : in std_logic_vector (DataWidth-1 downto 0);
-			           input8 : in std_logic_vector (DataWidth-1 downto 0);
-			           input9 : in std_logic_vector (DataWidth-1 downto 0);
-			           input10 : in std_logic_vector (DataWidth-1 downto 0);
-			           input11 : in std_logic_vector (DataWidth-1 downto 0);
-			           input12 : in std_logic_vector (DataWidth-1 downto 0);
-			           input13 : in std_logic_vector (DataWidth-1 downto 0);
-			           input14 : in std_logic_vector (DataWidth-1 downto 0);
-			           input15 : in std_logic_vector (DataWidth-1 downto 0);
-			           sel : in std_logic_vector (3 downto 0);
-			           output : out std_logic_vector(DataWidth-1 downto 0)
-			           );
-			end Mux_16x1;
+			ENTITY Mux_16x1 IS
+				GENERIC (DataWidth : NATURAL := 8);
+				PORT (
+					input0 : IN STD_LOGIC_VECTOR (DataWidth - 1 DOWNTO 0);
+					input1 : IN STD_LOGIC_VECTOR (DataWidth - 1 DOWNTO 0);
+					input2 : IN STD_LOGIC_VECTOR (DataWidth - 1 DOWNTO 0);
+					input3 : IN STD_LOGIC_VECTOR (DataWidth - 1 DOWNTO 0);
+					input4 : IN STD_LOGIC_VECTOR (DataWidth - 1 DOWNTO 0);
+					input5 : IN STD_LOGIC_VECTOR (DataWidth - 1 DOWNTO 0);
+					input6 : IN STD_LOGIC_VECTOR (DataWidth - 1 DOWNTO 0);
+					input7 : IN STD_LOGIC_VECTOR (DataWidth - 1 DOWNTO 0);
+					input8 : IN STD_LOGIC_VECTOR (DataWidth - 1 DOWNTO 0);
+					input9 : IN STD_LOGIC_VECTOR (DataWidth - 1 DOWNTO 0);
+					input10 : IN STD_LOGIC_VECTOR (DataWidth - 1 DOWNTO 0);
+					input11 : IN STD_LOGIC_VECTOR (DataWidth - 1 DOWNTO 0);
+					input12 : IN STD_LOGIC_VECTOR (DataWidth - 1 DOWNTO 0);
+					input13 : IN STD_LOGIC_VECTOR (DataWidth - 1 DOWNTO 0);
+					input14 : IN STD_LOGIC_VECTOR (DataWidth - 1 DOWNTO 0);
+					input15 : IN STD_LOGIC_VECTOR (DataWidth - 1 DOWNTO 0);
+					sel : IN STD_LOGIC_VECTOR (3 DOWNTO 0);
+					output : OUT STD_LOGIC_VECTOR(DataWidth - 1 DOWNTO 0)
+				);
+			END Mux_16x1;
 
-			architecture behaviour of Mux_16x1 is
-			begin
-			    process(sel,input0,input1,input2,input3,input4,input5,
-			    input6,input7,input8,input9,input10,input11,input12,input13,input14,input15) is
-			    begin
-			        case sel is
-			            when "0000" =>
-			                output <= input0;
-			            when "0001" =>
-			                output <= input1;
-			            when "0010" =>
-			                output <= input2;
-			            when "0011" =>
-			                output <= input3;
-			            when "0100" =>
-			                output <= input4;
-			            when "0101" =>
-			                output <= input5;
-			            when "0110" =>
-			                output <= input6;
-			            when "0111" =>
-			                output <= input7;
-			            when "1000" =>
-			                output <= input8;
-			            when "1001" =>
-			                output <= input9;
-			            when "1010" =>
-			                output <= input10;
-			            when "1011" =>
-			                output <= input11;
-			            when "1100" =>
-			                output <= input12;
-			            when "1101" =>
-			                output <= input13;
-			            when "1110" =>
-			                output <= input14;
-			            when "1111" =>
-			                output <= input15;
-			            when others =>
-			                output <= (others => '0');
-			        end case;
-			    end process;
+			ARCHITECTURE behaviour OF Mux_16x1 IS
+			BEGIN
+				PROCESS (sel, input0, input1, input2, input3, input4, input5,
+					input6, input7, input8, input9, input10, input11, input12, input13, input14, input15) IS
+				BEGIN
+					CASE sel IS
+						WHEN "0000" =>
+							output <= input0;
+						WHEN "0001" =>
+							output <= input1;
+						WHEN "0010" =>
+							output <= input2;
+						WHEN "0011" =>
+							output <= input3;
+						WHEN "0100" =>
+							output <= input4;
+						WHEN "0101" =>
+							output <= input5;
+						WHEN "0110" =>
+							output <= input6;
+						WHEN "0111" =>
+							output <= input7;
+						WHEN "1000" =>
+							output <= input8;
+						WHEN "1001" =>
+							output <= input9;
+						WHEN "1010" =>
+							output <= input10;
+						WHEN "1011" =>
+							output <= input11;
+						WHEN "1100" =>
+							output <= input12;
+						WHEN "1101" =>
+							output <= input13;
+						WHEN "1110" =>
+							output <= input14;
+						WHEN "1111" =>
+							output <= input15;
+						WHEN OTHERS =>
+							output <= (OTHERS => '0');
+					END CASE;
+				END PROCESS;
 
-			end behaviour;
-			    		""";
+			END behaviour;
+			""";
+	/**
+	 * possible size of Multiplexer to generate.
+	 */
+	public static final Object[] possibleValues = { "2", "4", "8", "16" };
 
 	// Mux 32 to 1 (see if needed to add it later)
-	/*
-	 * private final String MUX32=""" """;
-	 */
+
+	// private static final String MUX32=""" """;
 
 	/**
-	 * Constructor that takes the size of the Multiplexer to write to the file.
-	 *
-	 * @param mux_size the size of the Multiplexer to create(number of input of
-	 *                     Multiplexer).
-	 * @exception IllegalArgumentException if the mux_size is not valid for
-	 *                                         available size see
-	 *                                         {@link Mux#possibleValues}.
+	 * default constructor
 	 */
-	public Mux(int mux_size)
+	private Mux()
 	{
-		if (mux_size != 2 && mux_size != 4 && mux_size != 8 && mux_size != 16)
-		{
-			throw new IllegalArgumentException(
-					"Invalid size for the constructor Mux!(valid size are 2 or 4 or 8 or 16 ");
-		}
-
-		this.mux_size = mux_size;
-	}
-
-	/**
-	 * getter return the size of the Multiplexer
-	 *
-	 * @return the size of the Multiplexer.
-	 */
-	public int getSizeMux()
-	{
-		return this.mux_size;
-
-	}
-
-	/**
-	 * setter the new size of the Multiplexer
-	 *
-	 * @param new_size of the Multiplexer
-	 * @exception IllegalArgumentException if the input size is invalid see
-	 *                                         {@link Mux#possibleValues}
-	 */
-	public void setSizeMux(int new_size)
-	{
-		if (new_size != 2 && new_size != 4 && new_size != 8 && new_size != 16)
-		{
-			throw new IllegalArgumentException(
-					"Invalid size for the constructor Mux!(valid size are 2 or 4 or 8 or 16 ");
-		}
-
-		this.mux_size = new_size;
-
-	}
+	} // prevent instantiation
 
 	/**
 	 * write the code of the Multiplexer to the file.
+	 *
+	 * @param mux_size  of the Mux see {@link Mux#possibleValues}
+	 * @param file_path the path to write the file
+	 *
+	 * @return the full path of the file generated if file_path otherwise throw
+	 *         Exception
+	 *
+	 * @exception IllegalArgumentException if the mux_size is invalid
+	 * @exception NullPointerException     if the full path returned is
+	 *                                         <code>null</code>
 	 */
-	public void writeMux()
+	public static String writeMux(final String mux_size, final String file_path)
 	{
-
+		StringBuilder full_path = null;
 		try
 		{
-			// if the file has been opened.
-			boolean open = false;
-			// folder chosen
-			String file_path = DisplayLibrary.chooseFolder();
 
 			if (WindowCode.validateFilePath(file_path))
 			{
 
+				full_path = new StringBuilder(file_path + DisplayLibrary.FILE_SEPARATOR);
+
 				// Mux size 2,4,8,16,32
-				switch (this.mux_size)
+				switch (mux_size)
 				{
-				case 2:
+				case "2" -> {
 					// new file path
-					file_path = file_path + DisplayLibrary.FILE_SEPARATOR + FILE_MUX2;
+					full_path.append(FILE_MUX2);
 					// create the new file.
-					open = FileGenerator.openFile(file_path);
+					FileGenerator.openFile(full_path.toString());
 					// write the code
-					FileGenerator.writeData(file_path, MUX2_VHDL);
-					break;
+					FileGenerator.writeData(full_path.toString(), MUX2_VHDL);
 
-				case 4:
+				}
+				case "4" -> {
 					// new file path
-					file_path = file_path + DisplayLibrary.FILE_SEPARATOR + FILE_MUX4;
+					full_path.append(FILE_MUX4);
 					// create the new file.
-					open = FileGenerator.openFile(file_path);
+					FileGenerator.openFile(full_path.toString());
 					// write the code
-					FileGenerator.writeData(file_path, MUX4_VHDL);
-					break;
-
-				case 8:
+					FileGenerator.writeData(full_path.toString(), MUX4_VHDL);
+				}
+				case "8" -> {
 					// new file path
-					file_path = file_path + DisplayLibrary.FILE_SEPARATOR + FILE_MUX8;
+					full_path.append(FILE_MUX8);
 					// create the new file
-					open = FileGenerator.openFile(file_path);
+					FileGenerator.openFile(full_path.toString());
 					// write the code
-					FileGenerator.writeData(file_path, MUX8_VHDL);
-					break;
-
-				case 16:
-
-					// new file path
-					file_path = file_path + DisplayLibrary.FILE_SEPARATOR + FILE_MUX16;
-					// create the new file
-					open = FileGenerator.openFile(file_path);
-					// write the code
-					FileGenerator.writeData(file_path, MUX16_VHDL);
-					break;
-
-				/*
-				 * case 32: maybe add it in the future //write the code
-				 * FileGenerator.writeData(file.getPath(),MUX32); //generated break;
-				 */
-				default:
-					System.err.println("Error multiplexer size! " + this.mux_size);
-					break;
+					FileGenerator.writeData(full_path.toString(), MUX8_VHDL);
 				}
 
-				// file was generated successfully
-				if (open)
-				{
-					// code generated successfully
-					int option = (Integer) WindowCode.successFrame(DisplayLibrary.GENERATED_COMPONENT).getValue();
+				case "16" -> {
+					// new file path
+					full_path.append(FILE_MUX16);
+					// create the new file
+					FileGenerator.openFile(full_path.toString());
+					// write the code
+					FileGenerator.writeData(full_path.toString(), MUX16_VHDL);
+				}
 
-					if (option == JOptionPane.YES_OPTION || option == JOptionPane.CANCEL_OPTION
-							|| option == JOptionPane.CLOSED_OPTION)
-					{
-						// show the file created
-						WindowCode.showFile(file_path);
-					}
+				// case 32: maybe add it in the future //write the code
+				default ->
+					throw new IllegalArgumentException("Error multiplexer size!" + mux_size + "option are 2,4,8,16");
 				}
 			}
 
 		} catch (IOException | NullPointerException e)
 		{
-			// handle cannot open file or create file.
-			// WindowCode.errorFrame(WindowCode.ERROR_MSG_OPEN);
+			// e.printStackTrace();
 		}
+
+		if (full_path == null)
+		{
+			// a error occurred when trying to write to path
+			throw new NullPointerException("could not write to file!");
+		}
+		// return path
+		return full_path.toString();
 
 	}
 

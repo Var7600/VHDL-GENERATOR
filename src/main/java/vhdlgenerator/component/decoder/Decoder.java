@@ -5,7 +5,7 @@
  * @author DOUDOU DIAWARA @see
  * <a href="https://github.com/Var7600/VHDL-GENERATOR">Github Page</a>
  *
- * @version 0.0
+ * @version 0.1
  *
  * @section LICENSE This program is free software; you can redistribute it
  * and/or modify it under the terms of “Commons Clause” License Condition v1.0
@@ -15,7 +15,6 @@
 package vhdlgenerator.component.decoder;
 
 import java.io.IOException;
-import javax.swing.JOptionPane;
 
 import vhdlgenerator.component.DisplayLibrary;
 import vhdlgenerator.generator.FileGenerator;
@@ -27,7 +26,7 @@ import vhdlgenerator.generator.WindowCode;
  * @author DOUDOU DIAWARA
  *
  */
-public class Decoder
+public final class Decoder
 {
 	/** name of the decoder2:4 file. */
 	private static final String FILE_DECODER2 = "Decoder2_4.vhdl";
@@ -35,8 +34,6 @@ public class Decoder
 	private static final String FILE_DECODER3 = "Decoder3_8.vhdl";
 	/** name of the decoder4:16 file */
 	private static final String FILE_DECODER4 = "Decoder4_16.vhdl";
-	/** represent the number of input of the Decoder */
-	private int decoder_size;
 	/** possible size of the Decoder */
 	public static Object[] possibleValues = { "2", "3", "4" };
 
@@ -45,245 +42,203 @@ public class Decoder
 	//
 
 	/** VHDL code of the decoder 2x4 */
-	private final String DECODER2_VHDL = """
-			library IEEE;
-			use IEEE.std_logic_1164.all;
-			use IEEE.numeric_std.all;
+	private static final String DECODER2_VHDL = """
+			LIBRARY IEEE;
+			USE IEEE.std_logic_1164.ALL;
+			USE IEEE.numeric_std.ALL;
 
-			entity Decoder2_4 is
-			    port(
-			        input : in std_logic_vector(1 downto 0);
-			        enable : in std_logic;
-			        output : out std_logic_vector(3 downto 0)
-			    );
-			end  Decoder2_4;
+			ENTITY Decoder2_4 IS
+				PORT (
+					input : IN STD_LOGIC_VECTOR(1 DOWNTO 0);
+					enable : IN STD_LOGIC;
+					output : OUT STD_LOGIC_VECTOR(3 DOWNTO 0)
+				);
+			END Decoder2_4;
 
-			architecture behaviour of Decoder2_4 is
+			ARCHITECTURE behaviour OF Decoder2_4 IS
 
-			begin
-			    process(enable,input) is begin
-			        if(enable = '1') then
-			            case input is
-			                when "00" =>
-			                    output <= "0001" ;
-			                when "01" =>
-			                    output <= "0010" ;
-			                when "10" =>
-			                    output <= "0100" ;
-			                when "11" =>
-			                    output <= "1000" ;
-			                when others =>
-			                    output <= "0000";
-			                end case;
-			        end if;
-			    end process;
+			BEGIN
+				PROCESS (enable, input) IS BEGIN
+					IF (enable = '1') THEN
+						CASE input IS
+							WHEN "00" =>
+								output <= "0001";
+							WHEN "01" =>
+								output <= "0010";
+							WHEN "10" =>
+								output <= "0100";
+							WHEN "11" =>
+								output <= "1000";
+							WHEN OTHERS =>
+								output <= "0000";
+						END CASE;
+					END IF;
+				END PROCESS;
 
-			end  behaviour;
-									""";
+			END behaviour;
+			""";
 
 	/** VHDL code of the decoder 3x8 */
-	private final String DECODER3_VHDL = """
-			library IEEE;
-			use IEEE.STD_LOGIC_1164.ALL;
-			use IEEE.numeric_std.all;
+	private static final String DECODER3_VHDL = """
+						LIBRARY IEEE;
+						USE IEEE.STD_LOGIC_1164.ALL;
+						USE IEEE.numeric_std.ALL;
 
-			entity Decoder3_8 is
-			    Port ( input : in STD_LOGIC_VECTOR(2 downto 0);
-			           enable : in STD_LOGIC;
-			           output : out STD_LOGIC_VECTOR(7 downto 0));
-			end Decoder3_8;
+						ENTITY Decoder3_8 IS
+							PORT (
+								input : IN STD_LOGIC_VECTOR(2 DOWNTO 0);
+								enable : IN STD_LOGIC;
+								output : OUT STD_LOGIC_VECTOR(7 DOWNTO 0));
+						END Decoder3_8;
 
-			architecture Behavioral of Decoder3_8 is
-			begin
-			    process(input, enable)
-			    begin
-			        if enable = '1' then
-			            case input is
-			                when "000" =>
-			                    output <= "00000001";
-			                when "001" =>
-			                    output <= "00000010";
-			                when "010" =>
-			                    output <= "00000100";
-			                when "011" =>
-			                    output <= "00001000";
-			                when "100" =>
-			                    output <= "00010000";
-			                when "101" =>
-			                    output <= "00100000";
-			                when "110" =>
-			                    output <= "01000000";
-			                when "111" =>
-			                    output <= "10000000";
-			                when others =>
-			                    output <= "00000000"; -- default case
-			            end case;
-			        else
-			            output <= "00000000"; -- output is all '0' when disabled
-			        end if;
-			    end process;
-			end Behavioral;
-						""";
+						ARCHITECTURE Behavioral OF Decoder3_8 IS
+						BEGIN
+							PROCESS (input, enable)
+							BEGIN
+								IF enable = '1' THEN
+									CASE input IS
+										WHEN "000" =>
+											output <= "00000001";
+										WHEN "001" =>
+											output <= "00000010";
+										WHEN "010" =>
+											output <= "00000100";
+										WHEN "011" =>
+											output <= "00001000";
+										WHEN "100" =>
+											output <= "00010000";
+										WHEN "101" =>
+											output <= "00100000";
+										WHEN "110" =>
+											output <= "01000000";
+										WHEN "111" =>
+											output <= "10000000";
+										WHEN OTHERS =>
+											output <= "00000000"; -- default case
+									END CASE;
+								ELSE
+									output <= "00000000"; -- output is all '0' when disabled
+								END IF;
+							END PROCESS;
+						END Behavioral;
+			""";
 	/** VHDL code of the decoder 4x16 */
-	private final String DECODER4_VHDL = """
-			library IEEE;
-			use IEEE.STD_logic_1164.all;
+	private static final String DECODER4_VHDL = """
+			LIBRARY IEEE;
+			USE IEEE.STD_logic_1164.ALL;
 
-			entity decoder4_16 is
-			    port(
-			          enable : in std_logic ;
-			         input: in std_logic_vector(3 downto 0);
-			         output: out std_logic_vector(15 downto 0));
-			end decoder4_16;
+			ENTITY decoder4_16 IS
+				PORT (
+					enable : IN STD_LOGIC;
+					input : IN STD_LOGIC_VECTOR(3 DOWNTO 0);
+					output : OUT STD_LOGIC_VECTOR(15 DOWNTO 0));
+			END decoder4_16;
 
-			architecture behaviour of decoder4_16 is
-			begin
-			    process(enable,input) is begin
-			         if(enable = '1') then
-			            output(0) <= (not input(3)) and (not input(2)) and (not input(1)) and (not input(0));
-			            output(1) <= (not input(3)) and (not input(2)) and (not input(1)) and input(0);
-			            output(2) <= (not input(3)) and (not input(2)) and input(1) and (not input(0));
-			            output(3) <= (not input(3)) and (not input(2)) and input(1) and input(0);
-			            output(4) <= (not input(3)) and input(2) and (not input(1)) and (not input(0));
-			            output(5) <= (not input(3)) and input(2) and (not input(1)) and input(0);
-			            output(6) <= (not input(3)) and input(2) and input(1) and (not input(0));
-			            output(7) <= (not input(3)) and input(2) and input(1) and input(0);
-			            output(8) <= input(3) and (not input(2)) and (not input(1)) and (not input(0));
-			            output(9) <= input(3) and (not input(2)) and (not input(1)) and input(0);
-			            output(10)<= input(3) and (not input(2)) and input(1) and (not input(0));
-			            output(11)<= input(3) and (not input(2)) and input(1) and input(0);
-			            output(12) <= input(3) and input(2) and (not input(1)) and (not input(0));
-			            output(13) <= input(3) and input(2) and (not input(1)) and input(0);
-			            output(14) <= input(3) and input(2) and input(1) and (not input(0));
-			            output(15) <=  input(3) and  input(2) and  input(1) and  input(0);
-			        else
-			            output <= (others => '0') ;
-			        end if;
-			    end process ;
-			end Behaviour;
-						""";
-
-	/**
-	 * Constructor with the size(number of input) of the Decoder to create.
-	 *
-	 * @param decoder_size the size of the decoder to create number of input.
-	 * @exception IllegalArgumentException if the decoder_size is not valid for
-	 *                                         available size see
-	 *                                         {@link Decoder#possibleValues}.
-	 */
-	public Decoder(int decoder_size)
-	{
-		if (decoder_size != 2 && decoder_size != 3 && decoder_size != 4)
-		{
-			throw new IllegalArgumentException(
-					"Invalid size for the constructor Decoder!(valid size are 2 or 3 or 4) ");
-		}
-
-		this.decoder_size = decoder_size;
-
-	}
+			ARCHITECTURE behaviour OF decoder4_16 IS
+			BEGIN
+				PROCESS (enable, input) IS BEGIN
+					IF (enable = '1') THEN
+						output(0) <= (NOT input(3)) AND (NOT input(2)) AND (NOT input(1)) AND (NOT input(0));
+						output(1) <= (NOT input(3)) AND (NOT input(2)) AND (NOT input(1)) AND input(0);
+						output(2) <= (NOT input(3)) AND (NOT input(2)) AND input(1) AND (NOT input(0));
+						output(3) <= (NOT input(3)) AND (NOT input(2)) AND input(1) AND input(0);
+						output(4) <= (NOT input(3)) AND input(2) AND (NOT input(1)) AND (NOT input(0));
+						output(5) <= (NOT input(3)) AND input(2) AND (NOT input(1)) AND input(0);
+						output(6) <= (NOT input(3)) AND input(2) AND input(1) AND (NOT input(0));
+						output(7) <= (NOT input(3)) AND input(2) AND input(1) AND input(0);
+						output(8) <= input(3) AND (NOT input(2)) AND (NOT input(1)) AND (NOT input(0));
+						output(9) <= input(3) AND (NOT input(2)) AND (NOT input(1)) AND input(0);
+						output(10) <= input(3) AND (NOT input(2)) AND input(1) AND (NOT input(0));
+						output(11) <= input(3) AND (NOT input(2)) AND input(1) AND input(0);
+						output(12) <= input(3) AND input(2) AND (NOT input(1)) AND (NOT input(0));
+						output(13) <= input(3) AND input(2) AND (NOT input(1)) AND input(0);
+						output(14) <= input(3) AND input(2) AND input(1) AND (NOT input(0));
+						output(15) <= input(3) AND input(2) AND input(1) AND input(0);
+					ELSE
+						output <= (OTHERS => '0');
+					END IF;
+				END PROCESS;
+			END Behaviour;
+			""";
 
 	/**
-	 * getter that return the size of the decoder
-	 *
-	 * @return the size of the decoder
+	 * default constructor
 	 */
-	public int getDecoderSize()
+	private Decoder()
 	{
-		return this.decoder_size;
-
-	}
-
-	/**
-	 * setter change the number of input of the decoder
-	 *
-	 * @param new_size the new decoder size (number of input)
-	 * @exception IllegalArgumentException if the input size is Invalid see
-	 *                                         {@link Decoder#possibleValues}
-	 */
-	public void setDecoderSize(int new_size)
-	{
-		if (new_size != 2 && new_size != 3 && new_size != 4)
-		{
-			throw new IllegalArgumentException(
-					"Invalid size for the constructor Decoder!(valid size are 2 or 3 or 4) ");
-		}
-		this.decoder_size = new_size;
-
-	}
+	} // prevent instantiation
 
 	/**
 	 * write the code of the Decoder to the file
+	 *
+	 * @param decoder_size the size of the decoder to write see
+	 *                         {@link Decoder#possibleValues}
+	 * @param file_path    the path to write the decoder
+	 *
+	 * @return the full path of the file generated if file_path otherwise throw
+	 *         Exception
+	 *
+	 * @exception IllegalArgumentException if the mux_size is invalid
+	 * @exception NullPointerException     if the full path returned is
+	 *                                         <code>null</code>
 	 */
-	public void writeDecoder()
+	public static String writeDecoder(final String decoder_size, final String file_path)
 	{
+		StringBuilder full_path = null;
 
 		try
 		{
-			// if the file has been opened
-			boolean created = false;
-
-			String file_path = DisplayLibrary.chooseFolder();
-
 			if (WindowCode.validateFilePath(file_path))
 			{
+				full_path = new StringBuilder(file_path + DisplayLibrary.FILE_SEPARATOR);
 
 				// deocder 2,3,4
-				switch (this.decoder_size)
+				switch (decoder_size)
 				{
-				case 2:
+				case "2" -> {
 					// create the full path name of the file
-					file_path = file_path + DisplayLibrary.FILE_SEPARATOR + FILE_DECODER2;
+					full_path.append(FILE_DECODER2);
 					// create the new file
-					created = FileGenerator.openFile(file_path);
+					FileGenerator.openFile(full_path.toString());
 					// write code to the file
-					FileGenerator.writeData(file_path, DECODER2_VHDL);
-					break;
-
-				case 3:
+					FileGenerator.writeData(full_path.toString(), DECODER2_VHDL);
+				}
+				case "3" -> {
 					// create the full path name of the file
-					file_path = file_path + DisplayLibrary.FILE_SEPARATOR + FILE_DECODER3;
+					full_path.append(FILE_DECODER3);
 					// create the new file
-					created = FileGenerator.openFile(file_path);
+					FileGenerator.openFile(full_path.toString());
 					// write code to the file
-					FileGenerator.writeData(file_path, DECODER3_VHDL);
-					break;
+					FileGenerator.writeData(full_path.toString(), DECODER3_VHDL);
+				}
 
-				case 4:
+				case "4" -> {
 					// create the full path name of the file
-					file_path = file_path + DisplayLibrary.FILE_SEPARATOR + FILE_DECODER4;
+					full_path.append(FILE_DECODER4);
 					// create the new file
-					created = FileGenerator.openFile(file_path);
+					FileGenerator.openFile(full_path.toString());
 					// write code to the file
-					FileGenerator.writeData(file_path, DECODER4_VHDL);
-
-					break;
-
-				default:
-					System.err.println("Error invalid option for Decoder! valid option are 2 or 3 or 4");
-					break;
+					FileGenerator.writeData(full_path.toString(), DECODER4_VHDL);
 
 				}
 
-				// FRAME for successful generation of the component
-				if (created)
-				{
-					// code generated successfully
-					int option = (Integer) WindowCode.successFrame(DisplayLibrary.GENERATED_COMPONENT).getValue();
+				default -> throw new IllegalArgumentException(
+						"Error invalid option for Decoder! valid option are 2 or 3 or 4");
 
-					if (option == JOptionPane.YES_OPTION || option == JOptionPane.CANCEL_OPTION
-							|| option == JOptionPane.CLOSED_OPTION)
-					{
-						// show the file created
-						WindowCode.showFile(file_path);
-					}
 				}
+
 			}
 
 		} catch (IOException | NullPointerException e)
 		{
-			// handle cannot open file or create file.
-			// WindowCode.errorFrame(WindowCode.ERROR_MSG_OPEN);
+			// e.printStackStrace();
 		}
+		if (full_path == null)
+		{
+			// a error occured when trying to write to path
+			throw new NullPointerException("could not write to file!");
+		}
+		// return path
+		return full_path.toString();
 	}
 }
