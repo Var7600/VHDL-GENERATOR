@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<checkstyle version="9.3">
+<file name="C:\Users\WinVar7600\Documents\GitProject\VHDL-GENERATOR\src\main\java\vhdlgenerator\application\AppVG.java">
+</file>
+<file name="C:\Users\WinVar7600\Documents\GitProject\VHDL-GENERATOR\src\main\java\vhdlgenerator\component\adder\Adder.java">
+</file>
+<file name="C:\Users\WinVar7600\Documents\GitProject\VHDL-GENERATOR\src\main\java\vhdlgenerator\component\comparator\Comparator.java">
+</file>
+<file name="C:\Users\WinVar7600\Documents\GitProject\VHDL-GENERATOR\src\main\java\vhdlgenerator\component\ComponentUtil.java">
+</file>
+<file name="C:\Users\WinVar7600\Documents\GitProject\VHDL-GENERATOR\src\main\java\vhdlgenerator\component\decoder\Decoder.java">
+</file>
+<file name="C:\Users\WinVar7600\Documents\GitProject\VHDL-GENERATOR\src\main\java\vhdlgenerator\component\demultiplexer\Demux.java">
+</file>
+<file name="C:\Users\WinVar7600\Documents\GitProject\VHDL-GENERATOR\src\main\java\vhdlgenerator\component\DisplayLibrary.java">
+</file>
+<file name="C:\Users\WinVar7600\Documents\GitProject\VHDL-GENERATOR\src\main\java\vhdlgenerator\component\encoder\Encoder.java">
+</file>
+<file name="C:\Users\WinVar7600\Documents\GitProject\VHDL-GENERATOR\src\main\java\vhdlgenerator\component\flipflop\DFlipFlop.java">
+</file>
+<file name="C:\Users\WinVar7600\Documents\GitProject\VHDL-GENERATOR\src\main\java\vhdlgenerator\component\flipflop\JKFlipFlop.java">
+</file>
+<file name="C:\Users\WinVar7600\Documents\GitProject\VHDL-GENERATOR\src\main\java\vhdlgenerator\component\flipflop\TFlipFlop.java">
+</file>
+<file name="C:\Users\WinVar7600\Documents\GitProject\VHDL-GENERATOR\src\main\java\vhdlgenerator\component\Library.java">
+</file>
+<file name="C:\Users\WinVar7600\Documents\GitProject\VHDL-GENERATOR\src\main\java\vhdlgenerator\component\multiplexer\Mux.java">
+</file>
+<file name="C:\Users\WinVar7600\Documents\GitProject\VHDL-GENERATOR\src\main\java\vhdlgenerator\component\priorityencoder\PriorityEncoder.java">
+</file>
+<file name="C:\Users\WinVar7600\Documents\GitProject\VHDL-GENERATOR\src\main\java\vhdlgenerator\component\segment7\Segment7.java">
+</file>
+<file name="C:\Users\WinVar7600\Documents\GitProject\VHDL-GENERATOR\src\main\java\vhdlgenerator\component\subtractor\Subtractor.java">
+</file>
+<file name="C:\Users\WinVar7600\Documents\GitProject\VHDL-GENERATOR\src\main\java\vhdlgenerator\generator\FileGenerator.java">
+</file>
+<file name="C:\Users\WinVar7600\Documents\GitProject\VHDL-GENERATOR\src\main\java\vhdlgenerator\generator\Port.java">
+</file>
+<file name="C:\Users\WinVar7600\Documents\GitProject\VHDL-GENERATOR\src\main\java\vhdlgenerator\generator\WindowCode.java">
+</file>
+<file name="C:\Users\WinVar7600\Documents\GitProject\VHDL-GENERATOR\src\main\java\vhdlgenerator\testbench\Testbench.java">
+</file>
+<file name="C:\Users\WinVar7600\Documents\GitProject\VHDL-GENERATOR\src\main\java\vhdlgenerator\texteditor\Editor.java">
+</file>
+<file name="C:\Users\WinVar7600\Documents\GitProject\VHDL-GENERATOR\src\main\java\vhdlgenerator\texteditor\LinePainter.java">
+</file>
+<file name="C:\Users\WinVar7600\Documents\GitProject\VHDL-GENERATOR\src\main\java\vhdlgenerator\texteditor\SymbolType.java">
+</file>
+<file name="C:\Users\WinVar7600\Documents\GitProject\VHDL-GENERATOR\src\main\java\vhdlgenerator\texteditor\SyntaxHighlighting.java">
+</file>
+<file name="C:\Users\WinVar7600\Documents\GitProject\VHDL-GENERATOR\src\main\java\vhdlgenerator\texteditor\Token.java">
+</file>
+<file name="C:\Users\WinVar7600\Documents\GitProject\VHDL-GENERATOR\src\main\java\vhdlgenerator\texteditor\VhdlSyntax.java">
+</file>
+<file name="C:\Users\WinVar7600\Documents\GitProject\VHDL-GENERATOR\src\test\java\TestComponent.java">
+</file>
+<file name="C:\Users\WinVar7600\Documents\GitProject\VHDL-GENERATOR\src\test\java\TestEditor.java">
+</file>
+<file name="C:\Users\WinVar7600\Documents\GitProject\VHDL-GENERATOR\src\test\java\TestFileGenerator.java">
+</file>
+<file name="C:\Users\WinVar7600\Documents\GitProject\VHDL-GENERATOR\src\test\java\TestTestbench.java">
+</file>
+<file name="C:\Users\WinVar7600\Documents\GitProject\VHDL-GENERATOR\src\test\java\TestWindowCode.java">
+</file>
+</checkstyle>

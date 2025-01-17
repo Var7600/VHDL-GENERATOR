@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE suppressions PUBLIC
+        "-//Puppy Crawl//DTD Suppressions 1.2//EN"
+        "http://www.puppycrawl.com/dtds/suppressions_1_2.dtd">
+
+<suppressions>
+    <suppress checks="NewlineAtEndOfFile" files="src[/\\]test[/\\]resources[/\\].*"/>
+    <suppress checks="JavadocMethod" files="src[/\\]test[/\\]java[/\\].*"/>
+    <suppress checks="JavadocVariable" files="src[/\\]test[/\\]java[/\\].*"/>
+    <suppress checks="InvalidJavadocPosition" files="src[/\\]test[/\\]java[/\\].*"/>
+    <suppress checks="NewlineAtEndOfFile" files="src[/\\]main[/\\]resources[/\\].*"/>
+    <suppress files="VhdlSyntax\.java" checks="[a-zA-Z0-9]*"/>
+    <suppress files="DisplayLibrary.java" checks="MethodLength"/>
+    <suppress files="WindowCode.java" checks="MethodLength"/>
+    <suppress files="Port.java" checks="ParameterNumber"/>
+</suppressions>
