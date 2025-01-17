@@ -3,7 +3,7 @@
  *
  * @author DOUDOU DIAWARA @see
  * <a href="https://github.com/Var7600/VHDL-GENERATOR">Github Page</a>
- * @version 0.1
+ * @version 0.2
  *
  * @section. LICENSE
  *
