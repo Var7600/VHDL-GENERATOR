@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>vhdlgenerator</groupId>
     <artifactId>VHDL_GENERATOR</artifactId>
-    <version>0.2</version>
+    <version>0.2.1</version>
     <packaging>jar</packaging>
     <name>VHDL_GENERATOR</name>
     <description> project for generating VHDL code</description>
