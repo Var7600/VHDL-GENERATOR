@@ -6,7 +6,7 @@
  *
  * @version 0.1
  *
- * @section LICENSE
+ * @section. LICENSE
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of “Commons Clause” License Condition v1.0 but not for Commercial
@@ -131,8 +131,6 @@ public final class DisplayLibrary extends JFrame implements ActionListener
 		// icon
 		setIconImage(AppVG.icon.getImage());
 
-		// position center
-		setLocationRelativeTo(null);
 		// close operation
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		// Layout Mode
