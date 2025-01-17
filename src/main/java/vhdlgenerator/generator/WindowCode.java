@@ -6,7 +6,7 @@
  *
  * @version 0.1
  *
- * @section LICENSE
+ * @section. LICENSE
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of “Commons Clause” License Condition v1.0 but not for Commercial
@@ -38,6 +38,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import javax.swing.WindowConstants;
 
 import vhdlgenerator.application.AppVG;
 import vhdlgenerator.component.ComponentUtil;
@@ -386,11 +387,8 @@ public class WindowCode extends JFrame implements ActionListener
 		// LAYOUT MANAGER
 		setLayout(null);
 
-		// LOCATION CENTER OF THE SCREEN
-		setLocationRelativeTo(null);
-
 		// ON CLOSE
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
 		// GET PANEL CURRENT WindowCode
 		Container container = getContentPane();
@@ -1059,7 +1057,7 @@ public class WindowCode extends JFrame implements ActionListener
 			if (file != null)
 			{
 				String path = file.getPath();
-				if (!(path.endsWith(".vhdl") && path.endsWith(".vhd")))
+				if (!(path.endsWith(".vhdl") || path.endsWith(".vhd")))
 				{
 					// add filename extension
 					path = path + ".vhdl";
