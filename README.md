@@ -4,7 +4,8 @@
 
 # Badges
 
-[![Checkstyle](https://github.com/Var7600/VHDL-GENERATOR/actions/workflows/checkstyle.yml/badge.svg)](https://github.com/Var7600/VHDL-GENERATOR/actions/workflows/checkstyle.yml)  [![Test](https://github.com/Var7600/VHDL-GENERATOR/actions/workflows/test.yml/badge.svg)](https://github.com/Var7600/VHDL-GENERATOR/actions/workflows/test.yml)  [![Release](https://github.com/Var7600/VHDL-GENERATOR/actions/workflows/release.yml/badge.svg)](https://github.com/Var7600/VHDL-GENERATOR/actions/workflows/release.yml)
+[![Checkstyle](https://github.com/Var7600/VHDL-GENERATOR/actions/workflows/checkstyle.yml/badge.svg)](https://github.com/Var7600/VHDL-GENERATOR/actions/workflows/checkstyle.yml)  [![Test](https://github.com/Var7600/VHDL-GENERATOR/actions/workflows/test.yml/badge.svg)](https://github.com/Var7600/VHDL-GENERATOR/actions/workflows/test.yml) [![codecov](https://codecov.io/gh/Var7600/VHDL-GENERATOR/branch/main/graph/badge.svg?token=CODECOV_TOKEN)](https://codecov.io/gh/Var7600/VHDL-GENERATOR)
+ [![Release](https://github.com/Var7600/VHDL-GENERATOR/actions/workflows/release.yml/badge.svg)](https://github.com/Var7600/VHDL-GENERATOR/actions/workflows/release.yml)
 ---
 
 # Overview
