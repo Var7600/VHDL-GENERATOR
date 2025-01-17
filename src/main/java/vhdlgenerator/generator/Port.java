@@ -3,7 +3,7 @@
 * @author DOUDOU DIAWARA  @see <a href="https://github.com/Var7600/VHDL-GENERATOR">Github Page</a>
 * @version 0.1
 *
-* @section LICENSE
+* @section. LICENSE
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of “Commons Clause” License Condition v1.0

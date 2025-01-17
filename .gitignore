@@ -2,10 +2,12 @@
 *.class
 
 # ignores target directory
-target/
+.target/
 
 #ignore eclipse setting
-./settings/
+.settings/
 
 # ignore jar files
 *.jar
+.settings/org.sonarlint.eclipse.core.prefs
+.checkstyle

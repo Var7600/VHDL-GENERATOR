@@ -43,7 +43,7 @@ jobs:
         with:
           arguments: full-release
         env:
-          JRELEASER_PROJECT_VERSION: 0.2
+          JRELEASER_PROJECT_VERSION: 0.2.1
           JRELEASER_GITHUB_TOKEN: ${{ secrets.JRELEASER_GITHUB_TOKEN }}
           
           # Upload Artifact

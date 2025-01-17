@@ -3,9 +3,9 @@
  *
  * @author DOUDOU DIAWARA @see
  * <a href="https://github.com/Var7600/VHDL-GENERATOR">Github Page</a>
- * @version 0.1
+ * @version 0.2
  *
- * @section LICENSE
+ * @section. LICENSE
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of “Commons Clause” License Condition v1.0 but not for Commercial
@@ -14,21 +14,26 @@
 
 package vhdlgenerator.application;
 
-//FlatLaf
-import com.formdev.flatlaf.FlatLightLaf;
-import com.formdev.flatlaf.util.SystemInfo;
 // swing
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.JFrame;
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.WindowConstants;
+
+import com.formdev.flatlaf.FlatLightLaf;
+import com.formdev.flatlaf.util.SystemInfo;
+
+//FlatLaf
+
 // vhdl generator
 import vhdlgenerator.component.DisplayLibrary;
 import vhdlgenerator.generator.WindowCode;
@@ -80,9 +85,9 @@ public class AppVG extends JFrame implements ActionListener
 	/** font button */
 	private static final Font button_font = new Font("ArialBlack", Font.ITALIC | Font.BOLD, 14);
 	/** button component */
-	private static final JButton button_component = new JButton("GENERATE COMPONENT");
+	private final JButton button_component = new JButton("GENERATE COMPONENT");
 	/** button to generate code */
-	private static final JButton button_generate_code = new JButton("GENERATE CODE");
+	private final JButton button_generate_code = new JButton("GENERATE CODE");
 
 	/**
 	 * this constructor start the application
@@ -97,7 +102,7 @@ public class AppVG extends JFrame implements ActionListener
 		// no resizable
 		setResizable(false);
 		// close operation
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		// size
 		setSize(FRAME_WIDTH, FRAME_HEIGHT);
 		// icon
@@ -128,7 +133,6 @@ public class AppVG extends JFrame implements ActionListener
 		background.add(button_generate_code);
 
 		this.add(background);
-
 	}
 
 	/**
@@ -166,31 +170,26 @@ public class AppVG extends JFrame implements ActionListener
 			// enable custom window decorations
 			JFrame.setDefaultLookAndFeelDecorated(true);
 		}
+
 		try
 		{
 			// FlatLaf Theme
 			UIManager.setLookAndFeel(new FlatLightLaf());
-			SwingUtilities.invokeLater(() -> {
-
-				AppVG app = new AppVG();
-				app.setLocationRelativeTo(null);
-				app.setVisible(true);
-			});
 
 		} catch (UnsupportedLookAndFeelException e)
 		{
 
 			System.err
 					.println("Failed to initialize flatlaf theme!\n Lauching Default System theme. " + e.getMessage());
-			// Default theme
-			SwingUtilities.invokeLater(() -> {
-
-				AppVG app = new AppVG();
-				app.setLocationRelativeTo(null);
-				app.setVisible(true);
-			});
 
 		}
+
+		SwingUtilities.invokeLater(() -> {
+
+			AppVG app = new AppVG();
+			app.setLocationRelativeTo(null);
+			app.setVisible(true);
+		});
 
 	}
 
@@ -203,5 +202,4 @@ public class AppVG extends JFrame implements ActionListener
 	{
 		new AppVG().startApp();
 	}
-
 }

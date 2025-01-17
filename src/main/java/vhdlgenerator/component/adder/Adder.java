@@ -6,7 +6,7 @@
  *
  * @version 0.1
  *
- * @section LICENSE This program is free software; you can redistribute it
+ * @section. LICENSE This program is free software; you can redistribute it
  * and/or modify it under the terms of “Commons Clause” License Condition v1.0
  * but not for Commercial use
  *
